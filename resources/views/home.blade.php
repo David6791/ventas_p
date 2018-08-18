@@ -276,7 +276,7 @@
           </a>
           @role('super_admin')
           <ul class="treeview-menu">
-            <li><a href="index_role" class="load-page"><i class="fa fa-circle-o"></i> Roles</a></li>            
+            <li><a href="index_role" class="load-page"><i class="fa fa-circle-o"></i> Rolesss</a></li>            
             <li><a href="index_permission" class="load-page"><i class="fa fa-circle-o"></i> Permisos</a></li>
             <li><a href="index_roles_roles" class="load-page"><i class="fa fa-circle-o"></i> Asignacion de Roles</a></li>
             <li><a href="index_roles-permission" class="load-page"><i class="fa fa-circle-o"></i> Asignacion de Permisos</a></li>            
