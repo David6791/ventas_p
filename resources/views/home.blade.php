@@ -30,6 +30,9 @@
   <!-- bootstrap wysihtml5 - text editor -->
   <link rel="stylesheet" href="{{ asset('css/bootstrap3-wysihtml5.min.css') }}">
 
+  <link rel="stylesheet" href="{{ asset('css/dataTables.bootstrap.min.css') }}">
+
+
   <link rel="stylesheet" href="{{ asset('css/myStyles.css') }}">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -276,7 +279,7 @@
           </a>
           @role('super_admin')
           <ul class="treeview-menu">
-            <li><a href="index_role" class="load-page"><i class="fa fa-circle-o"></i> Rolesss</a></li>            
+            <li><a href="index_role" class="load-page"><i class="fa fa-circle-o"></i> Roles</a></li>            
             <li><a href="index_permission" class="load-page"><i class="fa fa-circle-o"></i> Permisos</a></li>
             <li><a href="index_roles_roles" class="load-page"><i class="fa fa-circle-o"></i> Asignacion de Roles</a></li>
             <li><a href="index_roles-permission" class="load-page"><i class="fa fa-circle-o"></i> Asignacion de Permisos</a></li>            
@@ -413,6 +416,11 @@
 <script src="{{ asset('js/dashboard.js') }}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{ asset('js/demo.js') }}"></script>
+
+<script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('js/dataTables.bootstrap.min.js') }}"></script>
+
+
 <script src="{{ asset('js/myScripts.js') }}"></script>
 </body>
 </html>
