@@ -24,8 +24,19 @@ $(function(){
             error:function(data){
                 //alert('asdasd')
                 //if(data.responseJSON.errors.description_rol=null)
+                console.log(data.responseJSON.errors)
+                //console.log(Object.keys(data.responseJSON.errors))
+                var asd = Object.keys(data.responseJSON.errors)
+                for(i = 0; i<Object.keys(data.responseJSON.errors).length; i++){
+
+                    console.log(data.responseJSON.errors[asd[i]][0])
+                    $( "input[name='"+asd[i]+"']" ).parent().find("small").text(data.responseJSON.errors[asd[i]][0]);
+                }
+                //$( "input[name='man']" ).val( "has man in it!" );
+
                 
-                $('#rol').text(data.responseJSON.errors.description_rol[0])
+
+                //$('#rol').text(data.responseJSON.errors.description_rol[0])
                 
                 console.log(data.responseJSON.errors.description_rol[0])
                 
