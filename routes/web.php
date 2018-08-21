@@ -20,6 +20,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 /* Rutas para Roles */
 Route::get('/index_role', 'Role@index_role');
+Route::post('/create_rol', 'Role@create_role');
 
 Route::get('/index_roles_roles', 'Role@index_roles_roles');
 

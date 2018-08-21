@@ -66,7 +66,8 @@
 <div class="modal fade" id="modal-default">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form action="">
+            <form class="form-horizontal form-label-left sendform_rol" novalidate action="{{url('create_rol')}}" method="post" autocomplete="off">
+                <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span></button>
@@ -80,14 +81,14 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="exampleInputEmail1">Identificador Rol</label>
-                                            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+                                            <label for="exampleInputEmail1">Identificador Rol <small class="text-red" id="rol"></small></label>
+                                            <input type="text" class="form-control" id="" name= "rol" placeholder="Ecribir rol">
                                         </div>
                                         </div>
                                         <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Nombre Rol</label>
-                                            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+                                            <input type="text" class="form-control" id="" name="name_rol" placeholder="Ingresar Nombre Rol">
                                         </div>
                                         </div>
                                     </div>
@@ -95,7 +96,7 @@
                                         <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Descripcion Rol</label>
-                                            <textarea class="form-control" rows="3" placeholder="Enter ..."></textarea>
+                                            <textarea class="form-control" rows="3" name="description_rol" placeholder="Escribir descripcion..."></textarea>
                                         </div>
                                         </div>
                                     </div>
@@ -106,7 +107,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary">Guardar</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
                 </div>
             </form>
         </div>        
@@ -120,10 +121,10 @@
     $('#example1').DataTable()
     $('#example2').DataTable({
       'paging'      : true,
-      'lengthChange': true,
+      'lengthChange': false,
       'searching'   : true,
       'ordering'    : true,
-      'info'        : true,
+      'info'        : false,
       'autoWidth'   : true
     })
   })
