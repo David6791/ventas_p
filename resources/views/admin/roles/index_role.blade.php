@@ -82,13 +82,13 @@
                                         <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Identificador Rol <small class="text-red" id=""></small></label>
-                                            <input type="text" class="form-control" id="" name= "rol" placeholder="Ecribir rol">
+                                            <input type="text" class="form-control name_form" id="" name= "rol" placeholder="Ecribir rol">
                                         </div>
                                         </div>
                                         <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Nombre Rol<small class="text-red" id=""></small></label>
-                                            <input type="text" class="form-control" id="" name="name_rol" placeholder="Ingresar Nombre Rol">
+                                            <input type="text" class="form-control name_form" id="" name="name_rol" placeholder="Ingresar Nombre Rol">
                                         </div>
                                         </div>
                                     </div>
@@ -96,7 +96,7 @@
                                         <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Descripcion Rol <small class="text-red" id=""></small></label>
-                                            <textarea class="form-control" rows="3" name="description_rol" placeholder="Escribir descripcion..."></textarea>
+                                            <textarea class="form-control name_form" rows="3" name="description_rol" placeholder="Escribir descripcion..."></textarea>
                                         </div>
                                         </div>
                                     </div>

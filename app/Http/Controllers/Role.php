@@ -28,7 +28,7 @@ class Role extends Controller
         //return $request->all();
         
         $validatedData = $request->validate([
-            'rol' => 'required|max:255',
+            'rol' => 'required|max:10',
             'name_rol' => 'required',
             'description_rol' => 'required'
         ]);
