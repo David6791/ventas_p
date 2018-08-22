@@ -15,7 +15,7 @@
             frutas.push(aux)
             
         })
-        console.log(frutas)
+        //console.log(frutas)
         data1=$(this).serialize()
         $.ajaxSetup({
             header:$('meta[name="_token"]').attr('content')
@@ -35,10 +35,33 @@
                 //console.log(data.responseJSON.errors)
                 //console.log(Object.keys(data.responseJSON.errors))
                 var asd = Object.keys(data.responseJSON.errors)
-                for(i = 0; i<Object.keys(data.responseJSON.errors).length; i++){
+                //console.log(asd);
+                //console.log(frutas);
+                //return false
+                for(i = 0; i<frutas.length; i++){
+                    if(asd.includes(frutas[i])) {
+                        //console.log('existe')
+                        $( "input[name='"+frutas[i]+"']" ).parent().find("small").text(data.responseJSON.errors[frutas[i]][0])
+                        $( "textarea[name='"+frutas[i]+"']" ).parent().find("small").text(data.responseJSON.errors[frutas[i]][0])
+                    }else{
+                        $( "input[name='"+frutas[i]+"']" ).parent().find("small").text('')
+                        $( "textarea[name='"+frutas[i]+"']" ).parent().find("small").text('')
+                    }
+                    //alert(asd[i])
+                    /*var aux = frutas[i].indexOf(asd[i])
+                    if(aux != -1){
+                        alert('si')
+                        //alert(frutas[i]+asd[i])
+                        $( "input[name='"+asd[i]+"']" ).parent().find("small").text(data.responseJSON.errors[asd[i]][0]);
+                        $( "textarea[name='"+asd[i]+"']" ).parent().find("small").text(data.responseJSON.errors[asd[i]][0]);
+                    }else{
+                        alert('no')
+                        $('#"+frutas[i]+"').text('')
+                    }*/
+                    
                     //console.log(data.responseJSON.errors[asd[i]][0])
-                    $( "input[name='"+asd[i]+"']" ).parent().find("small").text(data.responseJSON.errors[asd[i]][0]);
-                    $( "textarea[name='"+asd[i]+"']" ).parent().find("small").text(data.responseJSON.errors[asd[i]][0]);
+                    //$( "input[name='"+asd[i]+"']" ).parent().find("small").text(data.responseJSON.errors[asd[i]][0]);
+                    //$( "textarea[name='"+asd[i]+"']" ).parent().find("small").text(data.responseJSON.errors[asd[i]][0]);
                     
                 }
                 //$( "input[name='man']" ).val( "has man in it!" );
