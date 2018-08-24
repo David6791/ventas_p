@@ -26,7 +26,11 @@
             url:$(this).attr('action'),
             data:$(this).serialize(),            
             success:function(data){
-                alert('asdasdasd1111')
+                swal(
+                    'Felicidades',
+                    'El Rol se Registro Correctamente',
+                    'success'
+                  )
                 
             },
             error:function(data){
@@ -74,5 +78,49 @@
                 
             }
         })
+    })
+    $(document).on('click','.load_dates_edit',function(e){  
+        $('#modal-editrol').modal({
+            show: 'true',
+            backdrop: 'static',
+            keyboard: false,
+        })
+        e.preventDefault(e)
+        $.ajax({
+            type:'POST',
+            url:'/load_dates_edit_rol',
+            data:{id_rol:$(this).attr('value'),_token:$('meta[name="csrf-token"]').attr('content')},
+            success:function(data){
+                //$("#contentGlobal").html(data)    
+                //alert('asdsadas')            
+            },
+            error:function(data){
+                swal(
+                    'Error!',
+                    'El Paciente aun no esta registrado',
+                    'error'
+                  )
+            }
+        })
+        /*e.preventDefault(e)        
+        $.ajax({            
+            type:'POST',
+            url:'/load_dates_edit_rol',
+            dataType : 'json', 
+            //data:1,
+            data:{id_rol:$(this).attr('value'),_token:$('meta[name="csrf-token"]').attr('content')},
+            success:function(data){
+                //$("#contentGlobal").html(data)  
+                alert(data)          
+            },error:function(data){
+                console.log(data)
+                swal(
+                    'Error!',
+                    'El Paciente aun no esta registrado',
+                    'error'
+                  )
+            }
+
+        })*/
     })
 })

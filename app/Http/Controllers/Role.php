@@ -44,5 +44,5 @@ class Role extends Controller
         }else{
         return 'termino';}*/
         //return $request->all();
-    }
+    }    
 }
