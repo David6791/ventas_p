@@ -27,6 +27,8 @@ Route::get('/index_role', 'Role@index_role');
 });*/
 
 Route::post('/load_dates_edit_rol', 'RolesController@load_dates_edit_roles');
+Route::post('/edit_role', 'RolesController@save_edit_roles');
+Route::post('/delete_role', 'RolesController@delete_roles');
   /* Edit roles */
 Route::post('/create_rol', 'Role@create_role');
 

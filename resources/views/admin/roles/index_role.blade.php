@@ -30,7 +30,7 @@
                             <td>{{ $roles->description }}</td>
                             <td>{{ $roles->created_at }}</td>
                             <td>{{ $roles->state_role }}</td>
-                            <td> <button type="button" class="btn btn-primary btn-xs load_dates_edit" value="{{ $roles->id }}"> <span class="fa fa-edit"></span> Editar</button> <button type="button" class="btn btn-danger btn-xs"> <span class="fa fa-edit"></span> Borrar</button> </td>
+                            <td> <button type="button" class="btn btn-primary btn-xs load_dates_edit" value="{{ $roles->id }}"> <span class="fa fa-edit"></span> Editar</button> <button type="button" class="btn btn-danger btn-xs delete"  value="{{ $roles->id }}"> <span class="fa fa-edit"></span> Borrar</button> </td>
                         </tr>
                     @empty
                         <tr>
@@ -121,8 +121,9 @@
 <div class="modal fade" id="modal-editrol">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form class="form-horizontal form-label-left sendform_rol" novalidate action="{{url('create_rol')}}" method="post" autocomplete="off">
+            <form class="form-horizontal form-label-left sendform_edit_rol" novalidate action="{{url('edit_role')}}" method="post" autocomplete="off">
                 <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+                <input type="hidden" name= "id_rol" value="" id="id_rol">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span></button>

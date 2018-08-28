@@ -37,7 +37,9 @@ class Role extends Controller
             $request->name_rol,
             $request->description_rol
             ]);
-        return '$validatedData->fails()';
+        return redirect()->action(
+            'Role@index_role'                   
+        );
         /*if ($validatedData->fails())
         {
             return redirect()->back()->withErrors($validatedData->errors());

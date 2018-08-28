@@ -421,8 +421,9 @@
 <!-- AdminLTE for demo purposes -->
 <script src="{{ asset('js/demo.js') }}"></script>
 
-<script src="{{ asset('js/sweetalert2.min.js') }}"></script>
-<script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
+<!--script src="{{ asset('js/sweetalert.js') }}"></script-->
+<script src="{{ asset('js/sweetalert.min.js') }}"></script>
+<!--script src="{{ asset('js/sweetalert2.min.js') }}"></script-->
 <script src="{{ asset('js/dataTables.bootstrap.min.js') }}"></script>
 
 
