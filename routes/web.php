@@ -40,3 +40,9 @@ Route::post('/create_permission', 'PermissionController@create_permission');
 Route::post('/load_dates_edit_permission', 'PermissionController@load_dates_edit_permission');
 Route::post('/edit_permission', 'PermissionController@edit_permission'); 
 Route::post('/delete_permission', 'PermissionController@delete_permission'); 
+
+Route::post('/load_dates_roles_users', 'UserRoleController@load_dates_roles_users'); 
+
+
+/* Agregar y eliminar roles de usuario */
+Route::post('/add_role_user', 'UserRoleController@add_role_user'); 

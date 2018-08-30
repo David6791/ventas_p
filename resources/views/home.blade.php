@@ -36,6 +36,7 @@
 
   <link rel="stylesheet" href="{{ asset('css/dataTables.bootstrap.min.css') }}">
 
+  <link rel="stylesheet" href="{{ asset('css/all.css') }}">
 
   <link rel="stylesheet" href="{{ asset('css/myStyles.css') }}">
 
@@ -427,7 +428,7 @@
 <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('js/dataTables.bootstrap.min.js') }}"></script>
 
-
+<script src="{{ asset('js/icheck.min.js') }}"></script>
 <script src="{{ asset('js/myScripts.js') }}"></script>
 </body>
 </html>

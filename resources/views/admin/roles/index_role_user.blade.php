@@ -24,11 +24,11 @@
                     @forelse ($row as $roles)
                         <tr>
                             <td>{{ $a++ }}</td>
-                            <td>{{ $roles->usname }}</td>
-                            <td>{{ $roles->rname }}</td>
-                            <td>{{ $roles->asi_created }}</td>
-                            <td>{{ $roles->state_role_user }}</td>                            
-                            <td> <button type="button" class="btn btn-primary btn-xs"> <span class="fa fa-edit"></span> Editar</button> <button type="button" class="btn btn-danger btn-xs"> <span class="fa fa-edit"></span> Borrar</button> </td>
+                            <td>{{ $roles->name }}</td>
+                            <td>{{ $roles->email }}</td>
+                            <td>{{ $roles->created_at }}</td>
+                            <td>Activo</td>                            
+                            <td> <button type="button" class="btn btn-success btn-xs view_roles_user" value="{{ $roles->id }}"> <span class="fa fa-eye"></span> Ver roles </button></td>
                         </tr>
                     @empty
                         <tr>
@@ -49,3 +49,16 @@
       <!-- /.row -->
     </section>
     <!-- /.content -->
+    <script>
+  $(function () {
+    $('#example1').DataTable()
+    $('#example2').DataTable({
+      'paging'      : true,
+      'lengthChange': false,
+      'searching'   : true,
+      'ordering'    : true,
+      'info'        : false,
+      'autoWidth'   : true
+    })
+  })
+</script>
