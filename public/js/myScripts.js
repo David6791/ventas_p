@@ -7,9 +7,10 @@
         return false;
     })
     $(document).on('submit','.sendform_rol',function(e){
-        //$('#rol').text('')
-        $('#modal-default').modal('toggle')
+        //$('#rol').text('')        
         //$('#modal-default').trigger('click') 
+        //$('#modal-default').modal('toggle')
+        console.log('asdasdas')
         frutas = []
         $('.name_form').each(function(){
             //console.log($(this).attr("name"))
@@ -27,13 +28,18 @@
             type:$(this).attr('method'),
             url:$(this).attr('action'),
             data:$(this).serialize(),            
-            success:function(data){
+            success:function(data){  
+                console.log(data)     
+                $("#contentGlobal").html('')         
                 $("#contentGlobal").html(data)
                 swal(
                     'Felicidades',
                     'El Rol se Registro Correctamente',
                     'success'
                   )
+                $('.modal-backdrop').remove()
+                //$('#modal-default').modal("toggle")
+                //return false
                 
             },
             error:function(data){
@@ -96,10 +102,10 @@
             success:function(data){
                 //$("#contentGlobal").html(data)    
                 //alert('asdsadas')            
-                $('#id_rol').val(data[0].id)
-                $('#rol').val(data[0].name)
-                $('#name_rol').val(data[0].display_name)
-                $('#description_rol').val(data[0].description)
+                $('#id_rol_edit').val(data[0].id)
+                $('#rol_edit').val(data[0].name)
+                $('#name_rol_edit').val(data[0].display_name)
+                $('#description_rol_edit').val(data[0].description)
 
             },
             error:function(data){
@@ -132,7 +138,7 @@
         })*/
     })
     $(document).on('submit','.sendform_edit_rol',function(e){
-        $('#modal-editrol').modal('toggle')
+        //$('#modal-editrol').modal('toggle')
         frutas = []
         $('.name_form').each(function(){
             aux = $(this).attr("name")
@@ -154,7 +160,8 @@
                     'Felicidades',
                     'El Rol se Actualizo Correctamente',
                     'success'
-                  )                
+                  )
+                  $('.modal-backdrop').remove()               
             },
             error:function(data){
                 var asd = Object.keys(data.responseJSON.errors)
@@ -196,9 +203,9 @@
                 icon: "success",
               });
             } else {
-              swal("No se Realizo ninguna Modificacion!");
+              swal("No se Realizo ninguna modificacion!");
             }
-          });
+          })
         /*swal({
             title: 'Are you sure?',
             text: 'You will not be able to recover this imaginary file!',
@@ -234,5 +241,140 @@
             }
           });*/
               
+    })
+    $(document).on('submit','.sendform_permission',function(e){
+        frutas = []
+        $('.name_form').each(function(){
+            aux = $(this).attr("name")
+            frutas.push(aux)            
+        })
+        data1=$(this).serialize()
+        $.ajaxSetup({
+            header:$('meta[name="_token"]').attr('content')
+        })
+        e.preventDefault(e)
+        $.ajax({
+            type:$(this).attr('method'),
+            url:$(this).attr('action'),
+            data:$(this).serialize(),            
+            success:function(data){    
+                $("#contentGlobal").html('')         
+                $("#contentGlobal").html(data)
+                swal(
+                    'Felicidades',
+                    'El Rol se Registro Correctamente',
+                    'success'
+                  )
+                $('.modal-backdrop').remove()
+            },
+            error:function(data){
+                var asd = Object.keys(data.responseJSON.errors)
+                for(i = 0; i<frutas.length; i++){
+                    if(asd.includes(frutas[i])) {
+                        $( "input[name='"+frutas[i]+"']" ).parent().find("small").text(data.responseJSON.errors[frutas[i]][0])
+                        $( "textarea[name='"+frutas[i]+"']" ).parent().find("small").text(data.responseJSON.errors[frutas[i]][0])
+                    }else{
+                        $( "input[name='"+frutas[i]+"']" ).parent().find("small").text('')
+                        $( "textarea[name='"+frutas[i]+"']" ).parent().find("small").text('')
+                    }
+                } 
+            }
+        })
+    })
+    $(document).on('click','.load_dates_permission_edit',function(e){  
+        $('#modal_edit_permisions').modal({
+            show: 'true',
+            backdrop: 'static',
+            keyboard: false,
+        })
+        e.preventDefault(e)
+        $.ajax({
+            type:'POST',
+            url:'/load_dates_edit_permission',
+            data:{id_permission:$(this).attr('value'),_token:$('meta[name="csrf-token"]').attr('content')},
+            success:function(data){
+                //$("#contentGlobal").html(data)    
+                //alert('asdsadas')            
+                $('#id_permission_edit').val(data[0].id)
+                $('#permission_edit').val(data[0].name)
+                $('#name_permission_edit').val(data[0].display_name)
+                $('#description_permission_edit').val(data[0].description)
+
+            },
+            error:function(data){
+                swal(
+                    'Error!',
+                    'El Paciente aun no esta registrado',
+                    'error'
+                  )
+            }
+        })
+    })
+    $(document).on('submit','.sendform_permission_edit',function(e){
+        frutas = []
+        $('.name_form').each(function(){
+            aux = $(this).attr("name")
+            frutas.push(aux)
+            
+        })
+        data1=$(this).serialize()
+        $.ajaxSetup({
+            header:$('meta[name="_token"]').attr('content')
+        })
+        e.preventDefault(e)
+        $.ajax({
+            type:$(this).attr('method'),
+            url:$(this).attr('action'),
+            data:$(this).serialize(),            
+            success:function(data){
+                $("#contentGlobal").html(data)
+                swal(
+                    'Felicidades',
+                    'El Rol se Actualizo Correctamente',
+                    'success'
+                  )
+                  $('.modal-backdrop').remove()               
+            },
+            error:function(data){
+                var asd = Object.keys(data.responseJSON.errors)
+                for(i = 0; i<frutas.length; i++){
+                    if(asd.includes(frutas[i])) {
+                        $( "input[name='"+frutas[i]+"']" ).parent().find("small").text(data.responseJSON.errors[frutas[i]][0])
+                        $( "textarea[name='"+frutas[i]+"']" ).parent().find("small").text(data.responseJSON.errors[frutas[i]][0])
+                    }else{
+                        $( "input[name='"+frutas[i]+"']" ).parent().find("small").text('')
+                        $( "textarea[name='"+frutas[i]+"']" ).parent().find("small").text('')
+                    }              
+                    
+                }                
+            }
+        })
+    })  
+    $(document).on('click','.delete_permission',function(e){
+        swal({
+            title: "Estas Seguro?",
+            text: "Revisa antes de eliminar el PERMISO!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+          })
+          .then((willDelete) => {
+            if (willDelete) {
+                e.preventDefault(e)
+                    $.ajax({
+                        type:'POST',
+                        url:'/delete_permission',
+                        data:{id_permission:$(this).attr('value'),_token:$('meta[name="csrf-token"]').attr('content')},
+                        success:function(data){
+                            $('#contentGlobal').html(data)
+                        }
+                    }) 
+              swal("Bien! Se elimino correctamente el PERMISO!", {
+                icon: "success",
+              });
+            } else {
+              swal("No se Realizo ninguna modificacion!");
+            }
+          })     
     })
 })

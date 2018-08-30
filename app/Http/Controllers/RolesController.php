@@ -18,15 +18,15 @@ class RolesController extends Controller{
     public function save_edit_roles(Request $request){
         //return $request->all();
         $validatedData = $request->validate([
-            'rol' => 'required|max:10',
-            'name_rol' => 'required',
-            'description_rol' => 'required'
+            'rol_edit' => 'required|max:10',
+            'name_rol_edit' => 'required',
+            'description_rol_edit' => 'required'
         ]);
         DB::table('roles')
             ->where('id', $request->id_rol)
-            ->update(['name' => $request->rol,
-                        'display_name' => $request->name_rol,
-                        'description' => $request->description_rol
+            ->update(['name' => $request->rol_edit,
+                        'display_name' => $request->name_rol_edit,
+                        'description' => $request->description_rol_edit
             ]);
         return redirect()->action(
             'Role@index_role'                   

@@ -35,4 +35,8 @@ Route::post('/create_rol', 'Role@create_role');
 Route::get('/index_roles_roles', 'Role@index_roles_roles');
 
 /* Rutas para los Permisos */
-Route::get('/index_permission', 'Permission@index_permission');
+Route::get('/index_permission', 'Permission@index_permission'); 
+Route::post('/create_permission', 'PermissionController@create_permission');
+Route::post('/load_dates_edit_permission', 'PermissionController@load_dates_edit_permission');
+Route::post('/edit_permission', 'PermissionController@edit_permission'); 
+Route::post('/delete_permission', 'PermissionController@delete_permission'); 

@@ -4,7 +4,15 @@
         <div class="col-xs-12">
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Roles de Usuario</h3>
+                <div class="row">
+                    <div class="col-md-10">
+                        <h3 class="box-title">Roles de Usuario</h3>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="button" class="btn btn-success btn-ms"  data-toggle="modal" data-target="#modal-default"> <span class="fa fa-plus"> </span>  Agregar Nuevo Rol</button>  
+                    </div>
+                </div>
+              
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -51,19 +59,7 @@
       <!-- /.row -->
     </section>
     <!-- /.content -->
-    <section class="content">
-        <div class="row">
-            <div class="col-md-2">
-                <div class="box">
-                    <div class="box-body">
-                        <button type="button" class="btn btn-primary btn-ms"  data-toggle="modal" data-target="#modal-default"> <span class="fa fa-plus"> </span>  Agregar Nuevo Rol</button>  
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-<div class="modal fade" id="modal-default">
+<div class="modal fade" id="modal-default" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
     <div class="modal-dialog">
         <div class="modal-content">
             <form class="form-horizontal form-label-left sendform_rol" novalidate action="{{url('create_rol')}}" method="post" autocomplete="off">
@@ -79,13 +75,15 @@
                             <div class="box box-primary">
                                 <div class="box-body with-border">
                                     <div class="row">
-                                        <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1">Identificador Rol <small class="text-red" id=""></small></label>
-                                            <input type="text" class="form-control name_form" id="" name= "rol" placeholder="Ecribir rol">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Identificador Rol <small class="text-red" id=""></small></label>
+                                                <input type="text" class="form-control name_form" id="" name= "rol" placeholder="Ecribir rol">
+                                            </div>
                                         </div>
-                                        </div>
-                                        <div class="col-md-6">
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Nombre Rol<small class="text-red" id=""></small></label>
                                             <input type="text" class="form-control name_form" id="" name="name_rol" placeholder="Ingresar Nombre Rol">
@@ -106,7 +104,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
+                    <button type="button" id="modal_default_close" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
                     <button type="submit" class="btn btn-primary">Guardar</button>
                 </div>
             </form>
@@ -123,7 +121,7 @@
         <div class="modal-content">
             <form class="form-horizontal form-label-left sendform_edit_rol" novalidate action="{{url('edit_role')}}" method="post" autocomplete="off">
                 <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
-                <input type="hidden" name= "id_rol" value="" id="id_rol">
+                <input type="hidden" name= "id_rol" value="" id="id_rol_edit">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span></button>
@@ -135,24 +133,26 @@
                             <div class="box box-primary">
                                 <div class="box-body with-border">
                                     <div class="row">
-                                        <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1">Identificador Rol <small class="text-red" id=""></small></label>
-                                            <input type="text" class="form-control name_form" id="rol" name= "rol" placeholder="Ecribir rol">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Identificador Rol <small class="text-red" id=""></small></label>
+                                                <input type="text" class="form-control name_form" id="rol_edit" name= "rol_edit" placeholder="Ecribir rol">
+                                            </div>
                                         </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1">Nombre Rol<small class="text-red" id=""></small></label>
-                                            <input type="text" class="form-control name_form" id="name_rol" name="name_rol" placeholder="Ingresar Nombre Rol">
-                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Nombre Rol<small class="text-red" id=""></small></label>
+                                                <input type="text" class="form-control name_form" id="name_rol_edit" name="name_rol_edit" placeholder="Ingresar Nombre Rol">
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Descripcion Rol <small class="text-red" id=""></small></label>
-                                            <textarea class="form-control name_form" rows="3" id="description_rol" name="description_rol" placeholder="Escribir descripcion..."></textarea>
+                                            <textarea class="form-control name_form" rows="3" id="description_rol_edit" name="description_rol_edit" placeholder="Escribir descripcion..."></textarea>
                                         </div>
                                         </div>
                                     </div>
