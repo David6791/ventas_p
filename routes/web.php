@@ -46,3 +46,11 @@ Route::post('/load_dates_roles_users', 'UserRoleController@load_dates_roles_user
 
 /* Agregar y eliminar roles de usuario */
 Route::post('/add_role_user', 'UserRoleController@add_role_user'); 
+Route::post('/load_dates_view_rol', 'UserRoleController@load_dates_view_rol'); 
+
+
+/* Rutas para la asignacion de permisos a los roles */
+Route::get('/index_roles_permission', 'Permission@index_roles_permission'); 
+Route::post('/load_dates_view_permisos', 'Permission@load_dates_view_permisos'); 
+
+

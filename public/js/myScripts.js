@@ -377,13 +377,14 @@
             }
           })     
     })
-    $(document).on('click','.view_roles_user',function(e){  
+    $(document).on('click','.view_roles_edit_user',function(e){  
         e.preventDefault(e)
         $.ajax({
             type:'POST',
             url:'/load_dates_roles_users',
             data:{id_user:$(this).attr('value'),_token:$('meta[name="csrf-token"]').attr('content')},
             success:function(data){
+                //console.log(data.id)
                 $("#contentGlobal").html(data)    
             },
             error:function(data){
@@ -416,4 +417,64 @@
             }
         })
     }) 
+    $(document).on('click','.view_roles_user',function(e){ 
+        $('.table_roles tbody tr').closest('tr').remove()
+        $('#modal-viewrols').modal({
+            show: 'true',
+            backdrop: 'static',
+            keyboard: false,
+        })
+        e.preventDefault(e)
+        $.ajax({
+            type:'POST',
+            url:'/load_dates_view_rol',
+            data:{id_rol:$(this).attr('value'),_token:$('meta[name="csrf-token"]').attr('content')},
+            success:function(data){ 
+                $('#name_user').text(data[0].name)
+                var da = (data).length
+                for(var i = 0; i < da ; i++)
+                {                    
+                    x = i+1          
+                    $('.table_roles').append('<tr><td>'+x+'</td><td>'+data[i].rol_name+'</td><td>'+data[i].display_name+'</td></tr>')
+                }
+            },
+            error:function(data){
+                swal(
+                    'Error!',
+                    'El Paciente aun no esta registrado',
+                    'error'
+                  )
+            }
+        })
+    })
+    $(document).on('click','.view_permisos_rol',function(e){ 
+        $('.table_permisos tbody tr').closest('tr').remove()
+        $('#modal-view-permisos').modal({
+            show: 'true',
+            backdrop: 'static',
+            keyboard: false,
+        })
+        e.preventDefault(e)
+        $.ajax({
+            type:'POST',
+            url:'/load_dates_view_permisos',
+            data:{id_rol:$(this).attr('value'),_token:$('meta[name="csrf-token"]').attr('content')},
+            success:function(data){ 
+                $('#name_rol').text(data[0].rol_name)
+                var da = (data).length
+                for(var i = 0; i < da ; i++)
+                {                    
+                    x = i+1          
+                    $('.table_permisos').append('<tr><td>'+x+'</td><td>'+data[i].name_permission+'</td><td>'+data[i].created_at+'</td></tr>')
+                }
+            },
+            error:function(data){
+                swal(
+                    'Error!',
+                    'El Paciente aun no esta registrado',
+                    'error'
+                  )
+            }
+        })
+    })
 })

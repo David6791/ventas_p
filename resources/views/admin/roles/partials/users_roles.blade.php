@@ -3,11 +3,12 @@
         <div class="col-md-12">
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title">Roles Asignados a: {{ $row[0]->name }}</h3>
+                    <h3 class="box-title">Roles Asignados a: {{ $dates[0]->name }}</h3>
                 </div>
                 <div class="box-body">
                     <form class="form-horizontal form-label-left sendform_modifi_role_user" novalidate action="{{url('add_role_user')}}" method="post" autocomplete="off">
                         <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+                        <input type="hidden" name="id_user_role" id="" value="{{ $dates[0]->id }}">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="box-header">
@@ -70,7 +71,7 @@
                                 <button type="submit" class="btn btn-success btn-sm"> <span class="glyphicon glyphicon-floppy-save"></span> Guardar Cambios</button>
                             </div>
                             <div class="col-md-2">
-                                <button class="btn btn-danger btn-sm"> <span class="glyphicon glyphicon-remove"></span> Cancelar</button>
+                                <button href="index_roles_roles" class="btn btn-danger btn-sm load-pagse"> <span class="glyphicon glyphicon-remove"></span> Cancelar</button>
                             </div>
                             <div class="col-md-4"></div>
                         </div>
