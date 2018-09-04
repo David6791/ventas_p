@@ -163,7 +163,7 @@
       <!-- /.search form -->
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
-        <li class="header">MENU DE NAVEGACION</li>
+        <li class="header">MENU DE NAVEGACION</li>        
         <li class="active treeview">
           <a href="#">
             <i class="fa fa-dashboard"></i> <span>Usuarios</span>
@@ -172,7 +172,9 @@
             </span>
           </a>
           <ul class="treeview-menu">
+            @permission('Registrar')
             <li class="active"><a href="index.html"><i class="fa fa-circle-o"></i> Registro</a></li>
+            @endpermission
             <li><a href="index2.html"><i class="fa fa-circle-o"></i> Dashboard v2</a></li>
           </ul>
         </li>

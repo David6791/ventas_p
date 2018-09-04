@@ -26,7 +26,7 @@
                             <td>{{ $permisos->name }}</td>
                             <td>{{ $permisos->created_at }}</td>
                             <td>Activo</td>                            
-                            <td> <button type="button" class="btn btn-info btn-xs view_permisos_rol" value="{{ $permisos->id }}"> <span class="fa fa-eye"></span> Ver Permisos </button> <button type="button" class="btn btn-success btn-xs view_roles_edit_user" value="{{ $permisos->id }}"> <span class="fa fa-edit"></span> Editar Permisos </button></td>
+                            <td> <button type="button" class="btn btn-info btn-xs view_permisos_rol" value="{{ $permisos->id }}"> <span class="fa fa-eye"></span> Ver Permisos </button> <button type="button" class="btn btn-success btn-xs view_roles_edit_permisson" value="{{ $permisos->id }}"> <span class="fa fa-edit"></span> Editar Permisos </button></td>
                         </tr>
                     @empty
                         <tr>

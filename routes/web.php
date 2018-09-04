@@ -52,5 +52,7 @@ Route::post('/load_dates_view_rol', 'UserRoleController@load_dates_view_rol');
 /* Rutas para la asignacion de permisos a los roles */
 Route::get('/index_roles_permission', 'Permission@index_roles_permission'); 
 Route::post('/load_dates_view_permisos', 'Permission@load_dates_view_permisos'); 
+Route::post('/load_dates_roles_permission', 'Permission@load_dates_roles_permission'); 
+Route::post('/add_permissions_roles', 'Permission@add_permissions_roles'); 
 
 

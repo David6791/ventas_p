@@ -476,5 +476,45 @@
                   )
             }
         })
+    })    
+    $(document).on('click','.view_roles_edit_permisson',function(e){  
+        e.preventDefault(e)
+        $.ajax({
+            type:'POST',
+            url:'/load_dates_roles_permission',
+            data:{id_rol:$(this).attr('value'),_token:$('meta[name="csrf-token"]').attr('content')},
+            success:function(data){
+                //console.log(data.id)
+                $("#contentGlobal").html(data)    
+            },
+            error:function(data){
+                swal(
+                    'Error!',
+                    'El Paciente aun no esta registrado',
+                    'error'
+                  )
+            }
+        })
     })
+    $(document).on('submit','.sendform_modifi_role_permission',function(e){     
+        $.ajaxSetup({
+            header:$('meta[name="_token"]').attr('content')
+        })
+        e.preventDefault(e)
+        $.ajax({
+            type:$(this).attr('method'),
+            url:$(this).attr('action'),
+            data:$(this).serialize(),            
+            success:function(data){
+                $("#contentGlobal").html(data)
+                swal(
+                    'Felicidades',
+                    'El Rol se Actualizo Correctamente',
+                    'success'
+                  )             
+            },
+            error:function(data){                              
+            }
+        })
+    }) 
 })
