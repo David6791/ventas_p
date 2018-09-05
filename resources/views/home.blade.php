@@ -284,12 +284,12 @@
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
-          @role('super_admin')
+          @role('super_admin')         
           <ul class="treeview-menu">
-            <li><a href="index_role" class="load-page"><i class="fa fa-circle-o"></i> Roles</a></li>            
-            <li><a href="index_permission" class="load-page"><i class="fa fa-circle-o"></i> Permisos</a></li>
-            <li><a href="index_roles_roles" class="load-page"><i class="fa fa-circle-o"></i> Asignacion de Roles</a></li>
-            <li><a href="index_roles_permission" class="load-page"><i class="fa fa-circle-o"></i> Asignacion de Permisos</a></li>            
+            @permission('Roles')<li><a href="index_role" class="load-page"><i class="fa fa-circle-o"></i> Roles</a></li>@endpermission
+            @permission('Permisos')<li><a href="index_permission" class="load-page"><i class="fa fa-circle-o"></i> Permisos</a></li>@endpermission
+            @permission('Asi_roles')<li><a href="index_roles_roles" class="load-page"><i class="fa fa-circle-o"></i> Asignacion de Roles</a></li>@endpermission
+            @permission('Asig_permi')<li><a href="index_roles_permission" class="load-page"><i class="fa fa-circle-o"></i> Asignacion de Permisos</a></li>@endpermission            
           </ul>
           @endrole
         </li>

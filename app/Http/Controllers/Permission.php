@@ -58,9 +58,9 @@ class Permission extends Controller
                 \DB::table('permission_role')->where('id_per_rol', '=', $delete)->delete();
             }
         }
-        /*return redirect()->action(
-            'Role@index_roles_roles' 
+        return redirect()->action(
+            'Permission@index_roles_permission' 
             //'UserRoleController@load_dates_roles_users'                   
-        );*/
+        );
     }
 }
