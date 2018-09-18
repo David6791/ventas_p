@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 class PermissionController extends Controller{
     public function create_permission(Request $request){
         $validatedData = $request->validate([
-            'permission' => 'required|max:10',
+            'permission' => 'required|max:20',
             'name_permission' => 'required',
             'description_permission' => 'required'
         ]);

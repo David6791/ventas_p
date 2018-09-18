@@ -59,7 +59,7 @@
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>S</b>J</span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>San</b>Jinez</span>
+      <span class="logo-lg"><b>POLI</b>Clinico</span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
@@ -173,26 +173,25 @@
           </a>
           <ul class="treeview-menu">
             @permission('Registrar')
-            <li class="active"><a href="index.html"><i class="fa fa-circle-o"></i> Registro</a></li>
+            <li class="active"><a href=""><i class="fa fa-circle-o"></i> Registro</a></li>
             @endpermission
-            <li><a href="index2.html"><i class="fa fa-circle-o"></i> Dashboard v2</a></li>
+            @permission('Ver_usuarios')
+            <li><a href="index_users" class="load-page"><i class="fa fa-circle-o"></i> Ver Usuarios</a></li>
+            @endpermission
           </ul>
         </li>
+        @role('admin_pacientes')
         <li class="treeview">
           <a href="#">
             <i class="fa fa-files-o"></i>
-            <span>Layout Options</span>
-            <span class="pull-right-container">
-              <span class="label label-primary pull-right">4</span>
-            </span>
+            <span>Pacientes</span>            
           </a>
           <ul class="treeview-menu">
-            <li><a href="pages/layout/top-nav.html"><i class="fa fa-circle-o"></i> Top Navigation</a></li>
-            <li><a href="pages/layout/boxed.html"><i class="fa fa-circle-o"></i> Boxed</a></li>
-            <li><a href="pages/layout/fixed.html"><i class="fa fa-circle-o"></i> Fixed</a></li>
-            <li><a href="pages/layout/collapsed-sidebar.html"><i class="fa fa-circle-o"></i> Collapsed Sidebar</a></li>
+            @permission('Ver_Pacientes')<li><a href="index_patients" class="load-page"><i class="fa fa-circle-o"></i> Ver Pacientes</a></li>@endpermission
+            @permission('Registrar_Pacientes')<li><a href="form_patients" class="load-page"><i class="fa fa-circle-o"></i> Registro Pacientes</a></li>@endpermission
           </ul>
         </li>
+        @endrole
         <li>
           <a href="pages/widgets.html">
             <i class="fa fa-th"></i> <span>Widgets</span>
@@ -278,18 +277,19 @@
           </a>
         </li>
         <li class="treeview">
+          @role('super_admin')  
           <a href="#">
             <i class="fa fa-user"></i> <span>Administrador de Usuarios</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
-          </a>
-          @role('super_admin')         
+          </a>                 
           <ul class="treeview-menu">
             @permission('Roles')<li><a href="index_role" class="load-page"><i class="fa fa-circle-o"></i> Roles</a></li>@endpermission
             @permission('Permisos')<li><a href="index_permission" class="load-page"><i class="fa fa-circle-o"></i> Permisos</a></li>@endpermission
             @permission('Asi_roles')<li><a href="index_roles_roles" class="load-page"><i class="fa fa-circle-o"></i> Asignacion de Roles</a></li>@endpermission
-            @permission('Asig_permi')<li><a href="index_roles_permission" class="load-page"><i class="fa fa-circle-o"></i> Asignacion de Permisos</a></li>@endpermission            
+            @permission('Asig_permi')<li><a href="index_roles_permission" class="load-page"><i class="fa fa-circle-o"></i> Asignacion de Permisos</a></li>@endpermission  
+            @permission('Ver_medicos')<li><a href="index_medics" class="load-page"><i class="fa fa-circle-o"></i> Ver Usuarios</a></li>@endpermission
           </ul>
           @endrole
         </li>

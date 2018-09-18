@@ -29,7 +29,7 @@
             url:$(this).attr('action'),
             data:$(this).serialize(),            
             success:function(data){  
-                console.log(data)     
+                //console.log(data)     
                 $("#contentGlobal").html('')         
                 $("#contentGlobal").html(data)
                 swal(
@@ -517,4 +517,158 @@
             }
         })
     }) 
+    $(document).on('click','.add_medic',function(e){    
+        //alert('sadsad')  
+        e.preventDefault(e)
+        $.ajax({
+            type:'POST',
+            url:'/create_medics',
+            data:{_token:$('meta[name="csrf-token"]').attr('content')},
+            success:function(data){
+                $("#contentGlobal").html(data)                
+            },
+            error:function(data){
+                //console.log(data)
+            }
+        })
+    })
+    $(document).on('submit','.send_form_medics',function(e){
+        alert($(this).attr('action'))
+        frutas = []
+        $('.name_form').each(function(){
+            aux = $(this).attr("name")
+            frutas.push(aux)
+            
+        })
+        data1=$(this).serialize()
+        $.ajaxSetup({
+            header:$('meta[name="_token"]').attr('content')
+        })
+        e.preventDefault(e)
+        $.ajax({
+            type:$(this).attr('method'),
+            url:$(this).attr('action'),
+            data:$(this).serialize(),            
+            success:function(data){
+                $("#contentGlobal").html(data)
+                swal(
+                    'Felicidades',
+                    'El Usuario fue registrado Correctamente',
+                    'success'
+                  )
+                  $('.modal-backdrop').remove()               
+            },
+            error:function(data){
+                //alert(data)
+                var asd = Object.keys(data.responseJSON.errors)
+                for(i = 0; i<frutas.length; i++){
+                    if(asd.includes(frutas[i])) {
+                        $( "input[name='"+frutas[i]+"']" ).parent().find("small").text(data.responseJSON.errors[frutas[i]][0])
+                        //$( "input[name='"+frutas[i]+"']" ).parent().find("label").text(data.responseJSON.errors[frutas[i]][0])
+                        //$( "input[name='"+frutas[i]+"']" ).attr("placeholder", data.responseJSON.errors[frutas[i]][0])
+                        $( "textarea[name='"+frutas[i]+"']" ).parent().find("small").text(data.responseJSON.errors[frutas[i]][0])
+                    }else{
+                        $( "input[name='"+frutas[i]+"']" ).parent().find("small").text('')
+                        $( "textarea[name='"+frutas[i]+"']" ).parent().find("small").text('')
+                    }              
+                    
+                }            
+            }
+        })
+    })
+    $(document).on('click','.getVerUsuario',function(e){    
+        //alert($(this).attr('value'))  
+        e.preventDefault(e)
+        $.ajax({
+            type:'POST',
+            url:'/verUsuarios',
+            data:{id_medico:$(this).attr('value'),_token:$('meta[name="csrf-token"]').attr('content')},
+            success:function(data){
+                $("#contentGlobal").html(data)   
+                
+            },
+            error:function(data){
+                //console.log(data)
+            }
+        })
+    })
+    $(document).on('submit','.sendform',function(e){
+        $.ajaxSetup({
+            header:$('meta[name="_token"]').attr('content')
+        })
+        e.preventDefault(e)
+        $.ajax({
+            type:$(this).attr('method'),
+            url:$(this).attr('action'),
+            data:$(this).serialize(),
+            success:function(data){
+                $("#contentGlobal").html(data)
+                //console.log(data);
+                swal(
+                    'Felicidades',
+                    'Los datos de se actualizaron correctamente',
+                    'success'
+                  )
+            },
+            error:function(data){
+                swal(
+                    'Good job!',
+                    'You clicked the button!',
+                    'error'
+                  )
+            }
+        })
+    })
+    $(document).on('click','.get_BajaUser',function(e){   
+        e.preventDefault(e)
+        $.ajax({
+            type:'POST',
+            url:'/darBajaUser',
+            data:{id:$(this).attr('value'),_token:$('meta[name="csrf-token"]').attr('content')},
+            success:function(data){
+                $("#contentGlobal").html(data)   
+                
+            },
+            error:function(data){
+                //console.log(data)
+            }
+        })
+    })
+    
+    $(document).on('change','.charge_specialty',function(e){ 
+        ///alert($(this).find(":selected").val()) 
+        $('.add_specialty tbody tr').closest('tr').remove()        
+        e.preventDefault(e)
+        $.ajax({
+            type:'POST',
+            url:'/charge_specialty_b',
+            data:{id:$(this).find(":selected").val(),_token:$('meta[name="csrf-token"]').attr('content')},
+            success:function(data){
+                //console.log(data)
+                $('.delete_table').remove() 
+                var da = (data).length
+                for(var i = 0; i < da ; i++){
+                    //alert(i)
+                    x = i+1
+                    $('.add_specialty tbody').append('<tr><td>'+x+'</td><td>'+data[i].nombre_especialidad+'</td><td>'+data[i].descripcion_especialidad+'</td><td><input type="checkbox" name="schedul_add[]" value="'+data[i].id_especialidad+'"></td></tr>')
+                }
+                //$("#contentGlobal").html(data)   
+                
+            },
+            error:function(data){
+                //console.log(data)
+            }
+        })
+    })
+    $(document).on('click','.click_exec',function(e){
+        //alert('#.'+$(this).attr('value'))
+        var x = $(this).attr('value')
+        $('#'+x).removeAttr("disabled")
+    })
+    $(document).on('click','.click_cancel',function(e){
+        //alert('#.'+$(this).attr('value'))
+        var x = $(this).attr('value')
+        //$('#'+x).removeAttr("disabled")
+        $('#'+x).prop('disabled', true);
+    })
 })

@@ -55,4 +55,22 @@ Route::post('/load_dates_view_permisos', 'Permission@load_dates_view_permisos');
 Route::post('/load_dates_roles_permission', 'Permission@load_dates_roles_permission'); 
 Route::post('/add_permissions_roles', 'Permission@add_permissions_roles'); 
 
+/* Rutas para administrar usuarios  */
+Route::get('/index_medics', 'UsersController@index_medics'); 
+Route::post('/create_medics', 'UsersController@create_medics');
+Route::post('/add_user_medic', 'UsersController@add_user_medics');
+Route::post('/verUsuarios', 'UsersController@verUsuarios');
+Route::post('update1/{id}', 'UsersController@update1');
+Route::post('/darBajaUser', 'UsersController@baja_user');
+Route::post('/charge_specialty_b','UsersController@charge_specialty_b');
+
+
+/* Rutas para administrar Pacientes */
+Route::get('/index_patients','PatientsController@index_patients');
+Route::get('/form_patients','PatientsController@form_patients');
+
+
+
+
+
 

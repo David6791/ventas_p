@@ -26,7 +26,7 @@
                         <td>{{ $a++ }}</td>
                         <td>{{ $roles->name }}</td>
                         <td>{{ $roles->email }}</td>
-                        <td>{{ $roles->created_at }}</td>
+                        <td>{{ $roles->fecha_creacion }}</td>
                         <td>Activo</td>                            
                         <td> <button type="button" class="btn btn-info btn-xs view_roles_user" value="{{ $roles->id }}"> <span class="fa fa-eye"></span> Ver Roles </button> <button type="button" class="btn btn-success btn-xs view_roles_edit_user" value="{{ $roles->id }}"> <span class="fa fa-edit"></span> Editar roles </button></td>
                     </tr>
