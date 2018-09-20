@@ -1,6 +1,7 @@
 <section class="content">
     <div class="row">
-        <form class="sendform" action="{{url('store_patients')}}" method="post" autocomplete="off">
+        <form class="sendform_patients" action="{{url('store_patients')}}" method="post" autocomplete="off">
+        <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
             <div class="col-md-5">
                 <div class="box box-primary">
                     <div class="box-header">
@@ -10,20 +11,22 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">Nro. Documento </label>
+                                    <label for="exampleInputEmail1">Nro. Documento </label> <br>
                                     <small class="text-red" id=""></small>
                                     <input name="ci" type="text" class="form-control col-md-7 col-xs-12 name_form" id="inputEmail3" placeholder="">
                                 </div>
                             </div>
+                            <div class="col-md-1"></div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1" class="control-label">Genero</label> <br>
+                                    <small class="text-red" id=""></small>
                                     <div id="" data-toggle="buttons" class="btn-group">
                                         <label class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                                            <input type="radio" name="genero" value="1" data-parsley-multiple="genero"> Masculino &nbsp;
+                                            <input type="radio" name="genero" value="Masculino" data-parsley-multiple="genero" class="name_form"> Masculino &nbsp;
                                         </label>
                                         <label class="btn btn-primary" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                                            <input type="radio" name="genero" value="2" data-parsley-multiple="genero"> Femenino
+                                            <input type="radio" name="genero" value="Femenino" data-parsley-multiple="genero" class="name_form"> Femenino
                                         </label>
                                     </div>
                                 </div>
@@ -93,13 +96,14 @@
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Fecha de Nacimiento</label> <br>
                                     <small class="text-red" id=""></small>
-                                    <input id="datepicker" type="text" class="form-control col-md-7 col-xs-12 name_form" class="fecha_nacimiento">
+                                    <input id="datepicker" type="text" class="form-control col-md-7 col-xs-12 name_form" name="fecha_nacimiento">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Nacionalidad</label>
-                                    <select class="select2_group form-control" name="nacionalidad">
+                                    <small class="text-red" id=""></small>
+                                    <select class="select2_group form-control name_form" name="nacionalidad">
                                         <option value="1">Boliviano</option>
                                         <option value="2">Argentino</option>
                                         <option value="3">Chileno</option>
@@ -113,14 +117,14 @@
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Ciudad</label> <br>
                                     <small class="text-red" id=""></small>
-                                    <input type="text" class="form-control col-md-7 col-xs-12 name_form" name="lugar de nacimiento"> 
+                                    <input type="text" class="form-control col-md-7 col-xs-12 name_form" name="ciudad"> 
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Provincia</label> <br>
                                     <small class="text-red" id=""></small>
-                                    <input type="text" class="form-control col-md-7 col-xs-12 name_form" name="lugar de nacimiento"> 
+                                    <input type="text" class="form-control col-md-7 col-xs-12 name_form" name="provincia"> 
                                 </div>
                             </div>
                         </div> <br>
@@ -129,7 +133,7 @@
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Localidad</label> <br>
                                     <small class="text-red" id=""></small>
-                                    <input type="text" class="form-control col-md-7 col-xs-12 name_form" name="lugar de nacimiento"> 
+                                    <input type="text" class="form-control col-md-7 col-xs-12 name_form" name="localidad"> 
                                 </div>
                             </div>
                         </div>
@@ -196,7 +200,7 @@
                     </div>
                 </div>
             </div>
-            <center><button class="btn btn-success btn-ms"> <span class=""></span> Guardar Datos Paciente</button></center>
+            <center><button type="submit" class="btn btn-success btn-ms"> <span class=""></span> Guardar Datos Paciente</button></center>
         </form>        
     </div>
 </section>

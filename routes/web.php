@@ -68,7 +68,10 @@ Route::post('/charge_specialty_b','UsersController@charge_specialty_b');
 /* Rutas para administrar Pacientes */
 Route::get('/index_patients','PatientsController@index_patients');
 Route::get('/form_patients','PatientsController@form_patients');
-
+Route::post('/store_patients', 'PatientsController@store_patient');
+Route::post('/load_dates_patient_edit', 'PatientsController@load_dates_patient_edit');
+Route::post('/load_dates_medic_edit_patient', 'PatientsController@load_dates_medic_edit_patient');
+Route::post('/edit_date_medic_patient', 'PatientsController@edit_date_medic_patient');
 
 
 
