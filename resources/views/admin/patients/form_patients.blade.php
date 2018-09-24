@@ -17,7 +17,7 @@
                                 </div>
                             </div>
                             <div class="col-md-1"></div>
-                            <div class="col-md-4">
+                            <div class="col-md-7">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1" class="control-label">Genero</label> <br>
                                     <small class="text-red" id=""></small>

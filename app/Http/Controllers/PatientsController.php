@@ -94,19 +94,20 @@ class PatientsController extends Controller
     public function load_dates_patient_edit(Request $request){
         
         $query = "SELECT * FROM pacientes p
-                        LEFT JOIN pacientes_patologias  pp
-                        ON p.id_paciente = pp.id_paciente
-                        LEFT JOIN patologias pt
-                        ON pt.id_patologia = pp.id_patologia
                     WHERE p.id_paciente = :id";
         $rows=\DB::select(\DB::raw($query),array('id'=>$request->id_patient));
+        $query2 = "SELECT * FROM pacientes_patologias  pp                        
+                        LEFT JOIN patologias pt
+                        ON pt.id_patologia = pp.id_patologia
+                    WHERE pp.id_paciente = :id AND pp.estado_pac_pat = 'activo'";
+        $rows2=\DB::select(\DB::raw($query2),array('id'=>$request->id_patient));
         $query1 = "SELECT * FROM patients_dates_medic pdm
                         INNER JOIN datos_medicos dm
                         ON pdm.id_date_medic = dm.id_dato_medico
                     WHERE id_patient = :id";
         $rows1=\DB::select(\DB::raw($query1),array('id'=>$request->id_patient));
-        //return $rows1;
-        return view('admin.patients.view_patients_details')->with('dates',$rows)->with('dates_medic',$rows1);
+        //return $rows;
+        return view('admin.patients.view_patients_details')->with('pat',$rows2)->with('dates',$rows)->with('dates_medic',$rows1);
     }     
     public function load_dates_medic_edit_patient(Request $request){
         $query = "SELECT * FROM patients_dates_medic pmd 
@@ -128,5 +129,45 @@ class PatientsController extends Controller
                     WHERE pmd.id_patent_date_medic = :id";
             $rows=\DB::select(\DB::raw($query),array('id'=>$request->id_date_medic));
             return $rows;
+    }
+    public function load_dates_edit_pat_patient(Request $request){
+        //return $request->all();
+        $query = "SELECT * FROM pacientes_patologias pp
+                        INNER JOIN patologias p
+                    ON pp.id_patologia = p.id_patologia        
+                        WHERE pp.id_paciente = :id and pp.estado_pac_pat = 'activo'";
+        $rows=\DB::select(\DB::raw($query),array('id'=>$request->id_patient));
+        $query1 = "SELECT * FROM patologias p WHERE p.estado_patologia = 'activo' and p.id_patologia NOT IN(
+                        SELECT id_patologia FROM pacientes_patologias WHERE id_paciente = :id  AND estado_pac_pat = 'activo'
+                    )";
+        $rows1=\DB::select(\DB::raw($query1),array('id'=>$request->id_patient));
+        //return $rows1;
+        //$id = $request->$request->id_patient;
+        return $var=['datos'=>$rows, 'datos1'=>$rows1, 'id'=>$request->id_patient];
+        //return $var=['datos'=>$rows, 'datos1'=>$rows1];
+        //return view('admin.patients.index_patients')->with('list_pat_asig',$rows);
+    }
+    public function edit_pat_patient(Request $request){
+        //return $request->all();
+        if(! empty($request->pat_add)){
+            foreach($request->pat_add as $esp){
+                return $esp;
+                if($esp!=0)
+                {
+                    $query = "select public.agregar_patologie(:id, :id_pat)";
+                    $rows = \DB::select(\DB::raw($query),array('id'=>$request->id_patient,'id_pat'=>$esp));        
+                }
+            }
+        }
+        if(! empty($request->pat_delete)){
+            foreach($request->pat_delete as $esp){
+                //return $esp;
+                if($esp!=0)
+                {
+                    $query = "select public.eliminar_patologie(:id, :id_pat)";
+                    $rows = \DB::select(\DB::raw($query),array('id'=>$request->id_patient,'id_pat'=>$esp));        
+                }
+            }
+        }    
     }
 }

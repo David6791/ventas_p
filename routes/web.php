@@ -72,6 +72,9 @@ Route::post('/store_patients', 'PatientsController@store_patient');
 Route::post('/load_dates_patient_edit', 'PatientsController@load_dates_patient_edit');
 Route::post('/load_dates_medic_edit_patient', 'PatientsController@load_dates_medic_edit_patient');
 Route::post('/edit_date_medic_patient', 'PatientsController@edit_date_medic_patient');
+Route::post('/load_dates_edit_pat_patient', 'PatientsController@load_dates_edit_pat_patient');
+Route::post('/edit_pat_patient', 'PatientsController@edit_pat_patient');
+
 
 
 

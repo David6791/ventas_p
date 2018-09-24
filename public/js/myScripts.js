@@ -808,5 +808,68 @@
                 } 
             }
         })
-    })
+    })    
+    $(document).on('click','.edit_pat_patients',function(e){  
+        //alert('asdsadsad')
+        $('#modal_edit_pat_patients').modal({
+            show: 'true',
+            backdrop: 'static',
+            keyboard: false,
+        })
+        e.preventDefault(e)
+        $.ajax({
+            type:'POST',
+            url:'/load_dates_edit_pat_patient',
+            data:{id_patient:$(this).attr('value'),_token:$('meta[name="csrf-token"]').attr('content')},
+            success:function(data){
+                console.log(data)
+                //$("#contentGlobal").html(data) 
+                $('#id_patient').val(data.id) 
+                $('.delete_add_table tr').remove()  
+                var da = (data.datos).length
+                for(var i = 0; i < da ; i++){
+                    //alert(i)
+                    x = i+1
+                    $('.delete_pat tbody').append('<tr><td>'+x+'</td><td>'+data.datos[i].nombre_patologia+'</td><td><input type="checkbox" name="pat_delete[]" value="'+data.datos[i].id_patologia+'"></td></tr>')
+                }
+                $('.delete_delete_table tr').remove()  
+                var da = (data.datos1).length
+                //alert(da)
+                for(var i = 0; i < da ; i++){
+                    //alert(i)
+                    x = i+1
+                    $('.add_pat tbody').append('<tr><td>'+x+'</td><td>'+data.datos1[i].nombre_patologia+'</td><td><input type="checkbox" name="pat_add[]" value="'+data.datos1[i].id_patologia+'"></td></tr>')
+                }
+            },
+            error:function(data){
+                swal(
+                    'Error!',
+                    'El Paciente aun no esta registrado',
+                    'error'
+                  )
+            }
+        })
+    })  
+    $(document).on('submit','.sendform_edit_pat_patient',function(e){        
+        $.ajaxSetup({
+            header:$('meta[name="_token"]').attr('content')
+        })
+        e.preventDefault(e)
+        $.ajax({
+            type:$(this).attr('method'),
+            url:$(this).attr('action'),
+            data:$(this).serialize(),
+            success:function(data){                           
+                swal(
+                    'Felicidades',
+                    'El paciente se Registro correctamente',
+                    'success'
+                  )
+                  $('#modal-edit-dates_medic').modal('toggle')
+            },
+            error:function(data){
+                
+            }
+        })
+    })          
 })
