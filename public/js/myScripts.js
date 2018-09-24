@@ -859,17 +859,533 @@
             type:$(this).attr('method'),
             url:$(this).attr('action'),
             data:$(this).serialize(),
-            success:function(data){                           
+            success:function(data){  
+                //console.log(data)                         
                 swal(
                     'Felicidades',
                     'El paciente se Registro correctamente',
                     'success'
-                  )
-                  $('#modal-edit-dates_medic').modal('toggle')
+                  )                  
+                  $('#modal_edit_pat_patients').modal('toggle')
+                $('.charge_modify tr').remove()
+                var da = (data).length
+                //alert(da)
+                for(var i = 0; i < da ; i++){
+                //alert(i)
+                x = i+1
+                $('.charge_modify_table tbody').append('<tr><td>'+x+'</td><td>'+data[i].nombre_patologia+'</td><td>No hay descripcion</td><td><button class="btn btn-danger btn-xs"> <span class="glyphicon glyphicon-trash"></span> Eliminar</button></td></tr>')
+                }
             },
             error:function(data){
                 
             }
         })
-    })          
+    }) 
+    $(document).on('click','.get_BajaSchedule',function(e){   
+        e.preventDefault(e)
+        $.ajax({
+            type:'POST',
+            url:'/darBajaSchedules',
+            data:{id:$(this).attr('value'),_token:$('meta[name="csrf-token"]').attr('content')},
+            success:function(data){
+                $("#contentGlobal").html(data)   
+                
+            },
+            error:function(data){
+                //console.log(data)
+            }
+        })
+    })   
+    $(document).on('click','.get_EditSchedule',function(e){          
+        e.preventDefault(e)
+        $.ajax({
+            type:'POST',
+            url:'/edit_Schedules',
+            data:{id_Schedules:$(this).attr('value'),_token:$('meta[name="csrf-token"]').attr('content')},
+            success:function(data){
+                $('#exampleModal1').modal({
+                    show: 'true',
+                    backdrop: 'static',
+                    keyboard: false,
+                })  
+                $('#name_schedules').val(data[0].name_schedules)
+                $('#hour_start').val(data[0].schedules_start)
+                $('#hour_end').val(data[0].schedules_end)
+                $('#hour_description').val(data[0].description)
+                $('#id_schedule').val(data[0].id_schedule)                
+            },
+            error:function(data){
+                //console.log(data)
+            }
+        })        
+    })  
+    $(document).on('submit','.sendform_schedules',function(e){
+        frutas = []
+        $('.name_form').each(function(){
+            aux = $(this).attr("name")
+            frutas.push(aux)
+            
+        })
+        //console.log(frutas)
+        //$('#close_save_modal').trigger('click') 
+        $.ajaxSetup({
+            header:$('meta[name="_token"]').attr('content')
+        })
+        e.preventDefault(e)
+        $.ajax({
+            type:$(this).attr('method'),
+            url:$(this).attr('action'),
+            data:$(this).serialize(),
+            success:function(data){ 
+            
+                $("#contentGlobal").html(data)          
+                swal(
+                    'Felicidades',
+                    'Los datos de se guardaron correctamente',
+                    'success'
+                  ) 
+                  $('.modal-backdrop').remove()            
+            },
+            error:function(data){ 
+                //console.log(data)                
+                  var asd = Object.keys(data.responseJSON.errors)
+                  for(i = 0; i<frutas.length; i++){
+                      if(asd.includes(frutas[i])) {
+                          $( "input[name='"+frutas[i]+"']" ).parent().find("small").text(data.responseJSON.errors[frutas[i]][0])
+                          //$( "input[name='"+frutas[i]+"']" ).parent().find("label").text(data.responseJSON.errors[frutas[i]][0])
+                          //$( "input[name='"+frutas[i]+"']" ).attr("placeholder", data.responseJSON.errors[frutas[i]][0])
+                          $( "textarea[name='"+frutas[i]+"']" ).parent().find("small").text(data.responseJSON.errors[frutas[i]][0])
+                      }else{
+                          $( "input[name='"+frutas[i]+"']" ).parent().find("small").text('')
+                          $( "textarea[name='"+frutas[i]+"']" ).parent().find("small").text('')
+                      }              
+                      
+                  }
+            }
+        })
+    })  
+    $(document).on('submit','.sendform_schedules1',function(e){
+        $('#exampleModal1').modal('toggle')
+        $.ajaxSetup({
+            header:$('meta[name="_token"]').attr('content')
+        })
+        e.preventDefault(e)
+        $.ajax({
+            type:$(this).attr('method'),
+            url:$(this).attr('action'),
+            data:$(this).serialize(),
+            success:function(data){  
+                $("#contentGlobal").html(data)          
+                swal(
+                    'Felicidades',
+                    'Los datos de se guardaron correctamente',
+                    'success'
+                  )
+            },
+            error:function(data){
+                swal(
+                    'Good job!',
+                    'You clicked the button!',
+                    'error'
+                  )
+            }
+        })
+    })
+    $(document).on('click','.viewAssignments',function(e){
+        $('.tabla_llenar tbody tr').closest('tr').remove() 
+        e.preventDefault(e)
+        $.ajax({
+            type:'POST',
+            url:'/view_Assignments',
+            data:{id_user:$(this).attr('value'),_token:$('meta[name="csrf-token"]').attr('content')},
+            success:function(data){
+                $('#modalViewAssignments').modal({
+                    show: 'true',
+                    backdrop: 'static',
+                    keyboard: false,
+                })  
+                $('#view_name').text(data[0].name +" "+ data[0].apellidos)
+                $('#view_tipo').text(data[0].nombre_tipo)
+                var da = (data).length
+                //console.log(da)
+                for(var i = 0; i < da ; i++)
+                {
+                    $('.tabla_llenar tbody').append('<tr style="text-align:center"><td>'+data[i].name_schedules+'</td><td>'+data[i].schedules_start+'</td><td>'+data[i].schedules_end+'</td><td>'+data[i].state+'</td></tr>')
+                }
+                
+            },
+            error:function(data){
+                //console.log(data)
+            }
+        })        
+    })  
+    $(document).on('click','.editAssignments',function(e){
+        //alert('asdasdsss')
+        $('.table_add tbody tr').closest('tr').remove() 
+        $('.table_remove tbody tr').closest('tr').remove() 
+        e.preventDefault(e)
+        $.ajax({
+            type:'POST',
+            url:'/edit_Assignments',
+            data:{id_user:$(this).attr('value'),_token:$('meta[name="csrf-token"]').attr('content')},
+            success:function(data){
+                $('#modalEditAssignments').modal({
+                    show: 'true',
+                    backdrop: 'static',
+                    keyboard: false,
+                })  
+                $('#id_user1').val(data.us[0].id)
+                $('#view_name1').text(data.us[0].name +" "+ data.us[0].apellidos)
+                $('#view_tipo1').text(data.us[0].nombre_tipo)
+                var da = (data.datos).length
+                var da1 = (data.datos1).length
+                var x = 0
+                console.log(da)
+                for(var i = 0; i < da ; i++)
+                {
+                    x = i+1
+                    $('.table_add tbody').append('<tr style="text-align:center"><td>'+x+'</td><td>'+data.datos[i].name_schedules+'</td><td><input type="checkbox" name="schedul_add[]" value="'+data.datos[i].id_schedule+'"></td></tr>')
+                }
+                for(var i = 0; i < da1 ; i++)
+                {
+                    x = i +1
+                    $('.table_remove tbody').append('<tr style="text-align:center"><td>'+x+'</td><td>'+data.datos1[i].name_schedules+'</td><td><input type="checkbox" name="schedul_remove[]" value="'+data.datos1[i].id_schedule+'"></td></tr>')
+                }
+                
+            },
+            error:function(data){
+                //console.log(data)
+            }
+        })        
+    })
+    $(document).on('submit','.send_form_assignments_edit',function(e){
+        $('#modalEditAssignments').modal('toggle')
+        $.ajaxSetup({
+            header:$('meta[name="_token"]').attr('content')
+        })
+        e.preventDefault(e)
+        $.ajax({
+            type:$(this).attr('method'),
+            url:$(this).attr('action'),
+            data:$(this).serialize(),
+            success:function(data){  
+                $("#contentGlobal").html(data)          
+                swal(
+                    'Felicidades',
+                    'Los datos de se guardaron correctamente',
+                    'success'
+                  )
+            },
+            error:function(data){
+                swal(
+                    'Good job!',
+                    'You clicked the button!',
+                    'error'
+                  )
+            }
+        })
+    })
+    $(document).on('submit','.send_form_assignments',function(e){
+        $('#exampleModal').modal('toggle')
+        $.ajaxSetup({
+            header:$('meta[name="_token"]').attr('content')
+        })
+        e.preventDefault(e)
+        $.ajax({
+            type:$(this).attr('method'),
+            url:$(this).attr('action'),
+            data:$(this).serialize(),
+            success:function(data){  
+                $("#contentGlobal").html(data)          
+                swal(
+                    'Felicidades',
+                    'Los datos de se guardaron correctamente',
+                    'success'
+                  )
+            },
+            error:function(data){
+                swal(
+                    'Good job!',
+                    'You clicked the button!',
+                    'error'
+                  )
+            }
+        })
+    })
+    $(document).on('click','.get_BajaSpecialty',function(e){   
+        e.preventDefault(e)
+        $.ajax({
+            type:'POST',
+            url:'/darBajaSpecialtys',
+            data:{id:$(this).attr('value'),_token:$('meta[name="csrf-token"]').attr('content')},
+            success:function(data){
+                $("#contentGlobal").html(data)   
+                
+            },
+            error:function(data){
+                //console.log(data)
+            }
+        })
+    })//
+    $(document).on('click','.editSpecialties',function(e){         
+        e.preventDefault(e)
+        $.ajax({
+            type:'POST',
+            url:'/editSpecialties',
+            data:{id_specialties:$(this).attr('value'),_token:$('meta[name="csrf-token"]').attr('content')},
+            success:function(data){
+                $('#editSpecialtiesModal').modal({
+                    show: 'true',
+                    backdrop: 'static',
+                    keyboard: false,
+                })  
+                $('#name_specialties').val(data[0].nombre_especialidad)
+                $('#description').val(data[0].descripcion_especialidad)
+                $('#id_specialties').val(data[0].id_especialidad)
+            },
+            error:function(data){
+                //console.log(data)
+            }
+        })        
+    })
+    $(document).on('submit','.sendform_save_edit_Specialties',function(e){
+        $('#close_save_modal').trigger('click') 
+        $.ajaxSetup({
+            header:$('meta[name="_token"]').attr('content')
+        })
+        e.preventDefault(e)
+        $.ajax({
+            type:$(this).attr('method'),
+            url:$(this).attr('action'),
+            data:$(this).serialize(),
+            success:function(data){  
+                $("#contentGlobal").html(data)          
+                swal(
+                    'Felicidades',
+                    'Los datos de se guardaron correctamente',
+                    'success'
+                  )
+            },
+            error:function(data){
+                swal(
+                    'Good job!',
+                    'You clicked the button!',
+                    'error'
+                  )
+            }
+        })
+    })
+    $(document).on('submit','.sendform1',function(e){
+        $.ajaxSetup({
+            header:$('meta[name="_token"]').attr('content')
+        })
+        e.preventDefault(e)
+        $.ajax({
+            type:$(this).attr('method'),
+            url:$(this).attr('action'),
+            data:$(this).serialize(),
+            success:function(data){
+                $("#contentGlobal").html(data)
+                //console.log(data);
+                swal(
+                    'Felicidades',
+                    'Los datos de se actualizaron correctamente',
+                    'success'
+                  )
+                  $('.modal-backdrop').remove()
+            },
+            error:function(data){
+                swal(
+                    'Good job!',
+                    'You clicked the button!',
+                    'error'
+                  )
+            }
+        })
+    })
+    $(document).on('click','.get_BajaPatologie',function(e){   
+        e.preventDefault(e)
+        $.ajax({
+            type:'POST',
+            url:'/darBajaPatologie',
+            data:{id:$(this).attr('value'),_token:$('meta[name="csrf-token"]').attr('content')},
+            success:function(data){
+                $("#contentGlobal").html(data)   
+                
+            },
+            error:function(data){
+                //console.log(data)
+            }
+        })
+    })
+    $(document).on('click','.edit_phatologies_function',function(e){
+        //alert($(this).attr('value'))
+        e.preventDefault(e)
+        $.ajax({
+            type:'POST',
+            url:'/edit_patologies_charge',
+            data:$(this).serialize(),
+            data:{id_patologie:$(this).attr('value'),_token:$('meta[name="csrf-token"]').attr('content')},
+            success:function(data){
+                $('#edit_phatologies').modal({
+                    show: 'true',
+                    backdrop: 'static',
+                    keyboard: false,
+                })  
+                $('#id_pathologie').val(data[0].id_patologia)
+                $('#name_pat').val(data[0].nombre_patologia)
+                $('#phatologie_description').val(data[0].descripcion_patologia)
+                //$("#contentGlobal").html(data)                
+            },error:function(data){
+            }
+
+        })
+    })
+    $(document).on('submit','.sendform_phatologies_edit',function(e){
+        $('#edit_phatologies').modal('toggle')
+        $.ajaxSetup({
+            header:$('meta[name="_token"]').attr('content')
+        })
+        e.preventDefault(e)
+        $.ajax({
+            type:$(this).attr('method'),
+            url:$(this).attr('action'),
+            data:$(this).serialize(),
+            success:function(data){
+                $("#contentGlobal").html(data)
+                swal(
+                    'Felicidades',
+                    'Se registro correctamente el Nuevo Dato Medico',
+                    'success'
+                  )
+            },
+            error:function(data){
+                swal(
+                    'Good job!',
+                    'You clicked the button!',
+                    'error'
+                  )
+            }
+        })
+    })
+    $(document).on('submit','.sendform_phatologies',function(e){
+        $('#create_phatologies').modal('toggle')
+        $.ajaxSetup({
+            header:$('meta[name="_token"]').attr('content')
+        })
+        e.preventDefault(e)
+        $.ajax({
+            type:$(this).attr('method'),
+            url:$(this).attr('action'),
+            data:$(this).serialize(),
+            success:function(data){  
+                $("#contentGlobal").html(data)          
+                swal(
+                    'Felicidades',
+                    'Se registro correctamente la Nueva Patologia',
+                    'success'
+                  )
+            },
+            error:function(data){
+                swal(
+                    'Good job!',
+                    'You clicked the button!',
+                    'error'
+                  )
+            }
+        })
+    })
+    $(document).on('click','.get_BajaDatemedic',function(e){   
+        e.preventDefault(e)
+        $.ajax({
+            type:'POST',
+            url:'/get_BajaDatemedics',
+            data:{id:$(this).attr('value'),_token:$('meta[name="csrf-token"]').attr('content')},
+            success:function(data){
+                $("#contentGlobal").html(data)   
+                
+            },
+            error:function(data){
+                //console.log(data)
+            }
+        })
+    })
+    $(document).on('click','.edit_medical_dates',function(e){
+        //alert($(this).attr('value'))
+        e.preventDefault(e)
+        $.ajax({
+            type:'POST',
+            url:'/edit_medical_charge',
+            data:$(this).serialize(),
+            data:{id_date_medic:$(this).attr('value'),_token:$('meta[name="csrf-token"]').attr('content')},
+            success:function(data){
+                $('#edit_medical_dates').modal({
+                    show: 'true',
+                    backdrop: 'static',
+                    keyboard: false,
+                })  
+                $('#id_date_medic').val(data[0].id_dato_medico)
+                $('#name_medical_date').val(data[0].nombre_dato_medico)
+                $('#mesage_answer_yes').val(data[0].pregunta_dato_medico)
+                $('#question_view').val(data[0].pregunta_mostrar)
+                //$("#contentGlobal").html(data)                
+            },error:function(data){
+            }
+
+        })
+    })
+    $(document).on('submit','.sendform_medicla_dates_edit',function(e){
+        $('#edit_medical_dates').modal('toggle')
+        $.ajaxSetup({
+            header:$('meta[name="_token"]').attr('content')
+        })
+        e.preventDefault(e)
+        $.ajax({
+            type:$(this).attr('method'),
+            url:$(this).attr('action'),
+            data:$(this).serialize(),
+            success:function(data){
+                $("#contentGlobal").html(data)
+                swal(
+                    'Felicidades',
+                    'Se registro correctamente el Nuevo Dato Medico',
+                    'success'
+                  )
+            },
+            error:function(data){
+                swal(
+                    'Good job!',
+                    'You clicked the button!',
+                    'error'
+                  )
+            }
+        })
+    })
+    $(document).on('submit','.sendform_medicla_dates',function(e){
+        $('#create_medical_dates').modal('toggle')
+        $.ajaxSetup({
+            header:$('meta[name="_token"]').attr('content')
+        })
+        e.preventDefault(e)
+        $.ajax({
+            type:$(this).attr('method'),
+            url:$(this).attr('action'),
+            data:$(this).serialize(),
+            success:function(data){  
+                $("#contentGlobal").html(data)          
+                swal(
+                    'Felicidades',
+                    'Se registro correctamente el Nuevo Dato Medico',
+                    'success'
+                  )
+            },
+            error:function(data){
+                swal(
+                    'Good job!',
+                    'You clicked the button!',
+                    'error'
+                  )
+            }
+        })
+    })
 })

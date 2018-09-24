@@ -77,6 +77,42 @@ Route::post('/edit_pat_patient', 'PatientsController@edit_pat_patient');
 
 
 
+Route::get('/index_schedules', 'SchedulesController@index_schedules');
+Route::post('/darBajaSchedules', 'SchedulesController@darBajaSchedule');
+Route::post('/edit_Schedules', 'SchedulesController@edit_Schedule');
+Route::post('/create_schedules','SchedulesController@create_Schedules');
+Route::post('/save_schedules', 'SchedulesController@save_Schedule');
 
 
+/* Rutas de Asignacion de Horarios a los Usuarios */
+Route::get('/index_assignment','AssignmentsController@index_Assignments');
+Route::post('/create_assignments','AssignmentsController@create_Assignments');
+Route::post('/edit_Assignments','AssignmentsController@edit_Assignment');
+Route::post('/view_Assignments','AssignmentsController@view_Assignment');
+Route::post('/save_edit_assignments','AssignmentsController@save_edit_assignment');
 
+/* Rutas para Administrar datos del sistema */
+Route::get('/index_pathologies','ManageDatesController@index_pathologie');
+Route::post('/create_phatologies','ManageDatesController@create_phatologies');
+Route::post('/edit_patologies_charge','ManageDatesController@edit_patologies_charge');
+
+Route::post('/edit_phatologies','ManageDatesController@edit_phatologies');
+Route::post('/darBajaPatologie','ManageDatesController@darBajaPatologie');
+
+
+Route::get('/index_medical_dates','ManageDatesController@index_medical_date');
+Route::post('/create_medical_dates','ManageDatesController@create_medical_date');
+Route::post('/edit_medical_charge','ManageDatesController@edit_medical_charge');
+
+Route::post('/edit_medical_dates','ManageDatesController@edit_medical_dates');
+
+/* rutas para especialidades */
+Route::get('/index_especialidades', 'SpecialtiesController@index_especialidad');
+Route::post('/crear_especialidad', 'SpecialtiesController@crear_especialidad');
+Route::post('/darBajaSpecialtys', 'SpecialtiesController@darBajaSpecialty');
+Route::post('/editSpecialties', 'SpecialtiesController@editSpecialtie');
+Route::post('/saveSpecialties', 'SpecialtiesController@saveSpecialtie');
+
+Route::get('/index_data_medical_appointments','ManageDatesController@index_data_medical_appointment');
+Route::get('/index_register_data_medical_appointments','ManageDatesController@index_register_data_medical_appointment');
+Route::post('/get_BajaDatemedics','ManageDatesController@get_BajaDatemedics');

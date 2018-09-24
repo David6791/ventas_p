@@ -151,7 +151,7 @@ class PatientsController extends Controller
         //return $request->all();
         if(! empty($request->pat_add)){
             foreach($request->pat_add as $esp){
-                return $esp;
+                //return $esp;
                 if($esp!=0)
                 {
                     $query = "select public.agregar_patologie(:id, :id_pat)";
@@ -164,10 +164,16 @@ class PatientsController extends Controller
                 //return $esp;
                 if($esp!=0)
                 {
-                    $query = "select public.eliminar_patologie(:id, :id_pat)";
+                    $query = "select public.eliminar_patologie_patient(:id, :id_pat)";
                     $rows = \DB::select(\DB::raw($query),array('id'=>$request->id_patient,'id_pat'=>$esp));        
                 }
             }
-        }    
+        }  
+        $query = "SELECT * FROM pacientes_patologias pp
+                        INNER JOIN patologias p
+                    ON pp.id_patologia = p.id_patologia        
+                        WHERE pp.id_paciente = :id and pp.estado_pac_pat = 'activo'";
+        $rows=\DB::select(\DB::raw($query),array('id'=>$request->id_patient)); 
+        return $rows; 
     }
 }

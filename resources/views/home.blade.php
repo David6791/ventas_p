@@ -38,6 +38,8 @@
 
   <link rel="stylesheet" href="{{ asset('css/all.css') }}">
 
+    <link rel="stylesheet" href="{{ asset('css/bootstrap-timepicker.min.css') }}">
+
   <link rel="stylesheet" href="{{ asset('css/myStyles.css') }}">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -184,54 +186,48 @@
         <li class="treeview">
           <a href="#">
             <i class="fa fa-files-o"></i>
-            <span>Pacientes</span>            
+            <span>Pacientes</span> 
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>           
           </a>
           <ul class="treeview-menu">
             @permission('Ver_Pacientes')<li><a href="index_patients" class="load-page"><i class="fa fa-circle-o"></i> Ver Pacientes</a></li>@endpermission
             @permission('Registrar_Pacientes')<li><a href="form_patients" class="load-page"><i class="fa fa-circle-o"></i> Registro Pacientes</a></li>@endpermission
           </ul>
         </li>
-        @endrole
-        <li>
-          <a href="pages/widgets.html">
-            <i class="fa fa-th"></i> <span>Widgets</span>
-            <span class="pull-right-container">
-              <small class="label pull-right bg-green">new</small>
-            </span>
-          </a>
-        </li>
+        @endrole 
+        @role('admin_horarios')       
         <li class="treeview">
           <a href="#">
             <i class="fa fa-pie-chart"></i>
-            <span>Charts</span>
+            <span>Administrar Horarios</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="pages/charts/chartjs.html"><i class="fa fa-circle-o"></i> ChartJS</a></li>
-            <li><a href="pages/charts/morris.html"><i class="fa fa-circle-o"></i> Morris</a></li>
-            <li><a href="pages/charts/flot.html"><i class="fa fa-circle-o"></i> Flot</a></li>
-            <li><a href="pages/charts/inline.html"><i class="fa fa-circle-o"></i> Inline charts</a></li>
+            @permission('ver_horarios')<li><a href="index_schedules" class="load-page"><i class="fa fa-circle-o"></i> Ver Horarios</a></li>@endpermission
+            @permission('asignacion_horarios')<li><a href="index_assignment" class="load-page"><i class="fa fa-circle-o"></i> Asignacion de Horarios</a></li>@endpermission
           </ul>
         </li>
+        @endrole
+        @role('admin_datos')
         <li class="treeview">
           <a href="#">
             <i class="fa fa-laptop"></i>
-            <span>UI Elements</span>
+            <span>Datos del Sistema</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="pages/UI/general.html"><i class="fa fa-circle-o"></i> General</a></li>
-            <li><a href="pages/UI/icons.html"><i class="fa fa-circle-o"></i> Icons</a></li>
-            <li><a href="pages/UI/buttons.html"><i class="fa fa-circle-o"></i> Buttons</a></li>
-            <li><a href="pages/UI/sliders.html"><i class="fa fa-circle-o"></i> Sliders</a></li>
-            <li><a href="pages/UI/timeline.html"><i class="fa fa-circle-o"></i> Timeline</a></li>
-            <li><a href="pages/UI/modals.html"><i class="fa fa-circle-o"></i> Modals</a></li>
+            @permission('ver_especialidades')<li><a href="index_especialidades" class="load-page"><i class="fa fa-circle-o"></i> Especialidades</a></li>@endpermission
+            @permission('ver_patologias')<li><a href="index_pathologies" class="load-page"><i class="fa fa-circle-o"></i> Patologias</a></li>@endpermission
+            @permission('ver_datos_medicos')<li><a href="index_medical_dates" class="load-page"><i class="fa fa-circle-o"></i> Datos Medicos</a></li>@endpermission
           </ul>
         </li>
+        @endrole
         <li class="treeview">
           <a href="#">
             <i class="fa fa-edit"></i> <span>Forms</span>
@@ -429,6 +425,8 @@
 <!--script src="{{ asset('js/sweetalert2.min.js') }}"></script-->
 <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('js/dataTables.bootstrap.min.js') }}"></script>
+
+<script src="{{ asset('js/bootstrap-timepicker.min.js') }}"></script>
 
 <script src="{{ asset('js/icheck.min.js') }}"></script>
 <script src="{{ asset('js/myScripts.js') }}"></script>

@@ -88,14 +88,14 @@
                     <h3 class="box-title">Patologias del Paciente </h3>
                 </div>
                 <div class="box-body">
-                    <table id="example2" class="table table-bordered table-hover">
+                    <table id="example2" class="table table-bordered table-hover charge_modify_table">
                         <thead>
                             <th>Nro.</th>
                             <th>Nombre Patologia</th>
                             <th>Descripcion</th>
                             <th>Accion</th>
                         </thead>
-                        <tbody>
+                        <tbody class="charge_modify">
                             <?php $a = 1 ?> 
                             @forelse($pat as $d)
                             <tr>
@@ -110,14 +110,17 @@
                                 </tr>
                                 </tr>
                             @endforelse
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td>
-                                <button class="btn btn-success btn-xm edit_pat_patients" value="{{ $dates[0]->id_paciente }}"> <span class="glyphicon glyphicon-edit"></span> Editar</button></td>
-                                <td></td>
-                            </tr>
+                            
                         </tbody>
+                    </table>
+                    <table id="example2" class="table table-bordered table-hover">
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td>
+                            <button class="btn btn-success btn-xm edit_pat_patients" value="{{ $dates[0]->id_paciente }}"> <span class="glyphicon glyphicon-edit"></span> Editar</button></td>
+                            <td></td>
+                        </tr>
                     </table>
                 </div>
             </div>
