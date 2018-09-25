@@ -228,6 +228,7 @@
           </ul>
         </li>
         @endrole
+        @role('admin_examen_medico')
         <li class="treeview">
           <a href="#">
             <i class="fa fa-edit"></i> <span>Forms</span>
@@ -241,6 +242,7 @@
             <li><a href="pages/forms/editors.html"><i class="fa fa-circle-o"></i> Editors</a></li>
           </ul>
         </li>
+        @endrole
         <li class="treeview">
           <a href="#">
             <i class="fa fa-table"></i> <span>Tables</span>
