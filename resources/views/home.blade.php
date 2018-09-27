@@ -231,30 +231,29 @@
         @role('admin_examen_medico')
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-edit"></i> <span>Forms</span>
+            <i class="fa fa-edit"></i> <span>Examenes Medicos</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="pages/forms/general.html"><i class="fa fa-circle-o"></i> General Elements</a></li>
-            <li><a href="pages/forms/advanced.html"><i class="fa fa-circle-o"></i> Advanced Elements</a></li>
-            <li><a href="pages/forms/editors.html"><i class="fa fa-circle-o"></i> Editors</a></li>
+            @permission('ver_exam_medic')<li><a href="index_examen_medic" class="load-page"><i class="fa fa-circle-o"></i> Ver Examenes Medicos</a></li>@endpermission            
           </ul>
         </li>
         @endrole
+        @role('ver_historial_medico')
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-table"></i> <span>Tables</span>
+            <i class="fa fa-table"></i> <span>Historiales Medicos</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="pages/tables/simple.html"><i class="fa fa-circle-o"></i> Simple tables</a></li>
-            <li><a href="pages/tables/data.html"><i class="fa fa-circle-o"></i> Data tables</a></li>
+            @permission('ver_lista')<li><a href="view_medical_record" class="load-page"><i class="fa fa-circle-o"></i> Ver Lista</a></li>@endpermission
           </ul>
         </li>
+        @endrole
         <li>
           <a href="pages/calendar.html">
             <i class="fa fa-calendar"></i> <span>Calendar</span>

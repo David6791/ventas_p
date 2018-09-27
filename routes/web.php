@@ -116,3 +116,21 @@ Route::post('/saveSpecialties', 'SpecialtiesController@saveSpecialtie');
 Route::get('/index_data_medical_appointments','ManageDatesController@index_data_medical_appointment');
 Route::get('/index_register_data_medical_appointments','ManageDatesController@index_register_data_medical_appointment');
 Route::post('/get_BajaDatemedics','ManageDatesController@get_BajaDatemedics');
+
+
+/* Rutas para los examenes medicos */
+
+Route::get('/index_examen_medic','MedicalExamController@index_examn_medic');
+
+Route::post('/create_medical_exam','MedicalExamController@create_medical_exam');
+
+Route::post('/edit_medical_exam_charge','MedicalExamController@edit_medical_exam_charge');
+
+
+Route::post('/edit_medical_exam','MedicalExamController@edit_medical_exam');
+
+
+
+/* Ver Historiales Medicos */
+Route::get('/view_medical_record','MedicRecordsController@view_medical_record');
+Route::post('/load_dates_record_medic_full','MedicRecordsController@load_dates_record_medic_full');

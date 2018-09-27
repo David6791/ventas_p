@@ -1388,4 +1388,129 @@
             }
         })
     })
+    $(document).on('submit','.sendform_medical_exam',function(e){
+        frutas = []
+        $('.name_form').each(function(){
+            aux = $(this).attr("name")
+            frutas.push(aux)
+            
+        })
+        //$('#medical_exam_modal').modal('toggle')
+        $.ajaxSetup({
+            header:$('meta[name="_token"]').attr('content')
+        })
+        e.preventDefault(e)
+        $.ajax({
+            type:$(this).attr('method'),
+            url:$(this).attr('action'),
+            data:$(this).serialize(),
+            success:function(data){
+                $("#contentGlobal").html(data)   
+                //$('.con1').remove()
+                //$(".con2").html(data)          
+                swal(
+                    'Felicidades',
+                    'Se registro correctamente el Nuevo Dato Medico',
+                    'success'
+                  )
+                  $('.modal-backdrop').remove()  
+            },
+            error:function(data){
+                var asd = Object.keys(data.responseJSON.errors)
+                  for(i = 0; i<frutas.length; i++){
+                      if(asd.includes(frutas[i])) {
+                          $( "input[name='"+frutas[i]+"']" ).parent().find("small").text(data.responseJSON.errors[frutas[i]][0])
+                          //$( "input[name='"+frutas[i]+"']" ).parent().find("label").text(data.responseJSON.errors[frutas[i]][0])
+                          //$( "input[name='"+frutas[i]+"']" ).attr("placeholder", data.responseJSON.errors[frutas[i]][0])
+                          $( "textarea[name='"+frutas[i]+"']" ).parent().find("small").text(data.responseJSON.errors[frutas[i]][0])
+                      }else{
+                          $( "input[name='"+frutas[i]+"']" ).parent().find("small").text('')
+                          $( "textarea[name='"+frutas[i]+"']" ).parent().find("small").text('')
+                    }   
+                }
+            }
+        })
+    })
+    $(document).on('click','.edit_medical_exam',function(e){
+        //alert($(this).attr('value'))
+        e.preventDefault(e)
+        $.ajax({
+            type:'POST',
+            url:'/edit_medical_exam_charge',
+            data:$(this).serialize(),
+            data:{id_exam_medic:$(this).attr('value'),_token:$('meta[name="csrf-token"]').attr('content')},
+            success:function(data){
+                $('#modal_edit_medical_exam').modal({
+                    show: 'true',
+                    backdrop: 'static',
+                    keyboard: false,
+                }) 
+                $('#n_e_m').val(data[0].name_medical_exam)
+                $('#d_e_m').val(data[0].description_medical_exam)
+                $('#id').val(data[0].id_medical_exam)
+            },error:function(data){
+
+            }
+        })
+    })
+    
+    $(document).on('submit','.sendform_edit_medical_exam',function(e){
+        frutas = []
+        $('.name_form').each(function(){
+            aux = $(this).attr("name")
+            frutas.push(aux)
+            
+        })
+        //$('#medical_exam_modal').modal('toggle')
+        $.ajaxSetup({
+            header:$('meta[name="_token"]').attr('content')
+        })
+        e.preventDefault(e)
+        $.ajax({
+            type:$(this).attr('method'),
+            url:$(this).attr('action'),
+            data:$(this).serialize(),
+            success:function(data){
+                $("#contentGlobal").html(data)   
+                //$('.con1').remove()
+                //$(".con2").html(data)          
+                swal(
+                    'Felicidades',
+                    'Se registro correctamente el Nuevo Dato Medico',
+                    'success'
+                  )
+                  $('.modal-backdrop').remove()  
+            },
+            error:function(data){
+                var asd = Object.keys(data.responseJSON.errors)
+                  for(i = 0; i<frutas.length; i++){
+                      if(asd.includes(frutas[i])) {
+                          $( "input[name='"+frutas[i]+"']" ).parent().find("small").text(data.responseJSON.errors[frutas[i]][0])
+                          //$( "input[name='"+frutas[i]+"']" ).parent().find("label").text(data.responseJSON.errors[frutas[i]][0])
+                          //$( "input[name='"+frutas[i]+"']" ).attr("placeholder", data.responseJSON.errors[frutas[i]][0])
+                          $( "textarea[name='"+frutas[i]+"']" ).parent().find("small").text(data.responseJSON.errors[frutas[i]][0])
+                      }else{
+                          $( "input[name='"+frutas[i]+"']" ).parent().find("small").text('')
+                          $( "textarea[name='"+frutas[i]+"']" ).parent().find("small").text('')
+                    }   
+                }
+            }
+        })
+    })
+    $(document).on('click','.get_view_record_medic',function(e){
+        //alert($(this).attr('value'))
+        e.preventDefault(e)
+        $.ajax({
+            type:'POST',
+            url:'/load_dates_record_medic_full',
+            data:$(this).serialize(),
+            data:{id_patient:$(this).attr('value'),_token:$('meta[name="csrf-token"]').attr('content')},
+            success:function(data){
+                $('.delete_load').remove()        
+                $('.load_delete').html(data)                
+            },error:function(data){
+            }
+
+        })
+    })
 })
