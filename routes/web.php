@@ -134,3 +134,15 @@ Route::post('/edit_medical_exam','MedicalExamController@edit_medical_exam');
 /* Ver Historiales Medicos */
 Route::get('/view_medical_record','MedicRecordsController@view_medical_record');
 Route::post('/load_dates_record_medic_full','MedicRecordsController@load_dates_record_medic_full');
+Route::post('/load_dates_record_medic_full_appoinment','MedicRecordsController@load_dates_record_medic_full_appoinment');
+
+/* Rutas para administrar citas medicas */
+Route::get('/view_medical_appointment','MedicalAppointmentController@index_Appointment');
+
+Route::get('/create_medical_appointment','MedicalAppointmentController@create_Medical_Appointment');
+
+
+/* insertar datos de una cita medica */
+Route::post('/insert_appointsments','MedicalAppointmentController@insert_appointsment');
+
+Route::post('/modifi_appointments_save','MedicalAppointmentController@modifi_appointment_save');

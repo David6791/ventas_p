@@ -2,7 +2,7 @@
     <div class="col-md-12">
         <div class="box box-primary">
             <div class="box-header">
-                <h3 class="box-title"><span class="glyphicon glyphicon-th-list"></span> Lista de los Historiales Medicos del Paciente: </label>
+                <h3 class="box-title"><span class="glyphicon glyphicon-th-list"></span> Historiales Medicos del Paciente: </label>
             </div>
             <div class="box-body delete_load">
                 <div class="row">                    

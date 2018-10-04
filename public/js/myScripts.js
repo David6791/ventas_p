@@ -1513,4 +1513,49 @@
 
         })
     })
+    $(document).on('click','.view_full_record_medic',function(e){
+        //alert($(this).attr('value'))
+        e.preventDefault(e)
+        $.ajax({
+            type:'POST',
+            url:'/load_dates_record_medic_full_appoinment',
+            data:$(this).serialize(),
+            data:{id_appointments:$(this).attr('value'),_token:$('meta[name="csrf-token"]').attr('content')},
+            success:function(data){
+                $('.delete_load').remove()        
+                $('.load_delete').html(data)                
+            },error:function(data){
+            }
+
+        })
+    })
+    $(document).on('click','.modifi_state_appointment',function(e){  
+        $('#modifi_state_appointment_Modal').modal({
+            show: 'true',
+            backdrop: 'static',
+            keyboard: false,
+        })
+        $('#id_medical_appointments').val(id=$(this).attr('value'))
+    })
+    $(document).on('click','.modifi_appointments',function(e){
+        $('#modifi_state_appointment_Modal').modal('toggle')
+        //alert("llego")
+        e.preventDefault(e)
+        $.ajax({
+            type:'POST',
+            url:'/modifi_appointments_save',
+            data:$(this).serialize(),
+            data:{id:$(this).attr('value'),id_appointments:$('input:hidden[name=id_medical_appointments]').val(),_token:$('meta[name="csrf-token"]').attr('content')},
+            success:function(data){
+                $("#contentGlobal").html(data)            
+            },error:function(data){
+                swal(
+                    'Error!',
+                    'El Paciente aun no esta registrado',
+                    'error'
+                  )
+            }
+
+        })
+    })
 })

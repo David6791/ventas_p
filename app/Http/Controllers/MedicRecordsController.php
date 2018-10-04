@@ -40,6 +40,7 @@ class MedicRecordsController extends Controller
             $asdd = json_decode($asd);
             $data[]=json_decode($asdd,true);
         }
+        //return $data;
         /* Examenes Medicos de la consulta medica */
         $query1 = "SELECT * FROM medical_exam_patients mep
                         INNER JOIN medical_exam me
@@ -85,6 +86,6 @@ class MedicRecordsController extends Controller
         $rows6=\DB::select(\DB::raw($query6),array('id_appointments'=>$request->id_appointments));
         /*$asd =  json_decode($rows3[0]->dates_register_appoinments);*/
         //return $rows1;
-        return view('record_medic.load_pages_record.view_record_patients_full_details')->with('date_medic',$data)->with('exam_medics',$rows1)->with('patologies_medic',$data2)->with('notes_medic',$rows3)->with('transfer_medic',$rows4)->with('treatment_medic',$rows5)->with('paciente',$rows6);
+        return view('admin.record_medics.load_pages_record.view_record_patients_full_details')->with('date_medic',$data)->with('exam_medics',$rows1)->with('patologies_medic',$data2)->with('notes_medic',$rows3)->with('transfer_medic',$rows4)->with('treatment_medic',$rows5)->with('paciente',$rows6);
     }
 }

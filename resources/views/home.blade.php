@@ -254,14 +254,17 @@
           </ul>
         </li>
         @endrole
-        <li>
-          <a href="pages/calendar.html">
-            <i class="fa fa-calendar"></i> <span>Calendar</span>
+        @role('citas_medicas')
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-calendar"></i> <span>Citas Medicas</span>
             <span class="pull-right-container">
-              <small class="label pull-right bg-red">3</small>
-              <small class="label pull-right bg-blue">17</small>
+              <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
+          <ul class="treeview-menu">
+            @permission('ver_citas')<li><a href="view_medical_appointment" class="load-page"><i class="fa fa-circle-o"></i> Ver Citas</a></li>@endpermission
+          </ul>
         </li>
         <li>
           <a href="pages/mailbox/mailbox.html">
@@ -273,6 +276,7 @@
             </span>
           </a>
         </li>
+        @endrole
         <li class="treeview">
           @role('super_admin')  
           <a href="#">
