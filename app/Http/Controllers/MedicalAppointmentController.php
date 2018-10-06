@@ -34,7 +34,7 @@ class MedicalAppointmentController extends Controller
         return view('admin.medical_appointment.index_medical_appointments')->with('row',$rows)->with('row1',$rows1);
     }
     public function create_Medical_Appointment(Request $request){
-        return view('admin.create_medical_appointsments');
+        return view('admin.medical_appointment.create_medical_appointsments');
     }
     public function create_medical_appointments_a(){
         $query = "SELECT mass.id_medical_assignments, us.id, us.name, us.apellidos, sch.id_schedule, sch.name_schedules, tp.nombre_tipo FROM medical_assignments mass
@@ -51,7 +51,7 @@ class MedicalAppointmentController extends Controller
     public function create_date_appointment_a(){
         $query = "select * from schedules order by id_schedule";
         $rows=\DB::select(\DB::raw($query));
-        return view('admin.load_pages.reservation_date')->with('schedul',$rows);
+        return view('admin.medical_appointment.load_pages.reservation_date')->with('schedul',$rows);
     }
     public function view_turns_day_date(Request $request){
         //return $request->all();
@@ -63,7 +63,7 @@ class MedicalAppointmentController extends Controller
                     WHERE date_trunc('day', map.date_appointments) = :date)";
         $rows=\DB::select(\DB::raw($query),array('date'=>$request->fecha,'id_schedul'=>$request->id_turno));
         //return $rows;
-        return view('admin.load_pages.reservation_turns_date')->with('turns',$rows);
+        return view('admin.medical_appointment.load_pages.reservation_turns_date')->with('turns',$rows);
     }
     public function create_assignments_view_user_medic(Request $request){
         //return $request->all();
@@ -83,7 +83,7 @@ class MedicalAppointmentController extends Controller
         $query2 = "SELECT * FROM types_appointsment";
         $rows2=\DB::select(\DB::raw($query2));
         //return $rows1;
-        return view('admin.load_pages.load_date_reservation')->with('dates',$datos)->with('turno',$rows)->with('medic',$rows1)->with('types',$rows2);
+        return view('admin.medical_appointment.load_pages.load_date_reservation')->with('dates',$datos)->with('turno',$rows)->with('medic',$rows1)->with('types',$rows2);
     }
     public function load_patient_date(Request $request){
         //return $request->all();

@@ -1558,4 +1558,48 @@
 
         })
     })
+    $(document).on('click','.reservationDate',function(e){
+        e.preventDefault(e)        
+        //alert('Fecha')
+        $.ajax({
+            type:'GET',
+            url:'/create_date_appointments',
+            data:$(this).serialize(),
+            success:function(data){
+                $('#load_page_appointsment').html(data)
+            }
+        })
+    })
+    $(document).on('click','.view_turns_day',function(e){
+        //$('#load_datos_user_appoinments').remove()
+        e.preventDefault(e)       
+        //alert('Fecha')
+        $.ajax({
+            type:'GET',
+            url:'/view_turns_day_date',
+            data:$(this).serialize(),
+            data:{fecha:$('input:text[name=fecha_viaje]').val(),id_turno:document.getElementById("selec_schedule").value,_token:$('meta[name="csrf-token"]').attr('content')},
+            success:function(data){
+                $('#table_load_turns').html(data)
+                //alert($('input:text[name=fecha_viaje]').val())
+            }
+        })
+    })
+    $(document).on('click','.create_assignments',function(e){
+        alert('asdasdsads')
+        e.preventDefault(e)
+        $.ajax({
+            type:'GET',
+            url:'/create_assignments_view_user_medics',
+            data:$(this).serialize(),
+            data:{id:$(this).attr('value'),fecha:$('input:text[name=fecha_viaje]').val(),id_turno:document.getElementById("selec_schedule").value,_token:$('meta[name="csrf-token"]').attr('content')},
+            success:function(data){
+                $('#datatable').remove()
+                //alert(data)
+                $('#load_datos_user_appoinments').html(data)
+                console.log(data.fecha)
+                $('#date_appointsment').val()
+            }
+        })
+    })
 })
