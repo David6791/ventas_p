@@ -1602,4 +1602,23 @@
             }
         })
     })
+    $(document).on('click','.search',function(e){
+        e.preventDefault(e)
+        $.ajax({
+            type:'POST',
+            url:'/load_patient_dates',
+            data:$(this).serialize(),
+            data:{ci_patient:$('input:text[name=ci_patient]').val(),_token:$('meta[name="csrf-token"]').attr('content')},
+            success:function(data){
+                $('#load_dates_patient').html(data)               
+            },error:function(data){
+                swal(
+                    'Error!',
+                    'El Paciente aun no esta registrado',
+                    'error'
+                  )
+            }
+
+        })
+    })
 })
