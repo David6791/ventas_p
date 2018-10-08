@@ -1621,4 +1621,38 @@
 
         })
     })
+    $(document).on('submit','.sendform_insert_appointsment',function(e){
+        //alert("llego")
+        $.ajaxSetup({
+            header:$('meta[name="_token"]').attr('content')
+        })
+        console.log($(this).serialize())
+        e.preventDefault(e)
+        $.ajax({
+            type:$(this).attr('method'),
+            url:$(this).attr('action'),
+            data:$(this).serialize(),
+            success:function(data){
+                $("#contentGlobal").html(data)
+                swal("", "Se Registro Correctamente la Cita Medica.", "success")                
+            },
+            error:function(data){
+                
+            }
+        })
+    })
+    /* Funcion para reservar cita medica mediante medico de turno y especialidad */
+    $(document).on('click','.reservationMedic',function(e){
+        e.preventDefault(e)
+        //alert('Medico')
+        $.ajax({
+            type:'GET',
+            url:'/create_medical_appointments',
+            data:$(this).serialize(),
+            success:function(data){
+                $('#load_page_appointsment').html(data)
+                //alert("asdsad")
+            }
+        })       
+    })
 })

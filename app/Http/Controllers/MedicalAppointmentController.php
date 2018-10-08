@@ -46,7 +46,7 @@ class MedicalAppointmentController extends Controller
                         ON us.tipo_usuario = tp.id_tipo
                     WHERE state_assignments = 'activo'";
         $rows=\DB::select(\DB::raw($query));
-        return view('admin.load_pages.reservation_medic')->with('medics',$rows);
+        return view('admin.medical_appointment.load_pages.reservation_medic')->with('medics',$rows);
     }
     public function create_date_appointment_a(){
         $query = "select * from schedules order by id_schedule";
@@ -90,7 +90,7 @@ class MedicalAppointmentController extends Controller
         $query = "SELECT * FROM pacientes WHERE ci_paciente = :ci";
         $row = \DB::select(\DB::raw($query),array('ci'=>$request->ci_patient));
         //return $row;
-        return view('admin.load_pages.load_dates_patient')->with('dates_patient',$row);
+        return view('admin.medical_appointment.load_pages.load_dates_patient')->with('dates_patient',$row);
     }
     public function insert_appointsment(Request $request){
         //return $request->all();

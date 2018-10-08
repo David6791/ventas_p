@@ -113,6 +113,8 @@
                                 </div>                                
                             </div>
                         </div>
+                        <div class="row load_dates_patient" id="load_dates_patient">                        
+                        </div>     
                     </form>
                 </div>
             </div>
