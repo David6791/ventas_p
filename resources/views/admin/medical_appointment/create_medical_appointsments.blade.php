@@ -1,6 +1,9 @@
 <div class="row">
     <div class="col-md-3">
         <div class="box box-primary">
+            <div class="box-header">
+                <h3 class="box-title">Seleccione Tipo de Reservacion</h3>
+            </div>
             <div class="box-body">
                 <div class="vertical-menu">
                     <a class="btn btn-success btn-sm reservationMedic">Reservar por Medico</a>

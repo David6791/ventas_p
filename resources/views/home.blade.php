@@ -265,17 +265,23 @@
           <ul class="treeview-menu">
             @permission('ver_citas')<li><a href="view_medical_appointment" class="load-page"><i class="fa fa-circle-o"></i> Ver Citas</a></li>@endpermission
             @permission('crear_citas')<li><a href="create_medical_appointment" class="load-page"><i class="fa fa-circle-o"></i> Crear Citas Medicas</a></li>@endpermission
+            @permission('emergencias')<li><a href="view_emergency" class="load-page"><i class="fa fa-circle-o"></i> Registrar Emergencia</a></li>@endpermission
+            <li><a href="morisjs.html"><i class="fa fa-circle-o"></i> Editar Reserva</a></li>
+            <li><a href="morisjs.html"><i class="fa fa-circle-o"></i> Confirmar Cita Medica</a></li>
           </ul>
-        </li>
-        <li>
-          <a href="pages/mailbox/mailbox.html">
-            <i class="fa fa-envelope"></i> <span>Mailbox</span>
+        </li>        
+        @endrole
+        @role('atencion_citas')
+        <li class="treeview">
+          <a href="">
+            <i class="fa fa-envelope"></i> <span>Atencion Citas Medicas</span>
             <span class="pull-right-container">
-              <small class="label pull-right bg-yellow">12</small>
-              <small class="label pull-right bg-green">16</small>
-              <small class="label pull-right bg-red">5</small>
+              <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
+          <ul class="treeview-menu">
+            @permission('lista_citas')<li><a href="view_attention_lists" class="load-page"><i class="fa fa-circle-o"></i> Lista de Citas Medicas</a></li>@endpermission
+          </ul>
         </li>
         @endrole
         <li class="treeview">

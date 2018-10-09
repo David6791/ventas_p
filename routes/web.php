@@ -160,3 +160,39 @@ Route::get('/create_assignments_view_user_medics','MedicalAppointmentController@
 
 /* Para agregar los datos del paciente al formulario de registro */
 Route::post('/load_patient_dates','MedicalAppointmentController@load_patient_date');
+
+
+/* Cita con Medico disponible */
+Route::post('/select_turns_free','MedicalAppointmentController@select_turn_free');
+Route::post('/load_dates_medic_patients','MedicalAppointmentController@load_dates_medic_patient');
+Route::post('/insert_appointsments_medics','MedicalAppointmentController@insert_appointsments_medic');
+
+
+/* Rutas para todo Emergencias */
+Route::get('/view_emergency','EmergenciesController@index_emergency');
+
+Route::post('/search_patients','EmergenciesController@search_patient');
+
+Route::post('/store_emergencies','EmergenciesController@store_emergency');
+
+
+/* Rutas para la atencion de Citas Medicas */
+Route::get('/view_attention_lists','AttentionsController@view_attention_list'); 
+
+Route::post('/start_appointment_date','AttentionsController@start_appointment_dates');
+Route::post('/save_dates_appoinments_dates','AttentionsController@save_dates_appoinments_date');
+Route::post('/load_medicine_table','AttentionsController@load_medicine_table');
+Route::post('/save_dates_treatment','AttentionsController@save_dates_treatment'); 
+Route::post('/store_patients_transfer','AttentionsController@store_patients_transfer');
+Route::post('/end_medical_appointment','AttentionsController@end_medical_appointment');
+Route::get('/view_attention_lists_full_medic','AttentionsController@view_attention_lists_full_medic'); 
+
+
+
+Route::post('/load_dates_appoinments','AttentionsController@load_dates_appoinment');
+
+Route::post('/load_dates_filiation_full','AttentionsController@load_dates_filiation_full');
+
+
+/* Ruta para guardar datos de examen medico de un paciente. */
+Route::post('/register_medical_exam','AttentionsController@register_medical_exam');

@@ -1655,4 +1655,178 @@
             }
         })       
     })
+    $(document).on('click','.load_date_medic',function(e){
+        $('#modalSelect_date').modal({
+            show: 'true',
+            backdrop: 'static',
+            keyboard: false,
+        })     
+        $('#id_schedul').val(id=$(this).attr('value'))   
+    })
+    $(document).on('click','.btn_select_date_cita',function(e){
+        $('#modalSelect_date').modal('toggle')
+        $('.borrar').remove()
+        //alert("llego")
+        e.preventDefault(e)
+        $.ajax({
+            type:'POST',
+            url:'/select_turns_free',
+            data:$(this).serialize(),
+            data:{id_schedule:$('input:hidden[name=id_schedul]').val(),fecha:$('input:text[name=fecha]').val(),_token:$('meta[name="csrf-token"]').attr('content')},
+            success:function(data){
+                $('#load_list_medics').remove()
+                //$("#contentGlobal").html(data)
+                $('#table_load_turns').html(data)         
+            },error:function(data){
+                swal(
+                    'Error!',
+                    'El Paciente aun no esta registrado',
+                    'error'
+                  )
+            }
+
+        })
+    })
+    $(document).on('click','.create_assignments_medic',function(e){
+        alert("llego")
+        $('.borrar').remove()
+        e.preventDefault(e)
+        $.ajax({
+            type:'POST',
+            url:'/load_dates_medic_patients',
+            data:$(this).serialize(),
+            data:{id_turn:$(this).attr('value'),id_assignments:$('input:hidden[name=id_schedul]').val(),fecha:$('input:hidden[name=fecha]').val(),_token:$('meta[name="csrf-token"]').attr('content')},
+            success:function(data){
+                $('#load_list_medics').remove()
+                //$("#contentGlobal").html(data)
+                $('#table_load_turns').html(data)
+            },error:function(data){
+                swal(
+                    'Error!',
+                    'El Paciente aun no esta registrado',
+                    'error'
+                  )
+            }
+
+        })
+    })
+    $(document).on('submit','.sendform_insert_appointsment_medic',function(e){
+        $.ajaxSetup({
+            header:$('meta[name="_token"]').attr('content')
+        })
+        e.preventDefault(e)
+        $.ajax({
+            type:$(this).attr('method'),
+            url:$(this).attr('action'),
+            data:$(this).serialize(),
+            success:function(data){  
+                $("#contentGlobal").html(data)          
+                swal(
+                    'Felicidades',
+                    'Los datos de se guardaron correctamente',
+                    'success'
+                  )
+            },
+            error:function(data){
+                swal(
+                    'Good job!',
+                    'You clicked the button!',
+                    'error'
+                  )
+            }
+        })
+    })
+    $(document).on('click','.search_patient',function(e){
+        //alert("llego")
+        e.preventDefault(e)
+        $.ajax({
+            type:'POST',
+            url:'/search_patients',
+            data:$(this).serialize(),
+            data:{ci_patient:$('input:text[name=ci_patient]').val(),_token:$('meta[name="csrf-token"]').attr('content')},
+            success:function(data){                
+                //$("#contentGlobal").html(data)
+                //$('#table_load_turns').html(data)
+                $('#name_patient').val(data[0].nombres)
+                $('#name_patient').prop('disabled', true);
+
+                $('#apaterno_patient').val(data[0].ap_paterno)
+                $('#apaterno_patient').prop('disabled', true);
+
+                $('#amaterno_patient').val(data[0].ap_materno)
+                $('#amaterno_patient').prop('disabled', true);
+
+                $('#fnacimiento_patient').val(data[0].fecha_nacimento)
+                $('#fnacimiento_patient').prop('disabled', true);
+
+                $('#sexo').val(data[0].sexo)
+                $('#sexo').prop('disabled', true);
+
+                $('#direccion_patient').val(data[0].direccion)
+                $('#direccion_patient').prop('disabled', true);
+
+                $('#id_patient').val(data[0].id_paciente)
+                swal(
+                    '',
+                    'El Paciente esta registrado',
+                    'success'
+                  )
+            },error:function(data){
+                swal(
+                    'Error!',
+                    'El Paciente aun no esta registrado',
+                    'error'
+                  )
+            }
+
+        })
+    })
+    $(document).on('submit','.store_emergencies',function(e){
+        //alert("asdasdsa")
+        $.ajaxSetup({
+            header:$('meta[name="_token"]').attr('content')
+        })
+        e.preventDefault(e)
+        $.ajax({
+            type:$(this).attr('method'),
+            url:$(this).attr('action'),
+            data:$(this).serialize(),
+            success:function(data){  
+                $("#contentGlobal").html(data)          
+                swal(
+                    'Felicidades',
+                    'Los datos de se guardaron correctamente',
+                    'success'
+                  )
+            },
+            error:function(data){
+                swal(
+                    'Good job!',
+                    'You clicked the button!',
+                    'error'
+                  )
+            }
+        })
+    })
+    $(document).on('click','.start_appointment',function(e){
+        //alert("llego")
+        e.preventDefault(e)
+        $.ajax({
+            type:'POST',
+            url:'/start_appointment_date',
+            data:$(this).serialize(),
+            data:{id_appointments:$(this).attr('value'),_token:$('meta[name="csrf-token"]').attr('content')},
+            success:function(data){                
+                $("#contentGlobal").html(data) 
+                
+            },error:function(data){
+                swal(
+                    'Error!',
+                    'El Paciente aun no esta registrado',
+                    'error'
+                  )
+            }
+
+        })
+    })
 })
