@@ -4,8 +4,8 @@
             <h3 class="box-title"> Atencion Paciente</h3>           
     </div>
     <div class="box-body">
-        <div class="" role="tabpanel" data-example-id="togglable-tabs">
-            <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
+        <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs">
                 <li role="presentation" class="active"><a href="#tab_content1" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Datos del Paciente</a>
                 </li>
                 <li role="presentation" class=""><a href="#tab_content2" role="tab" id="profile-tab" data-toggle="tab" aria-expanded="false">Citas Anteriores</a>
