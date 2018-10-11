@@ -1829,4 +1829,47 @@
 
         })
     })
+    $(document).on('click','.filiation_completing',function(e){   
+        //alert('asdasdas')
+        e.preventDefault(e)
+        $.ajax({
+            type:'POST',
+            url:'/filiation_completing',
+            data:{id:$(this).attr('value'),_token:$('meta[name="csrf-token"]').attr('content')},
+            success:function(data){
+                $("#delete").remove()                   
+                $(".filiation_completing").remove()  
+                $(".borrar_bt").remove()  
+                $(".add_completing").html(data)                   
+            },
+            error:function(data){
+                //console.log(data)
+            }
+        })
+    })    
+    $(document).on('click','.add_date_new_medic',function(e){   
+        //alert('asdasdas')
+        e.preventDefault(e)
+        $.ajax({
+            type:'POST',
+            url:'/add_date_new_medic_url',
+            data:{id:$(this).attr('value'),_token:$('meta[name="csrf-token"]').attr('content')},
+            success:function(data){
+                $('#modal-add-dates_medic').modal({
+                    show: 'true',
+                    backdrop: 'static',
+                    keyboard: false,
+                })
+                var da = (data).length
+                for(var i = 0; i < da ; i++)
+                {                    
+                    x = i+1          
+                    $('.table_dates_medics').append('<tr><td>'+x+'</td><td>'+data[i].nombre_dato_medico+'</td><td><input type="checkbox" name="schedul_add[]" value="'+data[i].id_dato_medico+'"></td></tr>')
+                }
+            },
+            error:function(data){
+                //console.log(data)
+            }
+        })
+    })
 })

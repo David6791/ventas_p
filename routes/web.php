@@ -196,3 +196,8 @@ Route::post('/load_dates_filiation_full','AttentionsController@load_dates_filiat
 
 /* Ruta para guardar datos de examen medico de un paciente. */
 Route::post('/register_medical_exam','AttentionsController@register_medical_exam');
+ 
+/* Para completar los datos de los pacientes. */ 
+Route::post('/filiation_completing', 'PatientsController@filiation_completing');
+
+Route::post('/add_date_new_medic_url', 'PatientsController@add_date_new_medic_url');

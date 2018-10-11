@@ -1,7 +1,7 @@
 <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="box box-primary">
         <div class="box-header">
-            <h3 class="box-title"> Atencion Paciente</h3>           
+            <h3 class="box-title"> Atencion Paciente Citas Medicas ------ Paciente: {{ $dates_patient[0]->nombres }} {{ $dates_patient[0]->ap_paterno }} {{ $dates_patient[0]->ap_materno }}</h3>           
     </div>
     <div class="box-body">
         <div class="nav-tabs-custom">
@@ -25,15 +25,12 @@
             </ul>
             <div id="myTabContent" class="tab-content">
                 <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <img src="{{ asset('img/img_patient.png') }}" alt="" width="300">
-                        </div>
-                        <div class="col-md-9">
+                    <div class="row">                        
+                        <div class="col-md-12">
                             <div class="x_panel">
                                 <div class="x_title">
                                         @if(($dates_patient[0]->filiacion_completa)=='n')
-                                        <div class="alert alert-danger">
+                                        <div class="alert alert-danger borrar_bt">
                                             <ul class="fa-ul">
                                                 <li>
                                                 <i class="fa fa-user fa-lg fa-li"></i> La Filiacion del Paciente no esta COMPLETA...!
@@ -43,7 +40,7 @@
                                         @else
                                             <!--button type="button" class="btn btn-info"> <span class=""></span> Ver datos Filiacion</button-->
                                         @endif                                    
-                                    <div class="alert alert-success">
+                                    <div class="alert alert-success borrar_bt">
                                         <ul class="fa-ul">
                                             <li>
                                             <i class="fa fa-user fa-lg fa-li"></i> Informacion Personal
@@ -52,7 +49,8 @@
                                     </div>
                                 </div>
                                 <div class="x_content"></div>
-                                <div class="row">
+                                <div class="row add_completing"></div>
+                                <div class="row" id="delete">
                                     <div class="col-md-6">
                                     <table class="table table-user-information">
                                         <tbody>
@@ -113,10 +111,7 @@
                                         @else
                                             <!--button type="button" class="btn btn-info"> <span class=""></span> Ver datos Filiacion</button-->
                                         @endif
-                                    </div>
-                                    <div class="col-md-2">
-                                        <button class="btn btn-info load_filiation_dates_full" value="{{ $dates_patient[0]->id_paciente }}">Ver Datos Filiacion</button>
-                                    </div>
+                                    </div>                                    
                                 </div>
                             </div>
                         </div>
@@ -762,6 +757,10 @@
 }
 .alinear{
     text-align: center;
+}
+.vertical-menu a{
+    width:100%;
+    margin-top:10px;
 }
 </style>
 <script>
