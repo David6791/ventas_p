@@ -201,3 +201,5 @@ Route::post('/register_medical_exam','AttentionsController@register_medical_exam
 Route::post('/filiation_completing', 'PatientsController@filiation_completing');
 
 Route::post('/add_date_new_medic_url', 'PatientsController@add_date_new_medic_url');
+
+Route::post('/completing_dates_patient', 'PatientsController@completing_dates_patient');

@@ -203,6 +203,25 @@ class PatientsController extends Controller
             SELECT id_date_medic FROM patients_dates_medic WHERE id_patient = :id  AND estate = 'activo'
         )";
         $rows1=\DB::select(\DB::raw($query1),array('id'=>$request->id));
+        //return $rows1;
+        return $var=['datos'=>$rows1, 'id'=>$request->id];
+    }
+    public function completing_dates_patient(Request $request){
+        //return $request->id_patient_dates;
+        $val = $request->dates_medic_add;
+        $id = $request->id_patient_dates;
+        foreach($val as $row) {
+            DB::table('patients_dates_medic')->insert([
+                'id_patient' => $request->id_patient_dates,
+                'id_date_medic' => $row
+            ]);
+        }
+        //return $id;
+        $query1 = "SELECT * FROM patients_dates_medic ptm
+                    INNER JOIN datos_medicos dm
+                        ON dm.id_dato_medico = ptm.id_date_medic
+                    WHERE ptm.id_patient = :id_patient";
+        $rows1=DB::select(DB::raw($query1),array('id_patient'=>$id));
         return $rows1;
     }
 }

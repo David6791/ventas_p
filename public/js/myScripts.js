@@ -822,7 +822,7 @@
             url:'/load_dates_edit_pat_patient',
             data:{id_patient:$(this).attr('value'),_token:$('meta[name="csrf-token"]').attr('content')},
             success:function(data){
-                console.log(data)
+                //console.log(data)
                 //$("#contentGlobal").html(data) 
                 $('#id_patient').val(data.id) 
                 $('.delete_add_table tr').remove()  
@@ -1848,7 +1848,7 @@
         })
     })    
     $(document).on('click','.add_date_new_medic',function(e){   
-        //alert('asdasdas')
+        //alert('asdasdas')        
         e.preventDefault(e)
         $.ajax({
             type:'POST',
@@ -1860,16 +1860,61 @@
                     backdrop: 'static',
                     keyboard: false,
                 })
-                var da = (data).length
+                //$('.delete_daes_medic').remove()
+                console.log(data) 
+                $('.id_patient_dates').val(data.id) 
+                var da = (data.datos).length
                 for(var i = 0; i < da ; i++)
                 {                    
                     x = i+1          
-                    $('.table_dates_medics').append('<tr><td>'+x+'</td><td>'+data[i].nombre_dato_medico+'</td><td><input type="checkbox" name="schedul_add[]" value="'+data[i].id_dato_medico+'"></td></tr>')
+                    $('.table_dates_medics').append('<tr><td>'+x+'</td><td>'+data.datos[i].nombre_dato_medico+'</td><td><input type="checkbox" name="dates_medic_add[]" value="'+data.datos[i].id_dato_medico+'"></td></tr>')
                 }
+                
             },
             error:function(data){
                 //console.log(data)
             }
         })
     })
+    $(document).on('submit','.sendform_completing_dates',function(e){
+        $('#delete_daes_medic').modal('toggle')
+        frutas = []
+        $('.name_form').each(function(){
+            aux = $(this).attr("name")
+            frutas.push(aux)
+            
+        })
+        data1=$(this).serialize()
+        $.ajaxSetup({
+            header:$('meta[name="_token"]').attr('content')
+        })
+        e.preventDefault(e)
+        $.ajax({
+            type:$(this).attr('method'),
+            url:$(this).attr('action'),
+            data:$(this).serialize(),            
+            success:function(data){
+                $("#contentGlobal").html(data)
+                swal(
+                    'Felicidades',
+                    'El Rol se Actualizo Correctamente',
+                    'success'
+                  )
+                  $('.modal-backdrop').remove()               
+            },
+            error:function(data){
+                var asd = Object.keys(data.responseJSON.errors)
+                for(i = 0; i<frutas.length; i++){
+                    if(asd.includes(frutas[i])) {
+                        $( "input[name='"+frutas[i]+"']" ).parent().find("small").text(data.responseJSON.errors[frutas[i]][0])
+                        $( "textarea[name='"+frutas[i]+"']" ).parent().find("small").text(data.responseJSON.errors[frutas[i]][0])
+                    }else{
+                        $( "input[name='"+frutas[i]+"']" ).parent().find("small").text('')
+                        $( "textarea[name='"+frutas[i]+"']" ).parent().find("small").text('')
+                    }              
+                    
+                }                
+            }
+        })
+    }) 
 })

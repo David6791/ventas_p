@@ -320,9 +320,9 @@
 <div class="modal fade" id="modal-add-dates_medic">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form class="form-horizontal form-label-left sendform_edit_pat_patient" id="form_edit" novalidate action="{{url('edit_pat_patient')}}" method="post" autocomplete="off">
+            <form class="form-horizontal form-label-left sendform_completing_dates" id="form_edit" novalidate action="{{url('completing_dates_patient')}}" method="post" autocomplete="off">
                 <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
-                <input type="hidden" name= "id_patient" value="" id="id_patient">
+                <input type="hidden" name= "id_patient_dates" value="" class="id_patient_dates">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span></button>
@@ -342,7 +342,7 @@
                                                     <th>Opcion</th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
+                                            <tbody class="delete_daes_medic">
                                             </tbody>
                                         </table>
                                     </div>
