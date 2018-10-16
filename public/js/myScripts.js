@@ -873,7 +873,7 @@
                 for(var i = 0; i < da ; i++){
                 //alert(i)
                 x = i+1
-                $('.charge_modify_table tbody').append('<tr><td>'+x+'</td><td>'+data[i].nombre_patologia+'</td><td>No hay descripcion</td><td><button class="btn btn-danger btn-xs"> <span class="glyphicon glyphicon-trash"></span> Eliminar</button></td></tr>')
+                $('.charge_modify_table tbody').append('<tr><td>'+x+'</td><td>'+data[i].nombre_patologia+'</td><td>No hay descripcion</td></tr>')
                 }
             },
             error:function(data){
@@ -1860,8 +1860,9 @@
                     backdrop: 'static',
                     keyboard: false,
                 })
-                //$('.delete_daes_medic').remove()
-                console.log(data) 
+                //$('.table_dates_medics tbody').remove()
+                $('.table_dates_medics tbody tr').closest('tr').remove()
+                //console.log(data) 
                 $('.id_patient_dates').val(data.id) 
                 var da = (data.datos).length
                 for(var i = 0; i < da ; i++)
@@ -1877,7 +1878,7 @@
         })
     })
     $(document).on('submit','.sendform_completing_dates',function(e){
-        $('#delete_daes_medic').modal('toggle')
+        $('#modal-add-dates_medic').modal('toggle')
         frutas = []
         $('.name_form').each(function(){
             aux = $(this).attr("name")
@@ -1894,7 +1895,7 @@
             url:$(this).attr('action'),
             data:$(this).serialize(),            
             success:function(data){
-                $("#contentGlobal").html(data)
+                $(".load_date_medic").html(data)
                 swal(
                     'Felicidades',
                     'El Rol se Actualizo Correctamente',
@@ -1917,4 +1918,63 @@
             }
         })
     }) 
+    $(document).on('click','.delete_dates_medic_patient',function(e){   
+        //alert($(this).attr('value'))
+        e.preventDefault(e)
+        $.ajax({
+            type:'POST',
+            url:'/delete_dates_medic_patient',
+            data:{id:$(this).attr('value'),id_patient:$('input:hidden[name=id_patient]').val(),_token:$('meta[name="csrf-token"]').attr('content')},
+            success:function(data){
+                $('.update_dates_medic').remove()                
+                //alert(data)
+                $('.load_date_medic').html(data)
+            },
+            error:function(data){
+                //console.log(data)
+            }
+        })
+    }) 
+    $(document).on('submit','.sendform_patients_update',function(e){
+        alert('llega')  
+        frutas = []
+        $('.name_form').each(function(){
+            aux = $(this).attr("name")
+            frutas.push(aux)
+            
+        })
+        data1=$(this).serialize()
+        $.ajaxSetup({
+            header:$('meta[name="_token"]').attr('content')
+        })
+        e.preventDefault(e)
+        $.ajax({
+            type:$(this).attr('method'),
+            url:$(this).attr('action'),
+            data:$(this).serialize(),            
+            success:function(data){
+                $(".load_date_medic").html(data)
+                swal(
+                    'Felicidades',
+                    'El Rol se Actualizo Correctamente',
+                    'success'
+                  )
+                  $('.modal-backdrop').remove()               
+            },
+            error:function(data){
+                var asd = Object.keys(data.responseJSON.errors)
+                for(i = 0; i<frutas.length; i++){
+                    if(asd.includes(frutas[i])) {
+                        $( "input[name='"+frutas[i]+"']" ).parent().find("small").text(data.responseJSON.errors[frutas[i]][0])
+                        $( "textarea[name='"+frutas[i]+"']" ).parent().find("small").text(data.responseJSON.errors[frutas[i]][0])
+                        $( "textarea[name='"+frutas[i]+"']" ).parent().parent().parent().find("small").text(data.responseJSON.errors[frutas[i]][0])
+                    }else{
+                        $( "input[name='"+frutas[i]+"']" ).parent().find("small").text('')
+                        $( "textarea[name='"+frutas[i]+"']" ).parent().find("small").text('')
+                    }              
+                    
+                }                
+            }
+        })
+    })
 })

@@ -207,7 +207,7 @@ class PatientsController extends Controller
         return $var=['datos'=>$rows1, 'id'=>$request->id];
     }
     public function completing_dates_patient(Request $request){
-        //return $request->id_patient_dates;
+        //return $request;
         $val = $request->dates_medic_add;
         $id = $request->id_patient_dates;
         foreach($val as $row) {
@@ -222,6 +222,57 @@ class PatientsController extends Controller
                         ON dm.id_dato_medico = ptm.id_date_medic
                     WHERE ptm.id_patient = :id_patient";
         $rows1=DB::select(DB::raw($query1),array('id_patient'=>$id));
-        return $rows1;
+        $query2 = "SELECT * FROM pacientes p 
+                        WHERE p.id_paciente =  :id_patient";
+        $rows2=\DB::select(\DB::raw($query2),array('id_patient'=>$request->id_patient_dates));
+        //return $rows1;
+        return view('admin.patients.completing_dates.table_new_dates_medic')->with('dates_medic',$rows1)->with('dates_patient',$rows2);
+    }
+    public function delete_dates_medic_patient(Request $request){
+        
+        $query = "select public.delete_date_medic(:id, :id_pat)";
+        $rows = \DB::select(\DB::raw($query),array('id'=>$request->id_patient,'id_pat'=>$request->id));        
+        $query1 = "SELECT * FROM patients_dates_medic pdm
+                        INNER JOIN datos_medicos dm
+                        ON pdm.id_date_medic = dm.id_dato_medico
+                    WHERE id_patient = :id";
+        $rows1=\DB::select(\DB::raw($query1),array('id'=>$request->id_patient));
+        $query2 = "SELECT * FROM pacientes p 
+                        WHERE p.id_paciente =  :id_patient";
+        $rows2=\DB::select(\DB::raw($query2),array('id_patient'=>$request->id_patient));
+        //return $rows2; 
+        return view('admin.patients.completing_dates.table_new_dates_medic')->with('dates_medic',$rows1)->with('dates_patient',$rows2);
+    }
+    public function update_patients_dates(Request $request){
+        $validatedData = $request->validate([
+            'apellido_materno' => 'required|max:20',
+            'apellido_paterno' => 'required',
+            'celular' => 'required',
+            'ci' => 'required',
+            'ciudad' => 'required',
+            'direccion' => 'required',
+            'genero' => 'required',
+            'fecha_nacimiento' => 'required',
+            'localidad' => 'required',
+            'nacionalidad' => 'required',
+            'nombre' => 'required',
+            'provincia' => 'required',
+            'telefono' => 'required'
+        ]);
+        /*$modify_appointments = DB::table('medical_appointments')
+            'ci_paciente' => $request->ci,
+            'ap_paterno' => $request->apellido_paterno,
+            'ap_materno' => $request->apellido_materno,
+            'nombres' => $request->nombre,
+            'sexo' => $request->genero,
+            'direccion' => $request->direccion,
+            'telefono' => $request->telefono,
+            'celular' => $request->celular,
+            'fecha_nacimento' => $request->fecha_nacimiento,
+            'pais_nacimiento' => $request->pais,
+            'ciudad_nacimiento' => $request->ciudad,
+            'provincia' => $request->provincia,
+            'localidad_nacimiento' => $request->localidad
+        ]);*/
     }
 }

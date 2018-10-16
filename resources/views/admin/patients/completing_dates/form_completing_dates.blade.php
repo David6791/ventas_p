@@ -1,5 +1,7 @@
 <div class="col-md-12">
-    <form action="">
+    <form class="sendform_patients_update" action="{{url('update_patients_dates')}}" method="post" autocomplete="off">
+        <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+        <input type="hidden" name="id_patient" value="{{ $dates_patient[0]->id_paciente }}">
         <div class="row">
             <div class="col-md-12">
                 <div class="box-header">
@@ -11,7 +13,7 @@
             <div class="col-md-2"></div>
             <div class="col-md-2">
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Nro. Documento </label> <br>
+                    <label for="exampleInputEmail1">Nro. Documento </label> 
                     <small class="text-red" id=""></small>
                     <input name="ci" type="text" value="{{ $dates_patient[0]->ci_paciente }}" class="form-control col-md-7 col-xs-12 name_form" id="inputEmail3" placeholder="">
                 </div>
@@ -19,13 +21,16 @@
             <div class="col-md-1"></div>
             <div class="col-md-7">
                 <div class="form-group">
-                    <label for="exampleInputEmail1" class="control-label">Genero</label> <br>
+                <small class="text-red" id=""></small>
+                    <label for="exampleInputEmail1" class="control-label">Genero</label> 
                     <small class="text-red" id=""></small>
                     <div id="" data-toggle="buttons" class="btn-group">
                         <label class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
+                        
                             <input type="radio" name="genero" value="Masculino" data-parsley-multiple="genero" class="name_form"> Masculino &nbsp;
                         </label>
                         <label class="btn btn-primary" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
+                        
                             <input type="radio" name="genero" value="Femenino" data-parsley-multiple="genero" class="name_form"> Femenino
                         </label>
                     </div>
@@ -35,21 +40,21 @@
         <div class="row">
             <div class="col-md-4">
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Nombres</label> <br>
+                    <label for="exampleInputEmail1">Nombres</label> 
                     <small class="text-red" id=""></small>
                     <input type="text" class="form-control col-md-7 col-xs-12 name_form" name="nombre" value="{{ $dates_patient[0]->nombres }}">
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Apellido Paterno</label> <br>
+                    <label for="exampleInputEmail1">Apellido Paterno</label> 
                     <small class="text-red" id=""></small>
                     <input type="text" class="form-control col-md-7 col-xs-12 name_form" name="apellido_paterno" value="{{ $dates_patient[0]->ap_paterno }}">
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Apellido Materno</label> <br>
+                    <label for="exampleInputEmail1">Apellido Materno</label> 
                     <small class="text-red" id=""></small>
                     <input type="text" class="form-control col-md-7 col-xs-12 name_form" name="apellido_materno" value="{{ $dates_patient[0]->ap_materno }}">
                 </div>
@@ -58,21 +63,21 @@
         <div class="row">
             <div class="col-md-4">
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Direccion</label> <br>
+                    <label for="exampleInputEmail1">Direccion</label> 
                     <small class="text-red" id=""></small>
                     <input type="text" class="form-control col-md-7 col-xs-12 name_form" name="direccion" value="{{ $dates_patient[0]->direccion }}">
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Telefono</label> <br>
+                    <label for="exampleInputEmail1">Telefono</label> 
                     <small class="text-red" id=""></small>
                     <input type="text" class="form-control col-md-7 col-xs-12 name_form" name="telefono" value="{{ $dates_patient[0]->telefono }}">
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Celular</label> <br>
+                    <label for="exampleInputEmail1">Celular</label> 
                     <small class="text-red" id=""></small>
                     <input type="text" class="form-control col-md-7 col-xs-12 name_form" name="celular" value="{{ $dates_patient[0]->celular }}">
                 </div>
@@ -81,7 +86,7 @@
         <div class="row">
             <div class="col-md-2">
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Fecha de Nacimiento</label> <br>
+                    <label for="exampleInputEmail1">Fecha de Nacimiento</label> 
                     <small class="text-red" id=""></small>
                     <input id="datepicker" type="text" class="form-control col-md-7 col-xs-12 name_form" name="fecha_nacimiento" value="{{ $dates_patient[0]->fecha_nacimento }}">
                 </div>
@@ -100,21 +105,21 @@
             </div>
             <div class="col-md-2">
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Ciudad</label> <br>
+                    <label for="exampleInputEmail1">Ciudad</label> 
                     <small class="text-red" id=""></small>
                     <input type="text" class="form-control col-md-7 col-xs-12 name_form" name="ciudad" value="{{ $dates_patient[0]->ciudad_nacimiento }}"> 
                 </div>
             </div>
             <div class="col-md-2">
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Provincia</label> <br>
+                    <label for="exampleInputEmail1">Provincia</label> 
                     <small class="text-red" id=""></small>
                     <input type="text" class="form-control col-md-7 col-xs-12 name_form" name="provincia" value="{{ $dates_patient[0]->provincia }}"> 
                 </div>
             </div>
             <div class="col-md-2">
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Localidad</label> <br>
+                    <label for="exampleInputEmail1">Localidad</label> 
                     <small class="text-red" id=""></small>
                     <input type="text" class="form-control col-md-7 col-xs-12 name_form" name="localidad" value="{{ $dates_patient[0]->localidad_nacimiento }}"> 
                 </div>
@@ -135,7 +140,7 @@
                             <th>Nro.</th>
                             <th>Nombre Patologia</th>
                             <th>Descripcion</th>
-                            <th>Accion</th>
+                            <!--th>Accion</th-->
                         </thead>
                         <tbody class="charge_modify">
                             <?php $a = 1 ?> 
@@ -144,7 +149,7 @@
                                 <td>{{ $a++ }}</td>
                                 <td>{{ $d->nombre_patologia }}</td>
                                 <td>No hay descripcion</td>
-                                <td> <button class="btn btn-danger btn-xs"> <span class="glyphicon glyphicon-trash"></span> Eliminar</button> </td>
+                                <!--td> <button class="btn btn-danger btn-xs delete_patologie_patient_update" value="{{ $d->id_patologia }}"> <span class="glyphicon glyphicon-trash"></span> Eliminar</button> </td-->
                             </tr>
                             @empty
                                 <tr>
@@ -174,7 +179,9 @@
                         </h3>
                     </div>
                 </center>
-                <div class="box-body">
+                <div class="load_date_medic">
+                </div>
+                <div class="box-body update_dates_medic">
                     @forelse($dates_medic as $li)
                         <div class="row">
                             <div class="col-md-12">
@@ -184,7 +191,7 @@
                                             <th>
                                                 {{ $li->pregunta_mostrar }}
                                             </th>
-                                            <th width="100px" ></th>
+                                            <th width="140px" ></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -193,7 +200,8 @@
                                                 <p for="" id="{{ $li->id_patent_date_medic }}">{{ $li->descripcion }}</p>
                                             </td>
                                             <td>
-                                                <button class="btn btn-info btn-xs edit_dates_medic_patient" value="{{ $li->id_patent_date_medic }}"> <span class="glyphicon glyphicon-edit"></span> Editar</button>    
+                                                <button class="btn btn-info btn-xs edit_dates_medic_patient" value="{{ $li->id_patent_date_medic }}"> <span class="glyphicon glyphicon-edit"></span> Editar</button>  <button class="btn btn-danger btn-xs delete_dates_medic_patient" value="{{ $li->id_patent_date_medic }}"> <span class="glyphicon glyphicon-crash"></span> Eliminar</button>   
+                                                
                                             </td>
                                         </tr>
                                     </tbody>
@@ -208,12 +216,13 @@
                             <button class="btn btn-success add_date_new_medic" value="{{ $dates_patient[0]->id_paciente }}"> Agregar Nuevo dato Medico</button>
                         </center>
                     </div>
-                </div>         
+                </div>
+
             </div>
         </div>
         <div class="row">
             <center>
-                <button class="btn btn-success">Guardar Cambios</button>
+                <button type="submit" class="btn btn-success">Guardar Cambios</button>
             </center>
         </div>
     </form>

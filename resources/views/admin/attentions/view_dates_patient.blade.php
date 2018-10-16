@@ -115,9 +115,9 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="load_dates_patients_full" id="load_dates_patients_full">
                     </div>
-                    <div class="load_dates_patients_full" id="load_dates_patients_full">
-                    </div>
+                    </div>                    
                 </div>
                 <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab">
                     <div class="row">
