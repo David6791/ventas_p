@@ -271,7 +271,7 @@
           </ul>
         </li>        
         @endrole
-        @role('atencion_citas')
+        @role('citas_medicas')
         <li class="treeview">
           <a href="">
             <i class="fa fa-envelope"></i> <span>Atencion Citas Medicas</span>
@@ -280,7 +280,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            @permission('lista_citas')<li><a href="view_attention_lists" class="load-page"><i class="fa fa-circle-o"></i> Lista de Citas Medicas</a></li>@endpermission
+            @permission('lista_cita')<li><a href="view_attention_lists" class="load-page"><i class="fa fa-circle-o"></i> Lista de Citas Medicas</a></li>@endpermission
           </ul>
         </li>
         @endrole
