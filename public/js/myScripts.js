@@ -1953,6 +1953,7 @@
             url:$(this).attr('action'),
             data:$(this).serialize(),            
             success:function(data){
+                $(".update_dates_medic").remove()
                 $(".load_date_medic").html(data)
                 swal(
                     'Felicidades',
