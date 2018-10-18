@@ -1936,7 +1936,7 @@
         })
     }) 
     $(document).on('submit','.sendform_patients_update',function(e){
-        alert('llega')  
+        //alert('llega')  
         frutas = []
         $('.name_form').each(function(){
             aux = $(this).attr("name")
@@ -1954,7 +1954,9 @@
             data:$(this).serialize(),            
             success:function(data){
                 $(".update_dates_medic").remove()
-                $(".load_date_medic").html(data)
+                $(".add_completing").remove()
+                console.log(data)
+                $(".full_dates").html(data)
                 swal(
                     'Felicidades',
                     'El Rol se Actualizo Correctamente',

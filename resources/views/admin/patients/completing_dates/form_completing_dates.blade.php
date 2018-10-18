@@ -96,10 +96,10 @@
                     <label for="exampleInputEmail1">Nacionalidad</label>
                     <small class="text-red" id=""></small>
                     <select class="select2_group form-control name_form" name="nacionalidad" value="{{ $dates_patient[0]->pais_nacimiento }}">
-                        <option value="1">Boliviano</option>
-                        <option value="2">Argentino</option>
-                        <option value="3">Chileno</option>
-                        <option value="4">Peruano</option>                                       
+                        <option value="Boliviano">Boliviano</option>
+                        <option value="Argentino">Argentino</option>
+                        <option value="Chileno">Chileno</option>
+                        <option value="Peruano">Peruano</option>                                       
                     </select>
                 </div>
             </div>

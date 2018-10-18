@@ -244,6 +244,7 @@ class PatientsController extends Controller
         return view('admin.patients.completing_dates.table_new_dates_medic')->with('dates_medic',$rows1)->with('dates_patient',$rows2);
     }
     public function update_patients_dates(Request $request){
+        //return $request->all();
         $validatedData = $request->validate([
             'apellido_materno' => 'required|max:20',
             'apellido_paterno' => 'required',
@@ -259,7 +260,9 @@ class PatientsController extends Controller
             'provincia' => 'required',
             'telefono' => 'required'
         ]);
-        /*$modify_appointments = DB::table('medical_appointments')
+        $modify_appointments = DB::table('pacientes')
+            ->where('id_paciente', $request->id_patient)
+            ->update([
             'ci_paciente' => $request->ci,
             'ap_paterno' => $request->apellido_paterno,
             'ap_materno' => $request->apellido_materno,
@@ -269,10 +272,16 @@ class PatientsController extends Controller
             'telefono' => $request->telefono,
             'celular' => $request->celular,
             'fecha_nacimento' => $request->fecha_nacimiento,
-            'pais_nacimiento' => $request->pais,
+            'pais_nacimiento' => $request->nacionalidad,
             'ciudad_nacimiento' => $request->ciudad,
             'provincia' => $request->provincia,
-            'localidad_nacimiento' => $request->localidad
-        ]);*/
+            'localidad_nacimiento' => $request->localidad,
+            'filiacion_completa' => 's'
+        ]);
+        $query = "SELECT * FROM pacientes pa                        
+                    WHERE pa.id_paciente = :id_patient";
+        $patient=\DB::select(\DB::raw($query),array('id_patient'=>$request->id_patient));
+        //return $patient;
+        return view('admin.patients.completing_dates.load_dates_full')->with('dates_patient',$patient);
     }
 }

@@ -20,6 +20,16 @@ class AttentionsController extends Controller
     }
     public function start_appointment_dates(Request $request){
         //return $request->all();
+        $quer = "SELECT id_patient FROM medical_appointments WHERE id_medical_appointments = :id";
+        $id=\DB::select(\DB::raw($quer),array('id'=>$request->id_appointments));
+        //return $id;
+        $pat = "SELECT * FROM pacientes pa
+                        INNER JOIN pacientes_patologias pap
+                            ON pa.id_paciente = pap.id_paciente
+                        INNER JOIN patologias pat
+                            ON pat.id_patologia = pap.id_patologia
+                    WHERE pa.id_paciente = :id_patient";
+        $patologias=\DB::select(\DB::raw($pat),array('id_patient'=>$id[0]->id_patient));
         $query = "SELECT pa.filiacion_completa, pa.id_paciente, pa.ci_paciente, pa.ap_paterno, pa.ap_materno, pa.nombres, pa.sexo, pa.direccion, pa.telefono, pa.celular, pa.fecha_nacimento, pa.pais_nacimiento, pa.ciudad_nacimiento, pa.provincia, pa.localidad_nacimiento, pa.fecha_creacion, pa.esta_paciente FROM medical_appointments  map
                         INNER JOIN pacientes pa
                             ON pa.id_paciente = map.id_patient
@@ -81,6 +91,14 @@ class AttentionsController extends Controller
         //return $data2;
         //return var_dump(json_decode($data2[1],true)["name_medical_exam"]);
         //return ['id_medical_exam'];
+        $query9 = "SELECT * FROM pacientes pa
+                        INNER JOIN patients_dates_medic ptm
+                            ON pa.id_paciente = ptm.id_patient
+                        INNER JOIN datos_medicos dm
+                            ON dm.id_dato_medico = ptm.id_date_medic
+                    WHERE pa.id_paciente = :id_patient";
+        $rows9=\DB::select(\DB::raw($query9),array('id_patient'=>$id[0]->id_patient));
+        //return $rows9;
         $query6 = "SELECT * FROM view_transfers_medics(:id)";
         $rows6=\DB::select(\DB::raw($query6),array('id'=>$request->id_appointments));
 
@@ -106,10 +124,10 @@ class AttentionsController extends Controller
             //return $rows7;
             $array1 = ["detalle"=>'si'];
             //return $array1['detalle'];
-            return view('admin.attentions.view_dates_patient')->with('dates_patient',$rows)->with('list_app',$row)->with('dat',$rows2)->with('dates_cita_end',$rows3)->with('list_mecines_disponibles',$rows4)->with('ex_medics',$data2)->with('types_transfer',$data3)->with('control',$array1);
+            return view('admin.attentions.view_dates_patient')->with('pat',$patologias)->with('datos_medicos',$rows9)->with('dates_patient',$rows)->with('list_app',$row)->with('dat',$rows2)->with('dates_cita_end',$rows3)->with('list_mecines_disponibles',$rows4)->with('ex_medics',$data2)->with('types_transfer',$data3)->with('control',$array1);
         }else{
             $array1 = ["detalle"=>'no'];
-            return view('admin.attentions.view_dates_patient')->with('dates_patient',$rows)->with('list_app',$row)->with('dat',$rows2)->with('dates_cita_end',$rows3)->with('list_mecines_disponibles',$rows4)->with('ex_medics',$data2)->with('types_transfer',$data3)->with('control',$array1)->with('view_treatment',$rows8);
+            return view('admin.attentions.view_dates_patient')->with('pat',$patologias)->with('datos_medicos',$rows9)->with('dates_patient',$rows)->with('list_app',$row)->with('dat',$rows2)->with('dates_cita_end',$rows3)->with('list_mecines_disponibles',$rows4)->with('ex_medics',$data2)->with('types_transfer',$data3)->with('control',$array1)->with('view_treatment',$rows8);
         }
         return $rows7;
         //return view('attentions.view_dates_patient')->with('dates_patient',$rows)->with('list_app',$row)->with('dat',$rows2)->with('dates_cita_end',$rows3)->with('list_mecines_disponibles',$rows4)->with('ex_medics',$data2)->with('types_transfer',$data3);
