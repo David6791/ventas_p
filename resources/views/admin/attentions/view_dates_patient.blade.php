@@ -178,12 +178,14 @@
                                     <!--button type="button" class="btn btn-info"> <span class=""></span> Ver datos Filiacion</button-->
                                 @endif 
                                 <div class="row">
-                                    <div class="col-md-5">
+                                    <div class="col-md-12">
+                                        <center>
                                         @if(($dates_patient[0]->filiacion_completa)=='n')
                                             <button type="button" value="{{ $dates_patient[0]->id_paciente }}" class="filiation_completing btn btn-danger"> <span class=""></span> Completar datos Filiacion</button>
                                         @else
                                             <!--button type="button" class="btn btn-info"> <span class=""></span> Ver datos Filiacion</button-->
                                         @endif
+                                        </center>
                                     </div>                                    
                                 </div>
                             </div>
@@ -238,7 +240,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="cargar_completo">
+                    <div class="load_dates_appointments_one">
                     </div>
                 </div>
                 <div role="tabpanel" class="tab-pane fade" id="tab_content3" aria-labelledby="profile-tab">

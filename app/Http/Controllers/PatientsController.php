@@ -281,7 +281,20 @@ class PatientsController extends Controller
         $query = "SELECT * FROM pacientes pa                        
                     WHERE pa.id_paciente = :id_patient";
         $patient=\DB::select(\DB::raw($query),array('id_patient'=>$request->id_patient));
+        $query1 = "SELECT * FROM pacientes pa
+                        INNER JOIN pacientes_patologias pap
+                            ON pa.id_paciente = pap.id_paciente
+                        INNER JOIN patologias pat
+                            ON pat.id_patologia = pap.id_patologia
+                    WHERE pa.id_paciente = :id_patient and pap.estado_pac_pat = 'activo'";
+        $rows1=\DB::select(\DB::raw($query1),array('id_patient'=>$request->id_patient));
+        $query2 = "SELECT * FROM patients_dates_medic pdm
+                        INNER JOIN datos_medicos dm
+                        ON pdm.id_date_medic = dm.id_dato_medico
+                    WHERE id_patient = :id";
+        $rows2=\DB::select(\DB::raw($query2),array('id'=>$request->id_patient));
         //return $patient;
-        return view('admin.patients.completing_dates.load_dates_full')->with('dates_patient',$patient);
+        //return $rows1;
+        return view('admin.patients.completing_dates.load_dates_full')->with('dates_patient',$patient)->with('datos_medicos',$rows2)->with('patologias',$rows1);
     }
 }

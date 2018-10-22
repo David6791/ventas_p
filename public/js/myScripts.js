@@ -1953,7 +1953,7 @@
             url:$(this).attr('action'),
             data:$(this).serialize(),            
             success:function(data){
-                $(".update_dates_medic").remove()
+                //$(".update_dates_medic").remove()                
                 $(".add_completing").remove()
                 console.log(data)
                 $(".full_dates").html(data)
@@ -1977,6 +1977,57 @@
                     }              
                     
                 }                
+            }
+        })
+    })
+    $(document).on('click','.load_dates_appoinments',function(e){
+        //alert("llego")
+        e.preventDefault(e)
+        $.ajax({
+            type:'POST',
+            url:'/load_dates_appoinments',
+            data:$(this).serialize(),
+            data:{id_appointments:$(this).attr('value'),_token:$('meta[name="csrf-token"]').attr('content')},
+            success:function(data){                
+                $(".load_dates_appointments_one").html(data) 
+                swal(
+                    '',
+                    'Correcto',
+                    'success'
+                  )
+            },error:function(data){
+                swal(
+                    'Error!',
+                    'El Paciente aun no esta registrado',
+                    'error'
+                  )
+            }
+
+        })
+    })
+    $(document).on('submit','.form_send_dates_appointments_send',function(e){
+        $.ajaxSetup({
+            header:$('meta[name="_token"]').attr('content')
+        })
+        e.preventDefault(e)
+        $.ajax({
+            type:$(this).attr('method'),
+            url:$(this).attr('action'),
+            data:$(this).serialize(),
+            success:function(data){  
+                $("#contentGlobal").html(data)          
+                swal(
+                    'Felicidades',
+                    'Se registro correctamente el Nuevo Dato Medico',
+                    'success'
+                  )
+            },
+            error:function(data){
+                swal(
+                    'Good job!',
+                    'You clicked the button!',
+                    'error'
+                  )
             }
         })
     })

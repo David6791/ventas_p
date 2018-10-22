@@ -133,7 +133,22 @@ class AttentionsController extends Controller
         //return view('attentions.view_dates_patient')->with('dates_patient',$rows)->with('list_app',$row)->with('dat',$rows2)->with('dates_cita_end',$rows3)->with('list_mecines_disponibles',$rows4)->with('ex_medics',$data2)->with('types_transfer',$data3);
     }
     public function load_dates_appoinment(Request $request){
-        return $request->all();
+        //return $request->all();
+        $query = "SELECT ma.id_medical_appointments, ma.date_appointments, sc.name_schedules, ht.start_time, us.name, us.apellidos, ta.name_type, ma.appointment_description FROM medical_appointments ma 
+                        INNER JOIN medical_assignments mas
+                            ON mas.id_medical_assignments = ma.id_medical_assignments
+                        INNER JOIN users us
+                            ON us.id = mas.id_user
+                        INNER JOIN schedules sc
+                            ON sc.id_schedule = mas.id_schedul
+                        INNER JOIN hour_turns ht
+                            ON ht.id_hour_turn = ma.id_turn_hour
+                        INNER JOIN types_appointsment ta
+                            ON ta.id_type_appointments = ma.type_appoinment
+                    WHERE ma.id_medical_appointments = :id_appointments";
+        $rows=\DB::select(\DB::raw($query),array('id_appointments'=>$request->id_appointments));
+        return view('admin.attentions.load_view_dates_appointments')->with('dates_cita',$rows);
+
     }
     public function load_dates_filiation_full(Request $request){
         $query = "SELECT * FROM pacientes pa
@@ -154,7 +169,7 @@ class AttentionsController extends Controller
         return view('attentions.view_filiation_dates_full')->with('patologias',$rows)->with('datos_medicos',$rows1);
     }
     public function save_dates_appoinments_date(Request $request){
-        //return $request->all();
+        return $request->all();
         /* Modificar los datos de aqui para cer que se puede insertar. */
         $al = $request->all();
         foreach($al as $row =>$val) {
@@ -165,6 +180,7 @@ class AttentionsController extends Controller
                 //json_decode($data2);
             }
         }
+        return $data2;
         //return json_encode( $data2);
         /*DB::table('notes_medic_dates_appoinments')->insert([
             'id_medical_appoinments' => $request->id_appoinments,
@@ -192,9 +208,9 @@ class AttentionsController extends Controller
                 'dates_register_appoinments' => json_encode($data2)
             ]);
         }
-        /*$query = "SELECT * FROM notes_medic_dates_appoinments";
+        $query = "SELECT * FROM notes_medic_dates_appoinments";
         $rows=\DB::select(\DB::raw($query));
-        return json_decode($rows[0]->dates_register_appoinments);*/
+        return json_decode($rows[0]->dates_register_appoinments);
 
     }
     public function load_medicine_table(Request $request){
