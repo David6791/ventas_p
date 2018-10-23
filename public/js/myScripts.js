@@ -2005,6 +2005,25 @@
 
         })
     })
+    $(document).on('click', '.eliminar_medicine', function(e){        
+        $(this).closest('tr').remove()
+    })
+    $(document).on('click','.move_file',function(e){        
+        e.preventDefault(e)
+        $.ajax({
+            type:'POST',
+            url:'/load_medicine_table',
+            data:{id_medicine:$(this).attr('value'),_token:$('meta[name="csrf-token"]').attr('content')},
+            success:function(data){                
+                //$("#contentGlobal").html(data) 
+                //alert('asdasdasd')
+                $('.add_medicines tbody').append('<tr style="text-align:center"><td>'+data[0].name_medicine+'</td><td style="text-align:center"><input type="text" name="cantidad[]" style="width:50px; text-align:center;" value="1"><input type="hidden" name="id_medicine[]" style="width:50px; text-align:center;" value="'+data[0].id_medicines+'"></td><td><button class="btn btn-danger btn-sm eliminar_medicine"><span class="fa fa-times-circle">Eliminar</span></button></td></tr>')               
+            },error:function(data){
+                //alert('asdsad')                
+            }
+
+        })
+    })
     $(document).on('submit','.form_send_dates_appointments_send',function(e){
         $.ajaxSetup({
             header:$('meta[name="_token"]').attr('content')
@@ -2015,7 +2034,102 @@
             url:$(this).attr('action'),
             data:$(this).serialize(),
             success:function(data){  
-                $("#contentGlobal").html(data)          
+                $('.load_notes_medic').remove()
+                console.log(data)
+                $(".load_new_notes_medic").html(data)          
+                swal(
+                    'Felicidades',
+                    'Se registro correctamente el Nuevo Dato Medico',
+                    'success'
+                  )
+            },
+            error:function(data){
+                swal(
+                    'Good job!',
+                    'You clicked the button!',
+                    'error'
+                  )
+            }
+        })
+    })
+    $(document).on('click','.click_cancel_1',function(e){
+        //alert('#.'+$(this).attr('value'))
+        var x = $(this).attr('value')
+        //$('#'+x).removeAttr("disabled")
+        $('#datos').prop('disabled', true);
+    })
+    $(document).on('click','.click_exec_1',function(e){
+        //alert('#.'+$(this).attr('value'))
+        var x = $(this).attr('value')
+        $('#datos').removeAttr("disabled")
+    })
+    $(document).on('submit','.form_send_dates_treatment',function(e){
+        $.ajaxSetup({
+            header:$('meta[name="_token"]').attr('content')
+        })
+        e.preventDefault(e)
+        $.ajax({
+            type:$(this).attr('method'),
+            url:$(this).attr('action'),
+            data:$(this).serialize(),
+            success:function(data){  
+                $(".borrar_1").remove()
+                $(".treat_content").html(data)          
+                swal(
+                    'Felicidades',
+                    'Se registro correctamente el Nuevo Dato Medico',
+                    'success'
+                  )
+            },
+            error:function(data){
+                swal(
+                    'Good job!',
+                    'You clicked the button!',
+                    'error'
+                  )
+            }
+        })
+    })
+    $(document).on('submit','.sendform_medical_exam',function(e){
+        $('#medical_exam_modal').modal('toggle')
+        $.ajaxSetup({
+            header:$('meta[name="_token"]').attr('content')
+        })
+        e.preventDefault(e)
+        $.ajax({
+            type:$(this).attr('method'),
+            url:$(this).attr('action'),
+            data:$(this).serialize(),
+            success:function(data){
+                $('.con1').remove()
+                $(".con2").html(data)          
+                swal(
+                    'Felicidades',
+                    'Se registro correctamente el Nuevo Dato Medico',
+                    'success'
+                  )
+            },
+            error:function(data){
+                swal(
+                    'Good job!',
+                    'You clicked the button!',
+                    'error'
+                  )
+            }
+        })
+    })
+    $(document).on('submit','.sendform_transfer_patients',function(e){
+        $.ajaxSetup({
+            header:$('meta[name="_token"]').attr('content')
+        })
+        e.preventDefault(e)
+        $.ajax({
+            type:$(this).attr('method'),
+            url:$(this).attr('action'),
+            data:$(this).serialize(),
+            success:function(data){  
+                $('.c_transfer1').remove()
+                $(".c_transfer2").html(data)        
                 swal(
                     'Felicidades',
                     'Se registro correctamente el Nuevo Dato Medico',

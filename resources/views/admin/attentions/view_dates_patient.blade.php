@@ -244,71 +244,74 @@
                     </div>
                 </div>
                 <div role="tabpanel" class="tab-pane fade" id="tab_content3" aria-labelledby="profile-tab">
-                    <form class="form-horizontal form_send_dates_appointments_send" action="{{url('save_dates_appoinments_dates')}}" method="post">
-                    <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
-                    <input type="hidden" name="id_appoinments" value="{{ $dates_cita_end[0]->id_medical_appointments }}">
-                        <div class="row">
-                            <div class="x_panel">
-                                <div class="x_title">
-                                    <h3>Paciente: <small>{{ $dates_patient[0]->nombres }} {{ $dates_patient[0]->ap_paterno }} {{ $dates_patient[0]->ap_materno }} </small> </h3>
-                                </div>
-                                <div class="x_content">
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <label for=""> Tipo Consulta: </label> {{ $dates_cita_end[0]->name_type }}
-                                        </div>
-                                        <div class="col-md-8"></div>
+                    <div class="load_new_notes_medic"></div>
+                    <div class="load_notes_medic">                    
+                        <form class="form-horizontal form_send_dates_appointments_send" action="{{url('save_dates_appoinments_dates')}}" method="post">
+                        <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+                        <input type="hidden" name="id_appoinments" value="{{ $dates_cita_end[0]->id_medical_appointments }}">
+                            <div class="row">
+                                <div class="x_panel">
+                                    <div class="x_title">
+                                        <h3>Paciente: <small>{{ $dates_patient[0]->nombres }} {{ $dates_patient[0]->ap_paterno }} {{ $dates_patient[0]->ap_materno }} </small> </h3>
                                     </div>
-                                    @foreach($dat as $lo)
-                                    <div class="row">
-                                        <div class="col-md-1"></div>
-                                        <div class="col-md-10">
-                                            <label for="">{{ $lo->name_date }}: </label>
-                                            <textarea rows=5 name="{{ $lo->id_date_register }}" placeholder="{{ $lo->description_dates }}..." id="message" required="required" class="form-control" name="message" data-parsley-trigger="keyup" data-parsley-minlength="20" data-parsley-maxlength="100" data-parsley-minlength-message="Come on! You need to enter at least a 20 caracters long comment.." data-parsley-validation-threshold="10"></textarea>    
-                                        </div>                                
-                                    </div> <br>
-                                    @endforeach
-                                    <div class="row">
-                                        <div class="col-md-1"></div>
-                                        <div class="col-md-10">
-                                        <label for="">Esta Cita Medica tendra Reconsulta...?</label>
-                                            <div class="row"> <br>                                            
-                                                <div class="col-md-2">
-                                                    <button type="button" class="btn btn-info click_exec_1"  value="">SI   </button>
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <button type="button" class="btn btn-danger click_cancel_1"  value="">NO   </button>
-                                                </div>
-                                                <div class="form-group col-md-6">
-                                                    <label for="">Observaciones...</label>
-                                                    <div class="form-group col-md-12">
-                                                        <textarea class="form-control" rows="3" disabled placeholder="Escribir aqui ..." id="datos" name="observations_appointments"></textarea>
+                                    <div class="x_content">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <label for=""> Tipo Consulta: </label> {{ $dates_cita_end[0]->name_type }}
+                                            </div>
+                                            <div class="col-md-8"></div>
+                                        </div>
+                                        @foreach($dat as $lo)
+                                        <div class="row">
+                                            <div class="col-md-1"></div>
+                                            <div class="col-md-10">
+                                                <label for="">{{ $lo->name_date }}: </label>
+                                                <textarea rows=3 name="{{ $lo->id_date_register }}" placeholder="{{ $lo->description_dates }}..." id="message" required="required" class="form-control" name="message" data-parsley-trigger="keyup" data-parsley-minlength="20" data-parsley-maxlength="100" data-parsley-minlength-message="Come on! You need to enter at least a 20 caracters long comment.." data-parsley-validation-threshold="10"></textarea>    
+                                            </div>                                
+                                        </div> <br>
+                                        @endforeach
+                                        <div class="row">
+                                            <div class="col-md-1"></div>
+                                            <div class="col-md-10">
+                                            <label for="">Esta Cita Medica tendra Reconsulta...?</label>
+                                                <div class="row"> <br>                                            
+                                                    <div class="col-md-2">
+                                                        <button type="button" class="btn btn-info click_exec_1"  value="">SI   </button>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <button type="button" class="btn btn-danger click_cancel_1"  value="">NO   </button>
+                                                    </div>
+                                                    <div class="form-group col-md-6">
+                                                        <label for="">Observaciones...</label>
+                                                        <div class="form-group col-md-12">
+                                                            <textarea class="form-control" rows="3" disabled placeholder="Escribir aqui ..." id="datos" name="observations_appointments"></textarea>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-1"></div>
-                                        <div class="col-md-10">
-                                            <label for="">Observaciones de la Cita Medica</label>
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <textarea class="form-control" placeholder="Escriba aqui las Observaciones de la Cita Medica..." rows="5" name="observation_appointment_dates" id=""></textarea>
+                                        <div class="row">
+                                            <div class="col-md-1"></div>
+                                            <div class="col-md-10">
+                                                <label for="">Observaciones de la Cita Medica</label>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <textarea class="form-control" placeholder="Escriba aqui las Observaciones de la Cita Medica..." rows="5" name="observation_appointment_dates" id=""></textarea>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div> <br>
-                                    <div class="row">
-                                        <div class="col-md-5"></div>
-                                        <div class="col-md-3">
-                                            <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Guardar Datos Cita Medica</button>
+                                        </div> <br>
+                                        <div class="row">
+                                            <div class="col-md-5"></div>
+                                            <div class="col-md-3">
+                                                <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Guardar Datos Cita Medica</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>    
-                    </form>                                    
+                            </div>    
+                        </form>
+                    </div>                 
                 </div>
                 <div role="tabpanel" class="tab-pane fade" id="tab_content4" aria-labelledby="profile-tab">
                     <div class="row">
@@ -410,11 +413,12 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div> <br>
+                                                </div> <br> 
                                                 <div class="row">
-                                                    <div class="col-md-5"></div>
-                                                    <div class="col-md-3">
-                                                        <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Guardar Datos Tratamiento</button>
+                                                    <div class="col-md-12"> <label for="" style="color:#FFF";>asdasdsa</label>
+                                                        <center>
+                                                            <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Guardar Datos Tratamiento</button>
+                                                        </center>                                                        
                                                     </div>
                                                 </div>   
                                             </div>
@@ -505,6 +509,7 @@
                                 </div>                        
                             </div>                         
                         </div>
+                    </div>
                 </div>
                 <div role="tabpanel" class="tab-pane fade" id="tab_content5" aria-labelledby="profile-tab">
                     <div class="row">
