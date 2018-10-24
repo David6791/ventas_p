@@ -50,9 +50,15 @@ class AttentionsController extends Controller
                     SELECT id_patient FROM medical_appointments WHERE id_medical_appointments = :id_appoinments
                     ) ORDER BY data_creation_appointments";
         $row=\DB::select(\DB::raw($querys),array('id_appoinments'=>$request->id_appointments));
-        $query = "SELECT * FROM dates_of_register
-                    WHERE state_date_register = 'activo'";
-        $rows2=\DB::select(\DB::raw($query));
+        $query = "SELECT * FROM public.view_notes_medics(:id_ap)";
+        $rows2=\DB::select(\DB::raw($query),array('id_ap'=>$request->id_appointments));
+        $no = array();
+        for($i = 0 ; $i < count($rows2); $i++){
+            $asd = json_encode($rows2[$i]->j);
+            $asdd = json_decode($asd);
+            $no[]=json_decode($asdd,true);
+        }
+        
         $query3 = "SELECT * FROM medical_appointments map
                     INNER JOIN types_appointsment ta
                         on ta.id_type_appointments = map.type_appoinment
@@ -119,15 +125,17 @@ class AttentionsController extends Controller
                         ON m.id_medicines = td.id_medicine
                 WHERE tp.id_medical_appointments = :id_appointments";
         $rows8=\DB::select(\DB::raw($query8),array('id_appointments'=>$request->id_appointments));
+        $queryy = "SELECT * FROM notes_medic_dates_appoinments nmd WHERE id_medical_appoinments = :id_a";
+        $rowss=\DB::select(\DB::raw($queryy),array('id_a'=>$request->id_appointments));
         //return $rows7[0]->count;
         if($rows7[0]->count === 0){
             //return $rows7;
             $array1 = ["detalle"=>'si'];
             //return $array1['detalle'];
-            return view('admin.attentions.view_dates_patient')->with('pat',$patologias)->with('datos_medicos',$rows9)->with('dates_patient',$rows)->with('list_app',$row)->with('dat',$rows2)->with('dates_cita_end',$rows3)->with('list_mecines_disponibles',$rows4)->with('ex_medics',$data2)->with('types_transfer',$data3)->with('control',$array1);
+            return view('admin.attentions.view_dates_patient')->with('datos_1',$rowss)->with('pat',$patologias)->with('datos_medicos',$rows9)->with('dates_patient',$rows)->with('list_app',$row)->with('dat_register',$no)->with('dates_cita_end',$rows3)->with('list_mecines_disponibles',$rows4)->with('ex_medics',$data2)->with('types_transfer',$data3)->with('control',$array1);
         }else{
             $array1 = ["detalle"=>'no'];
-            return view('admin.attentions.view_dates_patient')->with('pat',$patologias)->with('datos_medicos',$rows9)->with('dates_patient',$rows)->with('list_app',$row)->with('dat',$rows2)->with('dates_cita_end',$rows3)->with('list_mecines_disponibles',$rows4)->with('ex_medics',$data2)->with('types_transfer',$data3)->with('control',$array1)->with('view_treatment',$rows8);
+            return view('admin.attentions.view_dates_patient')->with('datos_1',$rowss)->with('pat',$patologias)->with('datos_medicos',$rows9)->with('dates_patient',$rows)->with('list_app',$row)->with('dat_register',$no)->with('dates_cita_end',$rows3)->with('list_mecines_disponibles',$rows4)->with('ex_medics',$data2)->with('types_transfer',$data3)->with('control',$array1)->with('view_treatment',$rows8);
         }
         return $rows7;
         //return view('attentions.view_dates_patient')->with('dates_patient',$rows)->with('list_app',$row)->with('dat',$rows2)->with('dates_cita_end',$rows3)->with('list_mecines_disponibles',$rows4)->with('ex_medics',$data2)->with('types_transfer',$data3);
@@ -155,7 +163,43 @@ class AttentionsController extends Controller
         $rows1=\DB::select(\DB::raw($query1),array('id_a'=>$request->id_appointments));
         $query2 = "SELECT * FROM notes_medic_dates_appoinments nmd WHERE id_medical_appoinments = :id_a";
         $rows2=\DB::select(\DB::raw($query2),array('id_a'=>$request->id_appointments));
-        return view('admin.attentions.load_view_dates_appointments')->with('dates_cita',$rows)->with('notes_medic',$rows1)->with('datos_1',$rows2);
+        $query3 = "SELECT * FROM treatment_patients tp
+                        INNER JOIN treatment_details td
+                            ON tp.id_treatment = td.id_treatment
+                        INNER JOIN medicines m
+                            ON m.id_medicines = td.id_medicine
+                    WHERE tp.id_medical_appointments = :id_appointments";
+        $rows3=\DB::select(\DB::raw($query3),array('id_appointments'=>$request->id_appointments));
+        $query4 = "SELECT mep.id_medical_exam_patient, mep.id_appoinments, mep.reason_medical_examn, mep.observation_medical_exam, mep.date_creation, mass.id_user, us.name, us.apellidos,
+                        p.nombres, p.ap_paterno, p.ap_materno, p.fecha_nacimento, p.ci_paciente, mee.name_medical_exam
+                        FROM medical_exam_patients mep
+                        INNER JOIN medical_appointments mapp 
+                            ON mep.id_appoinments = mapp.id_medical_appointments
+                        INNER JOIN medical_assignments mass
+                            ON mass.id_medical_assignments = mapp.id_medical_assignments
+                        INNER JOIN users us
+                            ON us.id = mass.id_user
+                        INNER JOIN pacientes p
+                            ON p.id_paciente = mep.id_patient
+                        INNER JOIN medical_exam mee
+                            ON mee.id_medical_exam = mep.id_medical_exam
+                    WHERE id_medical_appointments = :id_appoinments
+                        ORDER BY id_medical_exam_patient ASC LIMIT 1";
+        $rows4=\DB::select(\DB::raw($query4),array('id_appoinments'=>$request->id_appointments));
+        $query5 = "SELECT * FROM transfer_patients tp
+                        INNER JOIN pacientes p
+                            ON p.id_paciente = tp.id_patient_trasfer
+                        INNER JOIN types_transfer tt
+                            ON tt.id_type_transfer = tp.id_type_trasnfer
+                        INNER JOIN medical_appointments mapp
+                            ON mapp.id_medical_appointments = tp.id_appoinments
+                        INNER JOIN medical_assignments mass
+                            ON mass.id_medical_assignments = mapp.id_medical_assignments
+                        INNER JOIN users us
+                            ON us.id = mass.id_user
+                    WHERE id_appoinments = :id_appo";
+        $rows5=\DB::select(\DB::raw($query5),array('id_appo'=>$request->id_appointments));
+        return view('admin.attentions.load_view_dates_appointments')->with('dates_cita',$rows)->with('notes_medic',$rows1)->with('datos_1',$rows2)->with('treat',$rows3)->with('exam_medic',$rows4)->with('transfer_medic',$rows5);
 
     }
     public function load_dates_filiation_full(Request $request){

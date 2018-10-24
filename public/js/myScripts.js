@@ -2090,7 +2090,7 @@
             }
         })
     })
-    $(document).on('submit','.sendform_medical_exam',function(e){
+    $(document).on('submit','.sendform_medical_exam_1',function(e){
         $('#medical_exam_modal').modal('toggle')
         $.ajaxSetup({
             header:$('meta[name="_token"]').attr('content')
@@ -2143,6 +2143,21 @@
                     'error'
                   )
             }
+        })
+    })
+    $(document).on('click','.end_medical_appointments',function(e){
+        //alert($(this).attr('value'))
+        e.preventDefault(e)
+        $.ajax({
+            type:'POST',
+            url:'/end_medical_appointment',
+            data:$(this).serialize(),
+            data:{id_appointments:$(this).attr('value'),_token:$('meta[name="csrf-token"]').attr('content')},
+            success:function(data){
+                $("#contentGlobal").html(data)                
+            },error:function(data){
+            }
+
         })
     })
 })
