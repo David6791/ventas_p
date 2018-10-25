@@ -99,6 +99,18 @@ Route::post('/edit_patologies_charge','ManageDatesController@edit_patologies_cha
 Route::post('/edit_phatologies','ManageDatesController@edit_phatologies');
 Route::post('/darBajaPatologie','ManageDatesController@darBajaPatologie');
 
+Route::get('/index_dates_register','ManageDatesController@index_dates_register');
+
+Route::post('/darBajaDates_register','ManageDatesController@darBajaDates_register');
+
+Route::post('/edit_date_register_functions','ManageDatesController@edit_date_register_functions');
+
+
+Route::post('/edit_dates_register','ManageDatesController@edit_dates_register');
+
+Route::post('/create_date_register','ManageDatesController@create_date_register');
+
+
 
 Route::get('/index_medical_dates','ManageDatesController@index_medical_date');
 Route::post('/create_medical_dates','ManageDatesController@create_medical_date');
@@ -207,4 +219,12 @@ Route::post('/completing_dates_patient', 'PatientsController@completing_dates_pa
 Route::post('/delete_dates_medic_patient', 'PatientsController@delete_dates_medic_patient');
 
 Route::post('/update_patients_dates', 'PatientsController@update_patients_dates');
+
+
+
+/* Rutas para las estadisticas del Policlinico */
+Route::get('/index_statistics', 'StatisticsController@index_statistics');
+Route::post('/view_day', 'StatisticsController@view_day');
+
+
 

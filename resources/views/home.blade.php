@@ -225,6 +225,7 @@
             @permission('ver_especialidades')<li><a href="index_especialidades" class="load-page"><i class="fa fa-circle-o"></i> Especialidades</a></li>@endpermission
             @permission('ver_patologias')<li><a href="index_pathologies" class="load-page"><i class="fa fa-circle-o"></i> Patologias</a></li>@endpermission
             @permission('ver_datos_medicos')<li><a href="index_medical_dates" class="load-page"><i class="fa fa-circle-o"></i> Datos Medicos</a></li>@endpermission
+            @permission('ver_datos_registro')<li><a href="index_dates_register" class="load-page"><i class="fa fa-circle-o"></i> Datos Cita Medica</a></li>@endpermission
           </ul>
         </li>
         @endrole
@@ -302,38 +303,19 @@
           @endrole
         </li>
         <li class="treeview">
+          @role('estadisticas')  
           <a href="#">
-            <i class="fa fa-share"></i> <span>Multilevel</span>
+            <i class="fa fa-user"></i> <span>Estadisticas</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
-          </a>
+          </a>                 
           <ul class="treeview-menu">
-            <li><a href="#"><i class="fa fa-circle-o"></i> Level One</a></li>
-            <li class="treeview">
-              <a href="#"><i class="fa fa-circle-o"></i> Level One
-                <span class="pull-right-container">
-                  <i class="fa fa-angle-left pull-right"></i>
-                </span>
-              </a>
-              <ul class="treeview-menu">
-                <li><a href="#"><i class="fa fa-circle-o"></i> Level Two</a></li>
-                <li class="treeview">
-                  <a href="#"><i class="fa fa-circle-o"></i> Level Two
-                    <span class="pull-right-container">
-                      <i class="fa fa-angle-left pull-right"></i>
-                    </span>
-                  </a>
-                  <ul class="treeview-menu">
-                    <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
-                    <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
-                  </ul>
-                </li>
-              </ul>
-            </li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> Level One</a></li>
+            @permission('Ver_estadisticas')<li><a href="index_statistics" class="load-page"><i class="fa fa-circle-o"></i> Ver Estadisticas</a></li>@endpermission
           </ul>
-        </li>        
+          @endrole
+        </li>
+              
       </ul>
     </section>
     <!-- /.sidebar -->

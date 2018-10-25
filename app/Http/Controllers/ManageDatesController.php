@@ -109,4 +109,49 @@ class ManageDatesController extends Controller
             'ManageDatesController@index_medical_date'
         );
     }
+    public function index_dates_register(){
+        $query = "SELECT * FROM dates_of_register  ORDER BY id_date_register";
+        $rows=\DB::select(\DB::raw($query));
+        return view('admin.manage_dates.index_dates_register')->with('list',$rows);
+    }
+    public function darBajaDates_register(Request $request){
+        $query = "select * from eliminar_date_register_cita(:pat,:us)";
+        $rows=\DB::select(\DB::raw($query),array('pat'=>$request->id,'us'=>Auth::user()->id));
+        return redirect()->action(
+            'ManageDatesController@index_dates_register'
+        );
+    }
+    public function edit_date_register_functions(Request $request){
+        $query = "select * from dates_of_register where id_date_register = :id_med";
+        $rows=\DB::select(\DB::raw($query),array('id_med'=>$request->id));
+        return $rows;
+    }
+    public function edit_dates_register(Request $request){        
+        $validatedData = $request->validate([
+            'nombre_dato' => 'required|max:30',
+            'descripcion_dato' => 'required'
+        ]);
+        DB::table('dates_of_register')
+            ->where('id_date_register', $request->_id)
+            ->update(['name_date' => $request->nombre_dato,
+                        'description_dates' => $request->descripcion_dato
+            ]);
+        return redirect()->action(
+            'ManageDatesController@index_dates_register'                   
+        );
+    }
+    public function create_date_register(Request $request){
+        $validatedData = $request->validate([
+            'nombre_dato' => 'required|max:30',
+            'descripcion_dato' => 'required'
+        ]);
+        DB::insert('insert into dates_of_register (name_date, description_dates, id_user_register) values (?, ?, ?)', [
+            $request->nombre_dato,
+            $request->descripcion_dato,
+            Auth::user()->id
+            ]);
+        return redirect()->action(
+            'ManageDatesController@index_dates_register'                   
+        );
+    }
 }

@@ -2160,4 +2160,144 @@
 
         })
     })
+    $(document).on('click','.get_BajaDate_register',function(e){   
+        e.preventDefault(e)
+        $.ajax({
+            type:'POST',
+            url:'/darBajaDates_register',
+            data:{id:$(this).attr('value'),_token:$('meta[name="csrf-token"]').attr('content')},
+            success:function(data){
+                $("#contentGlobal").html(data)   
+                
+            },
+            error:function(data){
+                //console.log(data)
+            }
+        })
+    })   
+    $(document).on('click','.edit_date_register_function',function(e){
+        //alert($(this).attr('value'))
+        e.preventDefault(e)
+        $.ajax({
+            type:'POST',
+            url:'/edit_date_register_functions',
+            data:$(this).serialize(),
+            data:{id:$(this).attr('value'),_token:$('meta[name="csrf-token"]').attr('content')},
+            success:function(data){
+                $('#edit_dates_register').modal({
+                    show: 'true',
+                    backdrop: 'static',
+                    keyboard: false,
+                })  
+                $('#_id').val(data[0].id_date_register)
+                $('#name_date').val(data[0].name_date)
+                $('#_description').val(data[0].description_dates)
+                //$("#contentGlobal").html(data)                
+            },error:function(data){
+            }
+
+        })
+    })
+    $(document).on('submit','.sendform_phatologies_edit',function(e){
+        frutas = []
+        $('.name_form').each(function(){
+            aux = $(this).attr("name")
+            frutas.push(aux)
+            
+        })
+        //$('#medical_exam_modal').modal('toggle')
+        $.ajaxSetup({
+            header:$('meta[name="_token"]').attr('content')
+        })
+        e.preventDefault(e)
+        $.ajax({
+            type:$(this).attr('method'),
+            url:$(this).attr('action'),
+            data:$(this).serialize(),
+            success:function(data){
+                $("#contentGlobal").html(data)   
+                //$('.con1').remove()
+                //$(".con2").html(data)          
+                swal(
+                    'Felicidades',
+                    'Se registro correctamente el Nuevo Dato Medico',
+                    'success'
+                  )
+                  $('.modal-backdrop').remove()  
+            },
+            error:function(data){
+                var asd = Object.keys(data.responseJSON.errors)
+                  for(i = 0; i<frutas.length; i++){
+                      if(asd.includes(frutas[i])) {
+                          $( "input[name='"+frutas[i]+"']" ).parent().find("small").text(data.responseJSON.errors[frutas[i]][0])
+                          //$( "input[name='"+frutas[i]+"']" ).parent().find("label").text(data.responseJSON.errors[frutas[i]][0])
+                          //$( "input[name='"+frutas[i]+"']" ).attr("placeholder", data.responseJSON.errors[frutas[i]][0])
+                          $( "textarea[name='"+frutas[i]+"']" ).parent().find("small").text(data.responseJSON.errors[frutas[i]][0])
+                      }else{
+                          $( "input[name='"+frutas[i]+"']" ).parent().find("small").text('')
+                          $( "textarea[name='"+frutas[i]+"']" ).parent().find("small").text('')
+                    }   
+                }
+            }
+        })
+    })
+    $(document).on('submit','.sendform_date_register',function(e){
+        //$('#modal-editrol').modal('toggle')
+        frutas = []
+        $('.name_form').each(function(){
+            aux = $(this).attr("name")
+            frutas.push(aux)
+            
+        })
+        data1=$(this).serialize()
+        $.ajaxSetup({
+            header:$('meta[name="_token"]').attr('content')
+        })
+        e.preventDefault(e)
+        $.ajax({
+            type:$(this).attr('method'),
+            url:$(this).attr('action'),
+            data:$(this).serialize(),            
+            success:function(data){
+                $("#contentGlobal").html(data)
+                swal(
+                    'Felicidades',
+                    'Se creo correctamente el Nuevo Dato',
+                    'success'
+                  )
+                  $('.modal-backdrop').remove()               
+            },
+            error:function(data){
+                var asd = Object.keys(data.responseJSON.errors)
+                for(i = 0; i<frutas.length; i++){
+                    if(asd.includes(frutas[i])) {
+                        $( "input[name='"+frutas[i]+"']" ).parent().find("small").text(data.responseJSON.errors[frutas[i]][0])
+                        $( "textarea[name='"+frutas[i]+"']" ).parent().find("small").text(data.responseJSON.errors[frutas[i]][0])
+                    }else{
+                        $( "input[name='"+frutas[i]+"']" ).parent().find("small").text('')
+                        $( "textarea[name='"+frutas[i]+"']" ).parent().find("small").text('')
+                    }              
+                    
+                }                
+            }
+        })
+    })  
+    $(document).on('click','.view_day',function(e){
+        //alert($(this).attr('value'))
+        e.preventDefault(e)
+        $.ajax({
+            type:'POST',
+            url:'/view_day',
+            data:$(this).serialize(),
+            data:{id:$(this).attr('value'),_token:$('meta[name="csrf-token"]').attr('content')},
+            success:function(data){                
+                $(".load_page_appointsment").html(data)                
+            },error:function(data){
+            }
+
+        })
+    })
+    $(document).on('click','.ver_info',function(e){
+        alert($('input:text[name=fecha]').val())
+    })
 })
