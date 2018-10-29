@@ -224,8 +224,11 @@ Route::post('/update_patients_dates', 'PatientsController@update_patients_dates'
 
 /* Rutas para las estadisticas del Policlinico */
 Route::get('/index_statistics', 'StatisticsController@index_statistics');
-Route::post('/view_day', 'StatisticsController@view_day');
+Route::post('/view_day', 'StatisticsController@view_day'); 
 
+Route::post('/view_range', 'StatisticsController@view_range'); 
+
+Route::post('/statistic_for_range', 'StatisticsController@statistic_for_range');
 Route::post('/statistic_for_day', 'StatisticsController@statistic_for_days');
 
 
@@ -243,3 +246,32 @@ Route::post('/baja_group_disease', 'DiseaseGroupController@baja_group_disease');
 Route::post('/load_dates_edit_group', 'DiseaseGroupController@load_dates_edit_group');
 
 Route::post('/edit_group', 'DiseaseGroupController@edit_group');
+
+
+
+/* Rutas para los Reportes */
+
+Route::get('/index_reports', 'ReportsController@index_reports');
+
+Route::get('/index_reports_general', 'ReportsController@index_reports_general');
+
+Route::post('/view_day_reports', 'ReportsController@view_day_reports');
+
+Route::post('/report_for_day', 'ReportsController@report_for_day');
+
+Route::post('/ver_info_report_ranges', 'ReportsController@ver_info_report_ranges');
+
+
+Route::post('/view_general_reports', 'ReportsController@view_general_reports');
+
+Route::post('/view_range_general_report', 'ReportsController@view_range_general_report');
+
+Route::post('/view_range_reports', 'ReportsController@view_range_reports');
+
+Route::post('/ver_info_report_general', 'ReportsController@ver_info_report_general');
+
+Route::post('/ver_info_report_range_full', 'ReportsController@ver_info_report_range_full');
+
+
+/* Registro de Examenes Medicos de pacientes con citas medicas que tienen examen medico */
+Route::get('/view_attention_lists_examen', 'AttentionsController@view_attention_lists_examen');

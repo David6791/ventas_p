@@ -2,12 +2,12 @@
     <div class="col-md-3">
         <div class="box box-primary">
             <div class="box-header">
-                <h3 class="box-title">Seleccione Tipo de Estadistica</h3>
+                <h3 class="box-title">Seleccione Tipo de Reporte</h3>
             </div>
             <div class="box-body">
                 <div class="vertical-menu">
-                    <a class="btn btn-success btn-sm view_day">Por Dia</a>
-                    <a class="btn btn-success btn-sm view_range" >Por Rango de Fecha</a>
+                    <a class="btn btn-success btn-sm view_day_report">Por Dia</a>
+                    <a class="btn btn-success btn-sm view_range_report" >Por Rango de Fecha</a>
                 </div> <br> <br>
                 <div class="load_page_appointsment">
                     

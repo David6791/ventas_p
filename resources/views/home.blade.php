@@ -169,22 +169,7 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MENU DE NAVEGACION</li>        
-        <li class="active treeview">
-          <a href="#">
-            <i class="fa fa-dashboard"></i> <span>Usuarios</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            @permission('Registrar')
-            <li class="active"><a href=""><i class="fa fa-circle-o"></i> Registro</a></li>
-            @endpermission
-            @permission('Ver_usuarios')
-            <li><a href="index_users" class="load-page"><i class="fa fa-circle-o"></i> Ver Usuarios</a></li>
-            @endpermission
-          </ul>
-        </li>
+        
         @role('admin_pacientes')
         <li class="treeview">
           <a href="#">
@@ -286,6 +271,7 @@
           </a>
           <ul class="treeview-menu">
             @permission('lista_cita')<li><a href="view_attention_lists" class="load-page"><i class="fa fa-circle-o"></i> Lista de Citas Medicas</a></li>@endpermission
+            @permission('registro_examenes')<li><a href="view_attention_lists_examen" class="load-page"><i class="fa fa-circle-o"></i> Registro de Examenes Medicos</a></li>@endpermission
           </ul>
         </li>
         @endrole
@@ -319,7 +305,32 @@
           </ul>
           @endrole
         </li>
-              
+        <li class="treeview">
+          @role('reportes_usuario')  
+          <a href="#">
+            <i class="fa fa-user"></i> <span>Reportes Usuario</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>                 
+          <ul class="treeview-menu">
+            @permission('Ver_reportes_usuario')<li><a href="index_reports" class="load-page"><i class="fa fa-circle-o"></i> Ver Reportes Usuario</a></li>@endpermission
+          </ul>
+          @endrole
+        </li>  
+        <li class="treeview">
+          @role('reportes_general')  
+          <a href="#">
+            <i class="fa fa-user"></i> <span>Reportes General</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>                 
+          <ul class="treeview-menu">
+          @permission('Ver_reportes_general')<li><a href="index_reports_general" class="load-page"><i class="fa fa-circle-o"></i> Ver Reporte General</a></li>@endpermission
+          </ul>
+          @endrole
+        </li> 
       </ul>
     </section>
     <!-- /.sidebar -->

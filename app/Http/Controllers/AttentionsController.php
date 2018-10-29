@@ -408,4 +408,16 @@ class AttentionsController extends Controller
         //return $rows;
         return view('attentions.view_appoinments_list_completo')->with('list',$rows);
     }
+    public function view_attention_lists_examen(){
+        //return 'sadsadsad';
+        $query = "SELECT * FROM medical_exam_patients mep 
+                        INNER JOIN medical_appointments ma
+                            ON ma.id_medical_appointments = mep.id_medical_exam_patient
+                        INNER JOIN pacientes p
+                            ON p.id_paciente = mep.id_patient
+                    WHERE mep.register = 'n'";
+        $rows=\DB::select(\DB::raw($query));
+        //return $rows;
+        return view('admin.attentions.view_appoinments_completing_examen')->with('list',$rows);
+    }
 }

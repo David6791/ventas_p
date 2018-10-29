@@ -14,7 +14,7 @@
                                 <div class="box-header">
                                     <h4 class="box-title text-green"> Roles Asignados</h4>
                                 </div>
-                                <table id="datatable" class="table table-striped table-bordered">
+                                <table id="datatable1" class="table table-striped table-bordered">
                                     <thead>
                                         <tr>
                                             <th>Nro.</th>
@@ -81,3 +81,6 @@
         </div>
     </div>
 </div>
+<script>
+    $('#datatable').DataTable();
+</script>

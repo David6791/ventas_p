@@ -2296,7 +2296,84 @@
             }
 
         })
+    })    
+    $(document).on('click','.view_range',function(e){
+        //alert($(this).attr('value'))
+        e.preventDefault(e)
+        $.ajax({
+            type:'POST',
+            url:'/view_range',
+            data:$(this).serialize(),
+            data:{id:$(this).attr('value'),_token:$('meta[name="csrf-token"]').attr('content')},
+            success:function(data){                
+                $(".load_page_appointsment").html(data)                
+            },error:function(data){
+            }
+
+        })
     })
+    
+    $(document).on('click','.view_range_report',function(e){
+        //alert($(this).attr('value'))
+        e.preventDefault(e)
+        $.ajax({
+            type:'POST',
+            url:'/view_range_reports',
+            data:$(this).serialize(),
+            data:{id:$(this).attr('value'),_token:$('meta[name="csrf-token"]').attr('content')},
+            success:function(data){                
+                $(".load_page_appointsment").html(data)                
+            },error:function(data){
+            }
+
+        })
+    })
+    $(document).on('click','.view_day_report',function(e){
+        //alert($(this).attr('value'))
+        e.preventDefault(e)
+        $.ajax({
+            type:'POST',
+            url:'/view_day_reports',
+            data:$(this).serialize(),
+            data:{id:$(this).attr('value'),_token:$('meta[name="csrf-token"]').attr('content')},
+            success:function(data){                
+                $(".load_page_appointsment").html(data)                
+            },error:function(data){
+            }
+
+        })
+    })  
+    $(document).on('click','.view_general_report',function(e){
+        //alert($(this).attr('value'))
+        e.preventDefault(e)
+        $.ajax({
+            type:'POST',
+            url:'/view_general_reports',
+            data:$(this).serialize(),
+            data:{id:$(this).attr('value'),_token:$('meta[name="csrf-token"]').attr('content')},
+            success:function(data){                
+                $(".load_page_appointsment").html(data)                
+            },error:function(data){
+            }
+
+        })
+    })  
+    $(document).on('click','.view_range_general_report',function(e){
+        //alert($(this).attr('value'))
+        e.preventDefault(e)
+        $.ajax({
+            type:'POST',
+            url:'/view_range_general_report',
+            data:$(this).serialize(),
+            data:{id:$(this).attr('value'),_token:$('meta[name="csrf-token"]').attr('content')},
+            success:function(data){                
+                $(".load_page_appointsment").html(data)                
+            },error:function(data){
+            }
+
+        })
+    })  
+   
     $(document).on('click','.ver_info',function(e){
         //alert($('input:text[name=fecha]').val())
         e.preventDefault(e)
@@ -2306,16 +2383,62 @@
             data:$(this).serialize(),
             data:{fecha:$('input:text[name=fecha]').val(),_token:$('meta[name="csrf-token"]').attr('content')},
             success:function(data){
-                //console.log(data)       
-                      
-                $(".load_statistic").html(data)                
+                $(".load_statistic").html(data)     
+                           
             },error:function(data){
             }
 
         })
     })
+    $(document).on('click','.ver_info_report',function(e){
+        //alert($('input:text[name=fecha]').val())
+        e.preventDefault(e)
+        $.ajax({
+            type:'POST',
+            url:'/report_for_day',
+            data:$(this).serialize(),
+            data:{fecha:$('input:text[name=fecha]').val(),_token:$('meta[name="csrf-token"]').attr('content')},
+            success:function(data){
+                $(".load_statistic").html(data)     
+                           
+            },error:function(data){
+            }
 
+        })
+    })
     
+    $(document).on('click','.ver_info_statics',function(e){
+        //alert($('input:text[name=fecha]').val())
+        e.preventDefault(e)
+        $.ajax({
+            type:'POST',
+            url:'/statistic_for_range',
+            data:$(this).serialize(),
+            data:{fecha:$('input:text[name=date_range]').val(),_token:$('meta[name="csrf-token"]').attr('content')},
+            success:function(data){
+                $(".load_statistic").html(data)     
+                           
+            },error:function(data){
+            }
+
+        })
+    })
+    $(document).on('click','.ver_info_report_range',function(e){
+        //alert($('input:text[name=fecha]').val())
+        e.preventDefault(e)
+        $.ajax({
+            type:'POST',
+            url:'/ver_info_report_ranges',
+            data:$(this).serialize(),
+            data:{fecha:$('input:text[name=date_range]').val(),_token:$('meta[name="csrf-token"]').attr('content')},
+            success:function(data){
+                $(".load_statistic").html(data)     
+                           
+            },error:function(data){
+            }
+
+        })
+    })
     $(document).on('submit','.sendform_group_disease',function(e){
         //$('#modal-editrol').modal('toggle')
         frutas = []
@@ -2441,4 +2564,36 @@
             }
         })
     })   
+    $(document).on('click','.ver_info_report_general',function(e){
+        //alert($('input:text[name=fecha]').val())
+        e.preventDefault(e)
+        $.ajax({
+            type:'POST',
+            url:'/ver_info_report_general',
+            data:$(this).serialize(),
+            data:{fecha:$('input:text[name=fecha]').val(),_token:$('meta[name="csrf-token"]').attr('content')},
+            success:function(data){
+                $(".load_statistic").html(data)     
+                           
+            },error:function(data){
+            }
+
+        })
+    })
+    $(document).on('click','.ver_info_report_range_full',function(e){
+        //alert($('input:text[name=fecha]').val())
+        e.preventDefault(e)
+        $.ajax({
+            type:'POST',
+            url:'/ver_info_report_range_full',
+            data:$(this).serialize(),
+            data:{fecha:$('input:text[name=date_range]').val(),_token:$('meta[name="csrf-token"]').attr('content')},
+            success:function(data){
+                $(".load_statistic").html(data)     
+                           
+            },error:function(data){
+            }
+
+        })
+    })
 })
