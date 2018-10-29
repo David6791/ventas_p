@@ -226,5 +226,20 @@ Route::post('/update_patients_dates', 'PatientsController@update_patients_dates'
 Route::get('/index_statistics', 'StatisticsController@index_statistics');
 Route::post('/view_day', 'StatisticsController@view_day');
 
+Route::post('/statistic_for_day', 'StatisticsController@statistic_for_days');
 
 
+
+
+
+/* Rutas para las grupos de enfermedades... */
+
+Route::get('/index_group_disease', 'DiseaseGroupController@index_group_disease');
+
+Route::post('/create_group_disease', 'DiseaseGroupController@create_group_disease');
+
+Route::post('/baja_group_disease', 'DiseaseGroupController@baja_group_disease');
+
+Route::post('/load_dates_edit_group', 'DiseaseGroupController@load_dates_edit_group');
+
+Route::post('/edit_group', 'DiseaseGroupController@edit_group');

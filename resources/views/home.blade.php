@@ -23,6 +23,9 @@
   <!-- Morris chart -->
   <link rel="stylesheet" href="{{ asset('css/morris.css') }}">
   <!-- jvectormap -->
+
+  
+
   <link rel="stylesheet" href="{{ asset('css/jquery-jvectormap.css') }}">
   <!-- Date Picker -->
   <link rel="stylesheet" href="{{ asset('css/bootstrap-datepicker.min.css') }}">
@@ -226,6 +229,7 @@
             @permission('ver_patologias')<li><a href="index_pathologies" class="load-page"><i class="fa fa-circle-o"></i> Patologias</a></li>@endpermission
             @permission('ver_datos_medicos')<li><a href="index_medical_dates" class="load-page"><i class="fa fa-circle-o"></i> Datos Medicos</a></li>@endpermission
             @permission('ver_datos_registro')<li><a href="index_dates_register" class="load-page"><i class="fa fa-circle-o"></i> Datos Cita Medica</a></li>@endpermission
+            @permission('ver_grupos_enfermedad')<li><a href="index_group_disease" class="load-page"><i class="fa fa-circle-o"></i> Grupos Enfermedades</a></li>@endpermission
           </ul>
         </li>
         @endrole
@@ -414,11 +418,17 @@
 <!-- AdminLTE for demo purposes -->
 <script src="{{ asset('js/demo.js') }}"></script>
 
+<script src="{{ asset('js/Chart.js') }}"></script>
+
 <!--script src="{{ asset('js/sweetalert.js') }}"></script-->
 <script src="{{ asset('js/sweetalert.min.js') }}"></script>
 <!--script src="{{ asset('js/sweetalert2.min.js') }}"></script-->
 <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('js/dataTables.bootstrap.min.js') }}"></script>
+
+
+
+
 
 <script src="{{ asset('js/bootstrap-timepicker.min.js') }}"></script>
 

@@ -17,12 +17,9 @@
         </div>
     </div>
     <div class="col-md-9">
-        <div class="table_load_turns" id="table_load_turns">
+        <div class="load_statistic">
                   
         </div>
-        <div class="load_datos_user_appoinments" id="load_datos_user_appoinments">
-
-        </div> 
     </div>
 </div>
 <style>
