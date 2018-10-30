@@ -30,7 +30,7 @@
                                             <td>{{ $lista->fecha_nacimento }}</td>
                                             <td>{{ $lista->date_appointments }}</td>
                                             <!--td><button class="btn btn-success btn-xs"> <span class="glyphicon glyphicon-eye-open"></span> Ver</button> <button class="btn btn-info btn-xs"> <span class="glyphicon glyphicon-print"></span> Imprimir</button> <button class="btn btn-danger btn-xs edit_dates_patients" value="{{ $lista->id_paciente }}"> <span class="glyphicon glyphicon-edit"></span> Completar</button></td-->
-                                            <td> <div class="col-md-2"><button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Completar</button></div></td>
+                                            <td> <div class="col-md-2"><button name="id" value = "{{ $lista->id_medical_appointments }}" type="button" class="btn btn-success btn-xs view_dates_for_exam" >Completar</button></div></td>
                                         </tr>
                                     @endforeach
                             </tbody>
@@ -53,49 +53,47 @@
         </div>
         <div class="modal-body">
             <!--form class="sendform1" action="{{url('crear_turno')}}" method="post"-->
-            <form class="sendform_schedules" action="{{url('create_schedules')}}" method="post">            
+            <form class="sendform_completing_examn" action="{{url('completing_examen_medic')}}" method="post">            
                 <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+                <input type="hidden" name="id" id="id_" value="">
                 <div class="row">
-                    <div class="col-md-8">  
+                    <div class="col-md-12">  
                         <div class="form-group">
-                            <label for="">Motivo Cita Medica {{ $list[0]->appointment_description }}</label> <br>
-                                <small class="text-red" id=""></small>
-                                <p>{{ $list[0]->appointment_description }}</p>
+                            <label for="">NOMBRE MEDICO</label>
+                                <p id="med"></p>
                         </div>               
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6">  
+                    <div class="col-md-12">  
                         <div class="form-group">
-                            <label for="">Hora Inicio</label>                            
-                            <div class="input-group">
-                                <small class="text-red" id=""></small>                                                                 
-                                <input name="hora_inicio" type="text" class="form-control timepicker name_form" />
-                                <span class="input-group-addon">
-                                    <span class="glyphicon glyphicon-calendar"></span>
-                                </span>
-                            </div>
-                        </div>               
-                    </div>
-                    <div class="col-md-6">  
-                        <div class="form-group">
-                            <label for="">Hora Fin</label>                            
-                            <div class="input-group">
-                                <small class="text-red" id=""></small>
-                                <input name="hora_fin" type='text' class="form-control timepicker name_form" />
-                                <span class="input-group-addon">
-                                    <span class="glyphicon glyphicon-calendar"></span>
-                                </span>
-                            </div>
+                            <label for="">FECHA CITA MEDICA</label>
+                                <p id="fecha"></p>
                         </div>               
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-md-12">  
+                        <div class="form-group">
+                            <label for="">EXAMEN MEDICO</label>
+                                <p id="examen"></p>
+                        </div>               
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">  
+                        <div class="form-group">
+                            <label for="">DESCRIPCION EXAMEN MEDICO</label>
+                                <p id="descripcion"></p>
+                        </div>               
+                    </div>
+                </div>                  
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label for="">Resultados del Examen</label>
+                            <label for="">RESULTADOS EXAMEN MEDICO</label>
                             <small class="text-red" id=""></small>
-                            <textarea class="form-control  col-md-6 name_form" rows="3" placeholder="Escribir ..." name="horario_descripcion"></textarea>
+                            <textarea class="form-control  col-md-6 name_form" rows="3" placeholder="Escribir ..." name="resultado"></textarea>
                         </div>
                     </div>
                 </div><br>

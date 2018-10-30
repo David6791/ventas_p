@@ -22,51 +22,25 @@
             <tbody>
                 <?php $a = 1 ?>
                 @foreach($medics as $lista)
-                @if(date('m-d-Y', strtotime( $lista->date_appointments )) == date("m-d-Y") )
-                    <tr bgcolor="FCEBEB">
+                    <tr>
                         <td>{{ $a++ }}</td>
                         <td>{{ $lista->nombres }} {{ $lista->ap_paterno }} {{ $lista->ap_materno }}</td>
                         <td>{{ $lista->name_type }}</td>             
                         <td>{{ date('m-d-Y', strtotime( $lista->date_appointments )) }}</td>
                         <td>{{ $lista->name_schedules }}</td>
                         <td>{{ $lista->start_time }}</td>
-                        @if(($lista->name_state_appointments)==='Atendido')
-                            <td> {{ $lista->name_state_appointments }} </td>    
-                        @else
-                            <td><button type="button" class="fa-hover btn btn-warning btn-xs modifi_state_appointment" value="{{$lista->id_medical_appointments}}"><i class="fa fa-cog"></i></button> {{ $lista->name_state_appointments }} </td>
-                        @endif
+                        <td> {{ $lista->name_state_appointments }} </td>                       
                         
                         <td>{{ $lista->m_name }} {{ $lista->m_apellidos }}</td>
-                        <td><!--td><button type="button" class="btn btn-primary btn-xs get_ViewAppointments" value="{{$lista->id_medical_appointments}}">Ver Detalles</button--><a target="_blank" href="http://192.168.1.106:8080/pentaho/api/repos/%3Apublic%3ASteel%20Wheels%3AReports%3Aboleta_reserva_2.prpt/generatedContent?userid=admin&password=password&output-target=pageable/pdf&p={{ $lista->id_medical_appointments }}" type="button" class="btn btn-primary btn-xs" >Imprimir</a></td>
+                        <td><button  value="{{ $lista->id_medical_appointments }}" type="button" class="btn btn-primary btn-xs load_dates_reserva" >Edtiar Cita Medica</button></td>
                         
                     </tr>
-                @else
-                    <tr bgcolor="F0FCEB">
-                        <td>{{ $a++ }}</td>
-                        <td>{{ $lista->nombres }} {{ $lista->ap_paterno }} {{ $lista->ap_materno }}</td>  
-                        <td>{{ $lista->name_type }}</td>                  
-                        <td>{{ date('m-d-Y', strtotime( $lista->date_appointments )) }}</td>
-                        <td>{{ $lista->name_schedules }}</td>
-                        <td>{{ $lista->start_time }}</td>
-                        @if(($lista->name_state_appointments)==='Atendido')
-                            <td text-align="center"> {{ $lista->name_state_appointments }} </td>    
-                        @else
-                            <td><button type="button" class="fa-hover btn btn-warning btn-xs modifi_state_appointment" value="{{$lista->id_medical_appointments}}"><i class="fa fa-cog"></i></button> {{ $lista->name_state_appointments }} </td>
-                        @endif
-                        <!--td><button type="button" class="btn btn-primary btn-xs get_ViewAppointments" value="{{$lista->id_medical_appointments}}">Ver Detalles</button-->
-                        <td>{{ $lista->m_name }} {{ $lista->m_apellidos }}</td>                            
-                        <td><!--button type="button" class="btn btn-primary btn-xs get_ViewAppointments" value="{{$lista->id_medical_appointments}}"> <span class="glyphicon glyphicon-eye-open"></span> Ver Detalles</button--><a target="_blank" href="http://192.168.1.106:8080/pentaho/api/repos/%3Apublic%3ASteel%20Wheels%3AReports%3Aboleta_reserva_2.prpt/generatedContent?userid=admin&password=password&output-target=pageable/pdf&p={{ $lista->id_medical_appointments }}" type="button" class="btn btn-info btn-xs" > <span class="glyphicon glyphicon-print"></span> Imprimir</a></td>
-                        
-                    </tr>
-                @endif
+                
                 @endforeach
             </tbody>
         </table>        
     </div>
-    <div class="x_footer">
-        <div class="row">
-            <div class="col-md-10"></div>
-            <div class="col-md-2"><button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Agregar Nuevo Horario</button></div>
-        </div>
+    <div class="x_footer">        
     </div>
 </div>
+<div class="load_edit_reserva"></div>

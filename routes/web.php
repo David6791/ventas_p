@@ -278,3 +278,16 @@ Route::post('/ver_info_report_range_full', 'ReportsController@ver_info_report_ra
 
 /* Registro de Examenes Medicos de pacientes con citas medicas que tienen examen medico */
 Route::get('/view_attention_lists_examen', 'AttentionsController@view_attention_lists_examen');
+
+Route::post('/view_dates_for_exam', 'AttentionsController@view_dates_for_exam');
+
+Route::post('/completing_examen_medic', 'AttentionsController@completing_examen_medic');
+
+/* Ruta para editar la reseva de citas medicas */
+
+Route::post('/load_dates_reserva', 'MedicalAppointmentController@load_dates_reserva');
+
+Route::post('/view_schedules_free', 'MedicalAppointmentController@view_schedules_free');
+
+
+

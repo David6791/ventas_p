@@ -2596,4 +2596,108 @@
 
         })
     })
+    $(document).on('click','.view_dates_for_exam',function(e){  
+        $('#exampleModal').modal({
+            show: 'true',
+            backdrop: 'static',
+            keyboard: false,
+        })
+        e.preventDefault(e)
+        $.ajax({
+            type:'POST',
+            url:'/view_dates_for_exam',
+            data:{id:$(this).attr('value'),_token:$('meta[name="csrf-token"]').attr('content')},
+            success:function(data){
+                //$("#contentGlobal").html(data)    
+                //alert('asdsadas')            
+                $('#med').text(data[0].name + data[0].apellidos)
+                $('#id_').val(data[0].id_medical_exam_patient)
+                $('#fecha').text(data[0].date_appointments)
+                $('#examen').text(data[0].name_medical_exam)
+                $('#descripcion').text(data[0].reason_medical_examn)
+
+            },
+            error:function(data){
+                swal(
+                    'Error!',
+                    'El Paciente aun no esta registrado',
+                    'error'
+                  )
+            }
+        })
+    })
+    $(document).on('submit','.sendform_completing_examn',function(e){
+        //$('#modal-editrol').modal('toggle')
+        frutas = []
+        $('.name_form').each(function(){
+            aux = $(this).attr("name")
+            frutas.push(aux)
+            
+        })
+        data1=$(this).serialize()
+        $.ajaxSetup({
+            header:$('meta[name="_token"]').attr('content')
+        })
+        e.preventDefault(e)
+        $.ajax({
+            type:$(this).attr('method'),
+            url:$(this).attr('action'),
+            data:$(this).serialize(),            
+            success:function(data){
+                $("#contentGlobal").html(data)
+                swal(
+                    'Felicidades',
+                    'El Rol se Actualizo Correctamente',
+                    'success'
+                  )
+                  $('.modal-backdrop').remove()               
+            },
+            error:function(data){
+                var asd = Object.keys(data.responseJSON.errors)
+                for(i = 0; i<frutas.length; i++){
+                    if(asd.includes(frutas[i])) {
+                        $( "input[name='"+frutas[i]+"']" ).parent().find("small").text(data.responseJSON.errors[frutas[i]][0])
+                        $( "textarea[name='"+frutas[i]+"']" ).parent().find("small").text(data.responseJSON.errors[frutas[i]][0])
+                    }else{
+                        $( "input[name='"+frutas[i]+"']" ).parent().find("small").text('')
+                        $( "textarea[name='"+frutas[i]+"']" ).parent().find("small").text('')
+                    }              
+                    
+                }                
+            }
+        })
+    }) 
+    
+    $(document).on('click','.load_dates_reserva',function(e){
+        //alert($('input:text[name=fecha]').val())
+        e.preventDefault(e)
+        $.ajax({
+            type:'POST',
+            url:'/load_dates_reserva',
+            data:$(this).serialize(),
+            data:{id:$(this).attr('value'),_token:$('meta[name="csrf-token"]').attr('content')},
+            success:function(data){
+                $(".load_edit_reserva").html(data)     
+                           
+            },error:function(data){
+            }
+
+        })
+    })
+    $(document).on('click','.view_schedules_free',function(e){
+        //alert($('input:text[name=fecha]').val())
+        e.preventDefault(e)
+        $.ajax({
+            type:'POST',
+            url:'/view_schedules_free',
+            data:$(this).serialize(),
+            data:{fecha:$('input:text[name=fecha]').val(),_token:$('meta[name="csrf-token"]').attr('content')},
+            success:function(data){
+                $(".load_schedules_free").html(data)     
+                           
+            },error:function(data){
+            }
+
+        })
+    })
 })

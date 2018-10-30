@@ -420,4 +420,36 @@ class AttentionsController extends Controller
         //return $rows;
         return view('admin.attentions.view_appoinments_completing_examen')->with('list',$rows);
     }
-}
+    public function view_dates_for_exam(Request $request){
+        //return 'sadsadsad';
+        $query = "select * from medical_appointments map 
+                        inner join medical_exam_patients mx
+                            on mx.id_medical_exam_patient = map.id_medical_appointments
+                        inner join medical_exam mex
+                            on mex.id_medical_exam = mx.id_medical_exam
+                        inner join medical_assignments mass
+                            on mass.id_medical_assignments = map.id_medical_assignments
+                        inner join users us
+                            on us.id = mass.id_user
+                    where map.id_medical_appointments = :id ";
+        $rows=\DB::select(\DB::raw($query),array('id'=>$request->id));
+        return $rows;
+        return view('admin.attentions.view_appoinments_completing_examen')->with('list',$rows);
+    }
+    public function completing_examen_medic(Request $request){
+        //return $request->all();
+        $validatedData = $request->validate([
+            'resultado' => 'required|max:100'
+        ]);
+        DB::table('medical_exam_patients')
+            ->where('id_medical_exam_patient', $request->id)
+            ->update([
+                        'result_examen' => $request->resultado,
+                        'register' => 's'
+            ]);
+        return redirect()->action(
+            'AttentionsController@view_attention_lists_examen'                   
+        );
+        //return $request->all();
+    }
+}       
