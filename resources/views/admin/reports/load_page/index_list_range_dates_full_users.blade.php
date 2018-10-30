@@ -22,7 +22,7 @@
                                 <th>NOMBRE PACIENTE</th>
                                 <th>HORA ATENCION</th>
                                 <th>ESTADO CITA MEDICA</th>
-                                <th>DESCRIPCION CITA</th>
+                                <th>FECHA CITA MEDICA</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -34,7 +34,7 @@
                                     <td> {{ $lista->nombres }} {{ $lista->ap_paterno }} {{ $lista->ap_materno }}</td>
                                     <td> {{ $lista->start_time }}</td>
                                     <td> {{ $lista->name_state_appointments }}</td>
-                                    <td> {{ $lista->appointment_description}} </td>
+                                    <td> {{ $lista->date_appointments}} </td>
                                 </tr>
                             @endforeach
                         </tbody>

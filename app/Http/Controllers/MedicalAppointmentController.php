@@ -167,4 +167,24 @@ class MedicalAppointmentController extends Controller
             'MedicalAppointmentController@index_Appointment'
         );
     }
+    public function view_list_appinments(){
+        $query = "select mep.id_medical_appointments, mep.appointment_description, pa.nombres, pa.ap_paterno, pa.ap_materno, mass.id_user, us.name m_name, us.apellidos m_apellidos, sch.name_schedules, ht.start_time, sap.name_state_appointments, mep.date_appointments, ta.name_type from medical_appointments mep 
+                        inner join pacientes pa
+                            on pa.id_paciente = mep.id_patient
+                        inner join medical_assignments mass
+                            on mass.id_medical_assignments = mep.id_medical_assignments
+                        inner join users us
+                            on us.id = mass.id_user
+                        inner join schedules sch
+                            on sch.id_schedule = mass.id_schedul
+                        inner join hour_turns ht
+                            on ht.id_hour_turn = mep.id_turn_hour
+                        inner join types_appointsment ta
+                            on mep.type_appoinment = ta.id_type_appointments   
+                        inner join state_appointments sap
+                            on sap.id_state_appointments = mep.state_appointments 
+                    where mep.state_appointments != 1 and mep.emergency != 'S'";
+        $rows=\DB::select(\DB::raw($query));
+        return view('admin.medical_appointment.load_pages.edit_reservations')->with('medics',$rows);
+    }
 }

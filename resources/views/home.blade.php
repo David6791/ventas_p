@@ -256,7 +256,7 @@
             @permission('ver_citas')<li><a href="view_medical_appointment" class="load-page"><i class="fa fa-circle-o"></i> Ver Citas</a></li>@endpermission
             @permission('crear_citas')<li><a href="create_medical_appointment" class="load-page"><i class="fa fa-circle-o"></i> Crear Citas Medicas</a></li>@endpermission
             @permission('emergencias')<li><a href="view_emergency" class="load-page"><i class="fa fa-circle-o"></i> Registrar Emergencia</a></li>@endpermission
-            <li><a href="morisjs.html"><i class="fa fa-circle-o"></i> Editar Reserva</a></li>
+            @permission('editar_reserva')<li><a href="view_list_appinments" class="load-page"><i class="fa fa-circle-o"></i> Editar Reserva</a></li>@endpermission
             <li><a href="morisjs.html"><i class="fa fa-circle-o"></i> Confirmar Cita Medica</a></li>
           </ul>
         </li>        

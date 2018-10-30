@@ -153,6 +153,9 @@ Route::get('/view_medical_appointment','MedicalAppointmentController@index_Appoi
 
 Route::get('/create_medical_appointment','MedicalAppointmentController@create_Medical_Appointment');
 
+Route::get('/view_list_appinments','MedicalAppointmentController@view_list_appinments');
+
+
 
 /* insertar datos de una cita medica */
 Route::post('/insert_appointsments','MedicalAppointmentController@insert_appointsment');

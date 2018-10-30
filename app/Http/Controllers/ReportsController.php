@@ -111,7 +111,7 @@ class ReportsController extends Controller
     public function ver_info_report_range_full(Request $request){
         //return $request->all();
         $as = explode('-',($request->fecha), 2);
-        $query = "SELECT p.ci_paciente, p.nombres, p.ap_paterno, p.ap_materno,ht.start_time, sapp.name_state_appointments, mapp.appointment_description FROM medical_appointments mapp
+        $query = "SELECT p.ci_paciente, p.nombres, p.ap_paterno, p.ap_materno,ht.start_time, sapp.name_state_appointments, mapp.appointment_description, mapp.date_appointments FROM medical_appointments mapp
                         INNER JOIN medical_assignments mass
                             ON mass.id_medical_assignments = mapp.id_medical_assignments
                         INNER JOIN users us
