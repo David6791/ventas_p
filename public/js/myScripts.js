@@ -2685,19 +2685,32 @@
         })
     })
     $(document).on('click','.view_schedules_free',function(e){
-        //alert($('input:text[name=fecha]').val())
+        //alert($('select[name=id_]').val())
         e.preventDefault(e)
         $.ajax({
             type:'POST',
             url:'/view_schedules_free',
             data:$(this).serialize(),
-            data:{fecha:$('input:text[name=fecha]').val(),_token:$('meta[name="csrf-token"]').attr('content')},
+            data:{schedul:$('select[name=id_]').val(),id:$('input:hidden[name=id]').val(),fecha:$('input:text[name=fecha]').val(),_token:$('meta[name="csrf-token"]').attr('content')},
             success:function(data){
-                $(".load_schedules_free").html(data)     
+                $(".view_schedules_free1").html(data)     
                            
             },error:function(data){
             }
 
+        })
+    })
+    $(document).on('click','.create_assignments_1',function(e){
+        //lert('asdasdsads')
+        e.preventDefault(e)
+        $.ajax({
+            type:'POST',
+            url:'/update_appoinment_patient',
+            data:$(this).serialize(),
+            data:{id:$(this).attr('value'),id_ap:$('input:hidden[name=id]').val(),fecha:$('input:hidden[name=schedul]').val(),fecha:$('input:hidden[name=fecha]').val(),id_turno:document.getElementById("selec_schedule").value,_token:$('meta[name="csrf-token"]').attr('content')},
+            success:function(data){
+                $("#contentGlobal").html(data)
+            }
         })
     })
 })

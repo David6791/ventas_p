@@ -29,8 +29,7 @@
                         <td>{{ date('m-d-Y', strtotime( $lista->date_appointments )) }}</td>
                         <td>{{ $lista->name_schedules }}</td>
                         <td>{{ $lista->start_time }}</td>
-                        <td> {{ $lista->name_state_appointments }} </td>                       
-                        
+                        <td> {{ $lista->name_state_appointments }} </td>       
                         <td>{{ $lista->m_name }} {{ $lista->m_apellidos }}</td>
                         <td><button  value="{{ $lista->id_medical_appointments }}" type="button" class="btn btn-primary btn-xs load_dates_reserva" >Edtiar Cita Medica</button></td>
                         

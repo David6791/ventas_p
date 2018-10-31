@@ -256,10 +256,36 @@
             @permission('ver_citas')<li><a href="view_medical_appointment" class="load-page"><i class="fa fa-circle-o"></i> Ver Citas</a></li>@endpermission
             @permission('crear_citas')<li><a href="create_medical_appointment" class="load-page"><i class="fa fa-circle-o"></i> Crear Citas Medicas</a></li>@endpermission
             @permission('emergencias')<li><a href="view_emergency" class="load-page"><i class="fa fa-circle-o"></i> Registrar Emergencia</a></li>@endpermission
-            @permission('editar_reserva')<li><a href="view_list_appinments" class="load-page"><i class="fa fa-circle-o"></i> Editar Reserva</a></li>@endpermission
-            <li><a href="morisjs.html"><i class="fa fa-circle-o"></i> Confirmar Cita Medica</a></li>
+            
+            
           </ul>
         </li>        
+        @endrole
+        @role('editar_reserva')
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-calendar"></i> <span>Editar Reservas</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">            
+            @permission('editar_reserva')<li><a href="view_list_appinments" class="load-page"><i class="fa fa-circle-o"></i> Editar Reserva</a></li>@endpermission            
+          </ul>
+        </li> 
+        @endrole
+        @role('confirmar_citas')
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-calendar"></i> <span>Confirmar Citas Medicas</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">            
+            @permission('confirmar_reserva')<li><a href="index_confir" class="load-page"><i class="fa fa-circle-o"></i> Confirmar Cita Medica</a></li>@endpermission
+          </ul>
+        </li> 
         @endrole
         @role('citas_medicas')
         <li class="treeview">

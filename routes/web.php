@@ -289,5 +289,8 @@ Route::post('/load_dates_reserva', 'MedicalAppointmentController@load_dates_rese
 
 Route::post('/view_schedules_free', 'MedicalAppointmentController@view_schedules_free');
 
+Route::post('/update_appoinment_patient', 'MedicalAppointmentController@update_appoinment_patient');
+
+
 
 

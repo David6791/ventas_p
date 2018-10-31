@@ -189,18 +189,35 @@ class MedicalAppointmentController extends Controller
     }
     public function load_dates_reserva(Request $request){
         //return $request->all();
-        
-        return view('admin.medical_appointment.load_pages.edit_reservations_dates');
+        $query = "select * from schedules order by id_schedule";
+        $rows=\DB::select(\DB::raw($query));
+        $var1 = [$request->id];
+        return view('admin.medical_appointment.load_pages.edit_reservations_dates')->with('schedules',$rows)->with('id',$var1);
     }
     public function view_schedules_free(Request $request){
+        //return $request->all();
         $query = "SELECT ht.id_hour_turn, ht.start_time, ht.end_time, ht.state, ht.id_schedul, sch.name_schedules FROM hour_turns ht
                     INNER JOIN schedules sch
                         ON sch.id_schedule = ht.id_schedul
                     WHERE ht.id_schedul = :id_schedul AND ht.id_hour_turn NOT IN (
                    SELECT id_turn_hour FROM medical_appointments map  
                     WHERE date_trunc('day', map.date_appointments) = :date)";
-        $rows=\DB::select(\DB::raw($query),array('date'=>$request->fecha,'id_schedul'=>$request->id_turno));
-        //return $rows;
-        return view('admin.medical_appointment.load_pages.reservation_turns_date')->with('turns',$rows);
+        $rows=\DB::select(\DB::raw($query),array('date'=>$request->fecha,'id_schedul'=>$request->schedul));
+        //return '$rows';
+        $var1 = [$request->fecha, $request->schedul,$request->id];
+        return view('admin.medical_appointment.load_pages.reservation_turns_date_edit')->with('turns',$rows)->with('dat',$var1);
+    }
+    public function update_appoinment_patient(Request $request){
+        //return $request->all();
+        $modi = DB::table('medical_appointments')
+            ->where('id_medical_appointments', '=', $request->id_ap)
+            ->update([
+                'id_medical_assignments' => $request->id_turno,
+                'id_turn_hour' => $request->id,
+                'date_appointments' => $request->fecha
+            ]);
+        return redirect()->action(
+            'MedicalAppointmentController@view_list_appinments'
+        );
     }
 }
