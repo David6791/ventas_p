@@ -292,5 +292,11 @@ Route::post('/view_schedules_free', 'MedicalAppointmentController@view_schedules
 Route::post('/update_appoinment_patient', 'MedicalAppointmentController@update_appoinment_patient');
 
 
+/* Rutas para confirmar citas Medicas */
+Route::get('/index_confirm', 'MedicalAppointmentController@index_confirm');
+
+Route::post('/confirm_function', 'MedicalAppointmentController@confirm_function');
+
+
 
 

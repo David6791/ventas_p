@@ -20,7 +20,41 @@
 </div>
 <script>
   
-  $('#reservationtime').daterangepicker({});  
+  $('#reservationtime').daterangepicker({
+    "locale": {
+        "format": "MM/DD/YYYY",
+        "separator": " - ",
+        "applyLabel": "Listo",
+        "cancelLabel": "Cancelar",
+        "fromLabel": "de",
+        "toLabel": "a",
+        "customRangeLabel": "Personalizado",
+        "daysOfWeek": [
+            "Do",
+            "Lu",
+            "Ma",
+            "Mi",
+            "Ju",
+            "Vi",
+            "Sa"
+        ],
+        "monthNames": [
+            "Enero",
+            "Febrero",
+            "Marzo",
+            "Abril",
+            "Mayo",
+            "Junio",
+            "Julio",
+            "Agosto",
+            "Septiembre",
+            "Octubre",
+            "Noviembre",
+            "Diciembre"
+        ],
+        "Primer Dia": 1
+    }
+  });  
 </script>
 <style>
 .date{

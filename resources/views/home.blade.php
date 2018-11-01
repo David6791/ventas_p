@@ -283,7 +283,7 @@
             </span>
           </a>
           <ul class="treeview-menu">            
-            @permission('confirmar_reserva')<li><a href="index_confir" class="load-page"><i class="fa fa-circle-o"></i> Confirmar Cita Medica</a></li>@endpermission
+            @permission('confirmar_reserva')<li><a href="index_confirm" class="load-page"><i class="fa fa-circle-o"></i> Confirmar Cita Medica</a></li>@endpermission
           </ul>
         </li> 
         @endrole

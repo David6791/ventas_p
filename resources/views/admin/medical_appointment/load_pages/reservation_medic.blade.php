@@ -5,7 +5,7 @@
 </div>
 <table id="datatable" class="table table-striped table-bordered table_medic">
 <tbody>
-@foreach($schedules as $lista)
+@foreach($medics as $lista)
     <tr>
         <td>{{ $lista->name_schedules }}</td>
         <td><button class="btn btn-primary btn-xs load_date_medic" name="id_assignments" value="{{$lista->id_medical_assignments}}">Seleccionar</button></td>

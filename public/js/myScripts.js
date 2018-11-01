@@ -2712,5 +2712,32 @@
                 $("#contentGlobal").html(data)
             }
         })
+    })    
+    $(document).on('click','.confirm_function',function(e){
+        swal({
+            title: "Estas Seguro?",
+            text: "La Cita Medica se Confirmara para la fecha y hora!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+          })
+          .then((willDelete) => {
+            if (willDelete) {
+                e.preventDefault(e)
+                    $.ajax({
+                        type:'POST',
+                        url:'/confirm_function',
+                        data:{id_appointments:$(this).attr('value'),_token:$('meta[name="csrf-token"]').attr('content')},
+                        success:function(data){
+                            $('#contentGlobal').html(data)
+                        }
+                    }) 
+              swal("Bien! Se CONFIRMO correctamente!", {
+                icon: "success",
+              });
+            } else {
+              swal("No se Realizo ninguna CONFIRMACION!");
+            }
+          })     
     })
 })

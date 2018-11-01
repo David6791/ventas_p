@@ -21,7 +21,7 @@ class StatisticsController extends Controller
         $query = "select dg.name_group, ma.type_disease, count (*) as id_ from medical_appointments ma
                     inner join disease_group dg
                         on dg._id = ma.type_disease
-                where ma.date_appointments = :fecha group by ma.type_disease, dg.name_group order by ma.type_disease";
+                where ma.type_disease != 1 and ma.date_appointments = :fecha group by ma.type_disease, dg.name_group order by ma.type_disease";
         $row=\DB::select(\DB::raw($query),array('fecha'=>$request->fecha));
         //return $row;
         return view('admin.statistics.load_pages.statistic_day1')->with('asd',$row);
@@ -35,7 +35,7 @@ class StatisticsController extends Controller
         $query = "select dg.name_group, ma.type_disease, count (*) as id_ from medical_appointments ma
                     left join disease_group dg
                         on dg._id = ma.type_disease
-                where ma.date_appointments BETWEEN :f1 and :f2 group by ma.type_disease, dg.name_group order by ma.type_disease";
+                where ma.type_disease != 1 and ma.type_disease is not NULL  and ma.date_appointments BETWEEN :f1 and :f2 group by ma.type_disease, dg.name_group order by ma.type_disease";
         $row=\DB::select(\DB::raw($query),array('f1'=>$as[0],'f2'=>$as[1]));
         return view('admin.statistics.load_pages.statistic_range')->with('asd',$row);
     }

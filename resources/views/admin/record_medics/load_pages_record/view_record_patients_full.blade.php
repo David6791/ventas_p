@@ -3,8 +3,7 @@
           <div class="box box-solid">
             <div class="box-header with-border">
                 <div class="row">
-                    <div class="col-md-1"></div>
-                    <div class="col-md-10">
+                    <div class="col-md-12">
                         <h3 class="box-title text-green">Paciente: {{ $list_record[0]['nombres'] }} {{ $list_record[0]['ap_paterno'] }} {{ $list_record[0]['ap_materno'] }}</h3>
                     </div>
                 </div>             
@@ -23,8 +22,7 @@
               
             </div>
             <div class="row">
-                <div class="col-md-1"></div>
-                <div class="col-md-10">
+                <div class="col-md-12">
                 <?php $a = 1 ?>
                 @if(!isset($list_record[0]['id_medical_appointments']))
                 <div class="box box-primary"> <br>
