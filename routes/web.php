@@ -299,4 +299,18 @@ Route::post('/confirm_function', 'MedicalAppointmentController@confirm_function'
 
 
 
+/* Rutas para antecion Modificado */
+
+Route::post('/view_patient_dates', 'AttentionsController@view_patient_dates');
+
+Route::post('/view_attention_patient', 'AttentionsController@view_attention_patient');
+
+Route::post('/view_cites_previus', 'AttentionsController@view_cites_previus');
+
+
+
+
+
+
+
 

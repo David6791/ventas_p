@@ -1837,10 +1837,8 @@
             url:'/filiation_completing',
             data:{id:$(this).attr('value'),_token:$('meta[name="csrf-token"]').attr('content')},
             success:function(data){
-                $("#delete").remove()                   
-                $(".filiation_completing").remove()  
-                $(".borrar_bt").remove()  
-                $(".add_completing").html(data)                   
+                $("#datos_paciente").remove()
+                $(".cargar_aqui").html(data)                   
             },
             error:function(data){
                 //console.log(data)
@@ -1895,6 +1893,7 @@
             url:$(this).attr('action'),
             data:$(this).serialize(),            
             success:function(data){
+                $(".update_dates_medic").remove()
                 $(".load_date_medic").html(data)
                 swal(
                     'Felicidades',
@@ -1956,10 +1955,10 @@
                 //$(".update_dates_medic").remove()                
                 $(".add_completing").remove()
                 console.log(data)
-                $(".full_dates").html(data)
+                $(".cargar_aqui").html(data)
                 swal(
                     'Felicidades',
-                    'El Rol se Actualizo Correctamente',
+                    'Se Completaron los datos del Paciente',
                     'success'
                   )
                   $('.modal-backdrop').remove()               
@@ -2036,7 +2035,7 @@
             success:function(data){  
                 $('.load_notes_medic').remove()
                 console.log(data)
-                $(".load_new_notes_medic").html(data)          
+                $(".cargar_aqui").html(data)          
                 swal(
                     'Felicidades',
                     'Se registro correctamente el Nuevo Dato Medico',
@@ -2740,4 +2739,53 @@
             }
           })     
     })
+    $(document).on('click','.view_patient_dates',function(e){
+        //alert($('select[name=id_]').val())
+        e.preventDefault(e)
+        $.ajax({
+            type:'POST',
+            url:'/view_patient_dates',
+            data:$(this).serialize(),
+            data:{id_appointments:$('input:hidden[name=id_app]').val(),_token:$('meta[name="csrf-token"]').attr('content')},
+            success:function(data){
+                $(".cargar_aqui").html(data)     
+                           
+            },error:function(data){
+            }
+
+        })
+    })
+    $(document).on('click','.view_attention_patient',function(e){
+        //alert($('select[name=id_]').val())
+        e.preventDefault(e)
+        $.ajax({
+            type:'POST',
+            url:'/view_attention_patient',
+            data:$(this).serialize(),
+            data:{id_appointments:$('input:hidden[name=id_app]').val(),_token:$('meta[name="csrf-token"]').attr('content')},
+            success:function(data){
+                $(".cargar_aqui").html(data)     
+                           
+            },error:function(data){
+            }
+
+        })
+    })
+    $(document).on('click','.view_cites_previus',function(e){
+        //alert($('select[name=id_]').val())
+        e.preventDefault(e)
+        $.ajax({
+            type:'POST',
+            url:'/view_cites_previus',
+            data:$(this).serialize(),
+            data:{id_appointments:$('input:hidden[name=id_app]').val(),_token:$('meta[name="csrf-token"]').attr('content')},
+            success:function(data){
+                $(".cargar_aqui").html(data)     
+                           
+            },error:function(data){
+            }
+
+        })
+    })
+    
 })

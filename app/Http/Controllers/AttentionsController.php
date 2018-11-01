@@ -161,8 +161,10 @@ class AttentionsController extends Controller
                             ON dof.id_date_register = dr.id_dates_register
                     WHERE dr.id_appointmetns_ = :id_a";
         $rows1=\DB::select(\DB::raw($query1),array('id_a'=>$request->id_appointments));
+        //return $rows1;
         $query2 = "SELECT * FROM notes_medic_dates_appoinments nmd WHERE id_medical_appoinments = :id_a";
         $rows2=\DB::select(\DB::raw($query2),array('id_a'=>$request->id_appointments));
+        //return $rows2;
         $query3 = "SELECT * FROM treatment_patients tp
                         INNER JOIN treatment_details td
                             ON tp.id_treatment = td.id_treatment
@@ -170,6 +172,7 @@ class AttentionsController extends Controller
                             ON m.id_medicines = td.id_medicine
                     WHERE tp.id_medical_appointments = :id_appointments";
         $rows3=\DB::select(\DB::raw($query3),array('id_appointments'=>$request->id_appointments));
+        //return $rows3;
         $query4 = "SELECT mep.id_medical_exam_patient, mep.id_appoinments, mep.reason_medical_examn, mep.observation_medical_exam, mep.date_creation, mass.id_user, us.name, us.apellidos,
                         p.nombres, p.ap_paterno, p.ap_materno, p.fecha_nacimento, p.ci_paciente, mee.name_medical_exam
                         FROM medical_exam_patients mep
@@ -451,5 +454,71 @@ class AttentionsController extends Controller
             'AttentionsController@view_attention_lists_examen'                   
         );
         //return $request->all();
+    }
+    public function view_patient_dates(Request $request){
+        $query = "SELECT pa.filiacion_completa, pa.id_paciente, pa.ci_paciente, pa.ap_paterno, pa.ap_materno, pa.nombres, pa.sexo, pa.direccion, pa.telefono, pa.celular, pa.fecha_nacimento, pa.pais_nacimiento, pa.ciudad_nacimiento, pa.provincia, pa.localidad_nacimiento, pa.fecha_creacion, pa.esta_paciente FROM medical_appointments  map
+                        INNER JOIN pacientes pa
+                            ON pa.id_paciente = map.id_patient
+                    WHERE map.id_medical_appointments = :id_appoinments";
+        $rows=\DB::select(\DB::raw($query),array('id_appoinments'=>$request->id_appointments));
+        
+        $query9 = "SELECT * FROM pacientes pa
+                        INNER JOIN patients_dates_medic ptm
+                            ON pa.id_paciente = ptm.id_patient
+                        INNER JOIN datos_medicos dm
+                            ON dm.id_dato_medico = ptm.id_date_medic
+                    WHERE pa.id_paciente = :id_patient";
+        $rows9=\DB::select(\DB::raw($query9),array('id_patient'=>$rows[0]->id_paciente));
+        $pat = "SELECT * FROM pacientes pa
+                        INNER JOIN pacientes_patologias pap
+                            ON pa.id_paciente = pap.id_paciente
+                        INNER JOIN patologias pat
+                            ON pat.id_patologia = pap.id_patologia
+                    WHERE pa.id_paciente = :id_patient";
+        $patologias=\DB::select(\DB::raw($pat),array('id_patient'=>$rows[0]->id_paciente));
+        return view('admin.attentions.partials.view_patient_partial')->with('dates_patient',$rows)->with('datos_medicos',$rows9)->with('pat',$patologias);
+    }
+    public function view_attention_patient(Request $request){
+        $query3 = "SELECT * FROM medical_appointments map
+                    INNER JOIN types_appointsment ta
+                        on ta.id_type_appointments = map.type_appoinment
+                    where id_medical_appointments = :id_appoinments AND state_appointments = 3";
+        $rows3=\DB::select(\DB::raw($query3),array('id_appoinments'=>$request->id_appointments));
+        $query = "SELECT pa.filiacion_completa, pa.id_paciente, pa.ci_paciente, pa.ap_paterno, pa.ap_materno, pa.nombres, pa.sexo, pa.direccion, pa.telefono, pa.celular, pa.fecha_nacimento, pa.pais_nacimiento, pa.ciudad_nacimiento, pa.provincia, pa.localidad_nacimiento, pa.fecha_creacion, pa.esta_paciente FROM medical_appointments  map
+                        INNER JOIN pacientes pa
+                            ON pa.id_paciente = map.id_patient
+                    WHERE map.id_medical_appointments = :id_appoinments";
+        $rows=\DB::select(\DB::raw($query),array('id_appoinments'=>$request->id_appointments));
+        $query = "SELECT * FROM public.view_notes_medics(:id_ap)";
+        $rows2=\DB::select(\DB::raw($query),array('id_ap'=>$request->id_appointments));
+        $no = array();
+        for($i = 0 ; $i < count($rows2); $i++){
+            $asd = json_encode($rows2[$i]->j);
+            $asdd = json_decode($asd);
+            $no[]=json_decode($asdd,true);
+        }
+        $query = "SELECT * FROM disease_group WHERE state_group = 'activo' AND _id != 1";
+        $rows=\DB::select(\DB::raw($query));
+        $queryy = "SELECT * FROM notes_medic_dates_appoinments nmd WHERE id_medical_appoinments = :id_a";
+        $rowss=\DB::select(\DB::raw($queryy),array('id_a'=>$request->id_appointments));
+        return view('admin.attentions.partials.view_atention_patient')->with('datos_1',$rowss)->with('dates_cita_end',$rows3)->with('dates_patient',$rows)->with('dat_register',$no)->with('group',$rows);
+    }
+    public function view_cites_previus(Request $request){
+        $querys = "SELECT map.id_medical_appointments, map.id_patient, map.id_turn_hour, ta.name_type, map.appointment_description, map.date_appointments, map.data_creation_appointments, sap.name_state_appointments, sch.name_schedules, ht.start_time from medical_appointments map
+                            INNER JOIN state_appointments sap
+                                ON sap.id_state_appointments = map.state_appointments
+                            INNER JOIN medical_assignments mass
+                                ON mass.id_medical_assignments = map.id_medical_assignments
+                            INNER JOIN schedules sch
+                                ON sch.id_schedule = mass.id_schedul
+                            INNER JOIN hour_turns ht
+                                ON ht.id_hour_turn = map.id_turn_hour
+                            INNER JOIN types_appointsment ta
+                                ON ta.id_type_appointments = map.type_appoinment
+                        WHERE id_patient =(
+                    SELECT id_patient FROM medical_appointments WHERE id_medical_appointments = :id_appoinments
+                    ) ORDER BY data_creation_appointments";
+        $row=\DB::select(\DB::raw($querys),array('id_appoinments'=>$request->id_appointments));
+        return view('admin.attentions.partials.view_previus_app')->with('list_app',$row);
     }
 }       
