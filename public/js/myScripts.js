@@ -2787,5 +2787,69 @@
 
         })
     })
+    $(document).on('click','.view_treatment_form',function(e){
+        //alert($('select[name=id_]').val())
+        e.preventDefault(e)
+        $.ajax({
+            type:'POST',
+            url:'/view_treatment_form',
+            data:$(this).serialize(),
+            data:{id_appointments:$('input:hidden[name=id_app]').val(),_token:$('meta[name="csrf-token"]').attr('content')},
+            success:function(data){
+                $(".cargar_aqui").html(data)     
+                           
+            },error:function(data){
+            }
+
+        })
+    })
+    $(document).on('click','.view_exam_medic',function(e){
+        //alert($('select[name=id_]').val())
+        e.preventDefault(e)
+        $.ajax({
+            type:'POST',
+            url:'/view_exam_medic',
+            data:$(this).serialize(),
+            data:{id_appointments:$('input:hidden[name=id_app]').val(),_token:$('meta[name="csrf-token"]').attr('content')},
+            success:function(data){
+                $(".cargar_aqui").html(data)     
+                           
+            },error:function(data){
+            }
+
+        })
+    })
+    $(document).on('click','.vew_transfer_patient',function(e){
+        //alert($('select[name=id_]').val())
+        e.preventDefault(e)
+        $.ajax({
+            type:'POST',
+            url:'/vew_transfer_patient',
+            data:$(this).serialize(),
+            data:{id_appointments:$('input:hidden[name=id_app]').val(),_token:$('meta[name="csrf-token"]').attr('content')},
+            success:function(data){
+                $(".cargar_aqui").html(data)     
+                           
+            },error:function(data){
+            }
+
+        })
+    })
+    $(document).on('click','.view_end_cite_medic',function(e){
+        //alert($('select[name=id_]').val())
+        e.preventDefault(e)
+        $.ajax({
+            type:'POST',
+            url:'/view_end_cite_medic',
+            data:$(this).serialize(),
+            data:{id_appointments:$('input:hidden[name=id_app]').val(),_token:$('meta[name="csrf-token"]').attr('content')},
+            success:function(data){
+                $(".cargar_aqui").html(data)     
+                           
+            },error:function(data){
+            }
+
+        })
+    })
     
 })

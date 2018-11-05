@@ -307,6 +307,13 @@ Route::post('/view_attention_patient', 'AttentionsController@view_attention_pati
 
 Route::post('/view_cites_previus', 'AttentionsController@view_cites_previus');
 
+Route::post('/view_treatment_form', 'AttentionsController@view_treatment_form');
+
+Route::post('/view_exam_medic', 'AttentionsController@view_exam_medic');
+
+Route::post('/vew_transfer_patient', 'AttentionsController@vew_transfer_patient');
+
+Route::post('/view_end_cite_medic', 'AttentionsController@view_end_cite_medic');
 
 
 

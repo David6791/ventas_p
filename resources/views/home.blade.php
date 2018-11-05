@@ -197,6 +197,7 @@
           <ul class="treeview-menu">
             @permission('ver_horarios')<li><a href="index_schedules" class="load-page"><i class="fa fa-circle-o"></i> Ver Horarios</a></li>@endpermission
             @permission('asignacion_horarios')<li><a href="index_assignment" class="load-page"><i class="fa fa-circle-o"></i> Asignacion de Horarios</a></li>@endpermission
+            @permission('crear_turnos')<li><a href="index_turns" class="load-page"><i class="fa fa-circle-o"></i> Crear Turnos para los Horarios</a></li>@endpermission
           </ul>
         </li>
         @endrole

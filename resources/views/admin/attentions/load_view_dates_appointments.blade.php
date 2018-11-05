@@ -180,7 +180,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="x_panel">
-					@foreach($exam_medic as $dat)
+					@forelse($exam_medic as $dat)
 					<div class="x_content">
 						<div class="row">
 							<div class="col-md-3">
@@ -230,7 +230,9 @@
 						</div>
 					</div>
 				</div>
-				@endforeach
+				@empty
+					No existen datos de Examenes medicos Solicitados
+				@endforelse
 			</div>
 		</div>
 	</div>

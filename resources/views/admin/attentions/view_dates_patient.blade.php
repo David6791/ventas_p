@@ -9,10 +9,10 @@
                     <a class="btn  btn-sm view_patient_dates"> <i class="glyphicon glyphicon-dashboard"></i> Datos del Paciente</a>
                     <a class="btn  btn-sm view_cites_previus" > <i class="glyphicon glyphicon-dashboard"></i> Citas Anteriores</a>
                     <a class="btn  btn-sm view_attention_patient" > <i class="glyphicon glyphicon-dashboard"></i> Atencion Cita</a>
-                    <a class="btn  btn-sm " > <i class="glyphicon glyphicon-dashboard"></i> Tratamiento</a>
-                    <a class="btn  btn-sm " ><i class="glyphicon glyphicon-dashboard"></i> Examen Medico</a>
-                    <a class="btn  btn-sm " > <i class="glyphicon glyphicon-dashboard"></i> Traslado de Paciente</a>
-                    <a class="btn  btn-sm " ><i class="glyphicon glyphicon-dashboard"></i> Finalizar Cita Medica</a>
+                    <a class="btn  btn-sm view_treatment_form" > <i class="glyphicon glyphicon-dashboard"></i> Tratamiento</a>
+                    <a class="btn  btn-sm view_exam_medic" ><i class="glyphicon glyphicon-dashboard"></i> Examen Medico</a>
+                    <a class="btn  btn-sm vew_transfer_patient" > <i class="glyphicon glyphicon-dashboard"></i> Traslado de Paciente</a>
+                    <a class="btn  btn-sm view_end_cite_medic" ><i class="glyphicon glyphicon-dashboard"></i> Finalizar Cita Medica</a>
                 </div>    
             </div>   
         </div>
