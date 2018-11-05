@@ -62,6 +62,19 @@
             .m-b-md {
                 margin-bottom: 30px;
             }
+            .verde h3{
+                margin-left:20px;
+                margin-top:20px;
+                color:green;
+                margin-left:-30%;
+                font-size: 500%;
+            }
+            .rojo{
+                margin-left:80%;
+                color:red;
+                font-size: 250%;
+                margin-top:-20%;
+            }
         </style>
     </head>
     <body>
@@ -78,18 +91,17 @@
             @endif
 
             <div class="content">
-                <div class="title m-b-md">
-                    Laravel
+                <div class="verde">
+                    <h3>
+                        Policlinico
+                    </h3>
                 </div>
 
-                <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
+                <div class="rojo">
+                    Virgen de Copacabana
                 </div>
             </div>
         </div>
     </body>
 </html>
+

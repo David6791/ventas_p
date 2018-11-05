@@ -49,43 +49,43 @@
         </div>
     </div>
 </div>
-<div class="box box-body">
-    <div class="row">
-        <div class="col-md-12">
-            <h4>Datos Medicos Generales y Patologias del Paciente</h4>
+<div class="row separar">
+    <div class="col-md-6">
+        <div class="box box-body box-primary">
+            <div class="box-header">
+                <h3 class="box-title">Prybsa sasd asd </h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="box box-body box-primary">
+            <div class="box-header">
+                <h3 class="box-title">Prybsa sasd asd </h3>
+            </div>
         </div>
     </div>
 </div>
-<div class="box box-body">
-    <div class="row">
-        <div class="col-md-12">
-            <h4>Notas Medicas al Momento de la Cita Medica</h4>
+<div class="row separar">
+    <div class="col-md-6">
+        <div class="box box-body box-primary">
+            <div class="box-header">
+                <h3 class="box-title">Prybsa sasd asd </h3>
+            </div>
         </div>
     </div>
-</div>
-<div class="box box-body">
-    <div class="row">
-        <div class="col-md-12">
-            <h4>Transferencia Medicas del Paciente </h4>
-        </div>
-    </div>
-</div>
-<div class="box box-body">
-    <div class="row">
-        <div class="col-md-12">
-            <h4>Examenes Medicos </h4>
-        </div>
-    </div>
-</div>
-<div class="box box-body">
-    <div class="row">
-        <div class="col-md-12">
-            <h4>Resultados Examenes Medicos </h4>
+    <div class="col-md-6">
+        <div class="box box-body box-primary">
+            <div class="box-header">
+                <h3 class="box-title">Prybsa sasd asd </h3>
+            </div>
         </div>
     </div>
 </div>
 <style>
 .spa{    
     margin:10px;
+}
+.separar{
+    margin-top:10px;
 }
 </style>
