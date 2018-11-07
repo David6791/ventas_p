@@ -27,7 +27,7 @@ class MedicalAppointmentController extends Controller
                         ON sap.id_state_appointments = map.state_appointments
                     INNER JOIN types_appointsment ta
                     ON ta.id_type_appointments = map.type_appoinment
-                        ORDER BY map.id_medical_appointments DESC";
+                        ORDER BY map.id_medical_appointments DESC ";
         $rows=\DB::select(\DB::raw($query));
         $query1 = "SELECT * FROM state_appointments";
         $rows1=\DB::select(\DB::raw($query1));
@@ -44,8 +44,9 @@ class MedicalAppointmentController extends Controller
                         ON sch.id_schedule = mass.id_schedul
                         INNER JOIN tipo_usuarios tp
                         ON us.tipo_usuario = tp.id_tipo
-                    WHERE state_assignments = 'activo'";
+                    WHERE state_assignments = 'activo' AND mass.id_schedul != 16 ";
         $rows=\DB::select(\DB::raw($query));
+        //return $rows;
         return view('admin.medical_appointment.load_pages.reservation_medic')->with('medics',$rows);
     }
     public function create_date_appointment_a(){
@@ -58,7 +59,7 @@ class MedicalAppointmentController extends Controller
         $query = "SELECT ht.id_hour_turn, ht.start_time, ht.end_time, ht.state, ht.id_schedul, sch.name_schedules FROM hour_turns ht
                     INNER JOIN schedules sch
                         ON sch.id_schedule = ht.id_schedul
-                    WHERE ht.id_schedul = :id_schedul AND ht.id_hour_turn NOT IN (
+                    WHERE ht.id_schedul = :id_schedul AND ht.state = 'activo' AND ht.id_hour_turn NOT IN (
                    SELECT id_turn_hour FROM medical_appointments map  
                     WHERE date_trunc('day', map.date_appointments) = :date)";
         $rows=\DB::select(\DB::raw($query),array('date'=>$request->fecha,'id_schedul'=>$request->id_turno));
@@ -70,7 +71,7 @@ class MedicalAppointmentController extends Controller
         $query = "SELECT * FROM hour_turns ht 
                         INNER JOIN schedules sch
                         ON sch.id_schedule = ht.id_schedul
-                    WHERE id_hour_turn = :id_hour_turn";
+                    WHERE id_hour_turn = :id_hour_turn AND ht.state = 'activo' ";
         $rows=\DB::select(\DB::raw($query),array('id_hour_turn'=>$request->id));
         $query1 = "SELECT * FROM medical_assignments mass
                             INNER JOIN users us
@@ -126,13 +127,17 @@ class MedicalAppointmentController extends Controller
     }
     public function select_turn_free(Request $request){
         //return $request->all();
+        $id = "SELECT id_schedul FROM medical_assignments WHERE id_medical_assignments = :id";
+        $id_sc = \DB::select(\DB::raw($id),array('id'=>$request->id_schedule));
+        //return $id_sc;
         $query = "SELECT ht.id_hour_turn, ht.start_time, ht.end_time, ht.state, ht.id_schedul, sch.name_schedules FROM hour_turns ht
                     INNER JOIN schedules sch
                         ON sch.id_schedule = ht.id_schedul
-                    WHERE ht.id_schedul = :id_schedul AND ht.id_hour_turn NOT IN (
+                    WHERE ht.id_schedul = :id_schedul AND ht.state = 'activo' AND ht.id_hour_turn NOT IN (
                    SELECT id_turn_hour FROM medical_appointments map  
-                    WHERE date_trunc('day', map.date_appointments) = :date)";
-        $rows=\DB::select(\DB::raw($query),array('date'=>$request->fecha,'id_schedul'=>$request->id_schedule));
+                    WHERE date_trunc('day', map.date_appointments) = :date) order by ht.id_hour_turn";
+        $rows=\DB::select(\DB::raw($query),array('date'=>$request->fecha,'id_schedul'=>$id_sc[0]->id_schedul));
+        //return $rows;
         return view('admin.medical_appointment.load_pages.load_dates_medic')->with('turns',$rows)->with('date',$request->fecha);
     }
     public function load_dates_medic_patient(Request $request){
@@ -201,7 +206,7 @@ class MedicalAppointmentController extends Controller
         $query = "SELECT ht.id_hour_turn, ht.start_time, ht.end_time, ht.state, ht.id_schedul, sch.name_schedules FROM hour_turns ht
                     INNER JOIN schedules sch
                         ON sch.id_schedule = ht.id_schedul
-                    WHERE ht.id_schedul = :id_schedul AND ht.id_hour_turn NOT IN (
+                    WHERE ht.id_schedul = :id_schedul AND ht.state = 'activo' AND ht.id_hour_turn NOT IN (
                    SELECT id_turn_hour FROM medical_appointments map  
                     WHERE date_trunc('day', map.date_appointments) = :date)";
         $rows=\DB::select(\DB::raw($query),array('date'=>$request->fecha,'id_schedul'=>$request->schedul));

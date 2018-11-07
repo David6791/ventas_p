@@ -330,6 +330,20 @@
           </ul>
           @endrole
         </li> 
+        <li class="treeview">
+          @role('medicamentos')  
+          <a href="#">
+            <i class="fa fa-user"></i> <span>Medicamentos</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>                 
+          <ul class="treeview-menu">
+          @permission('ver_medicamentos')<li><a href="view_medicines" class="load-page"><i class="fa fa-circle-o"></i> Ver Medicamentos</a></li>@endpermission
+          @permission('ver_stock')<li><a href="view_stock_medicines" class="load-page"> <i class="fa fa-circle-o"></i> Stock Mecicamentos</a></li> @endpermission
+          </ul>
+          @endrole
+        </li> 
       </ul>
     </section>
     <!-- /.sidebar -->

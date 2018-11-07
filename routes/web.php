@@ -316,8 +316,23 @@ Route::post('/vew_transfer_patient', 'AttentionsController@vew_transfer_patient'
 Route::post('/view_end_cite_medic', 'AttentionsController@view_end_cite_medic');
 
 
+/* Rutas para crear horarios para los turnos  */
+Route::get('/index_turns', 'SchedulesController@index_turns');
+
+Route::post('/view_turns_schedul', 'SchedulesController@view_turns_schedul');
+
+Route::post('/baja_turn', 'SchedulesController@baja_turn');
+
+Route::post('/save_turn', 'SchedulesController@save_turn');
 
 
+/* Rutas para el registro de Medicamentos */
+Route::get('/view_medicines','MedicinesController@index_view_medicines');
+Route::post('/create_medicines','MedicinesController@create_medicine');
+
+
+Route::get('/view_stock_medicines','MedicinesController@view_stock_medicine');
+Route::post('/create_stock_medicines','MedicinesController@create_stock_medicines');
 
 
 

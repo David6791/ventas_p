@@ -2851,5 +2851,138 @@
 
         })
     })
+    $(document).on('click','.view_turns_schedul',function(e){
+        //alert($('select[name=id_]').val())
+        e.preventDefault(e)
+        $.ajax({
+            type:'POST',
+            url:'/view_turns_schedul',
+            data:$(this).serialize(),
+            data:{id_sche:$(this).attr('value'),_token:$('meta[name="csrf-token"]').attr('content')},
+            success:function(data){
+                $("#contentGlobal").html(data)     
+                           
+            },error:function(data){
+            }
+        })        
+    })
+    $(document).on('click','.baja_turn',function(e){
+        //alert($('select[name=id_]').val())
+        e.preventDefault(e)
+        $.ajax({
+            type:'POST',
+            url:'/baja_turn',
+            data:$(this).serialize(),
+            data:{id_turn:$(this).attr('value'),id_hour:$('input:hidden[name=turno]').val(),_token:$('meta[name="csrf-token"]').attr('content')},
+            success:function(data){
+                $('.agregar tbody tr').closest('tr').remove()  
+                var da = (data).length
+                for(var i = 0; i < da ; i++)
+                {                    
+                    x = i+1          
+                    $('.agregar').append('<tr><td>'+x+'</td><td>'+data[i].start_time+'</td><td>'+data[i].end_time+'</td><td>'+data[i].state_turn+'</td><td>'+data[i].date+'</td><td>'+data[i].name_schedules+'</td><td><button type="button" class="btn btn-primary btn-xs baja_turn" value="'+data[i].id_hour_turn+'"> <span class="glyphicon glyphicon-show"></span> Dar de Baja</button></td></tr>')
+                }   
+                           
+            },error:function(data){
+            }
+
+        })
+    })
     
+    $(document).on('submit','.sendform_turn_new',function(e){
+        //$('#modal-editrol').modal('toggle')
+        frutas = []
+        $('.name_form').each(function(){
+            aux = $(this).attr("name")
+            frutas.push(aux)
+            
+        })
+        data1=$(this).serialize()
+        $.ajaxSetup({
+            header:$('meta[name="_token"]').attr('content')
+        })
+        e.preventDefault(e)
+        $.ajax({
+            type:$(this).attr('method'),
+            url:$(this).attr('action'),
+            data:$(this).serialize(),            
+            success:function(data){
+                $('.agregar tbody tr').closest('tr').remove()  
+                var da = (data).length
+                for(var i = 0; i < da ; i++)
+                {                    
+                    x = i+1          
+                    $('.agregar').append('<tr><td>'+x+'</td><td>'+data[i].start_time+'</td><td>'+data[i].end_time+'</td><td>'+data[i].state_turn+'</td><td>'+data[i].date+'</td><td>'+data[i].name_schedules+'</td><td><button type="button" class="btn btn-primary btn-xs baja_turn" value="'+data[i].id_hour_turn+'"> <span class="glyphicon glyphicon-show"></span> Dar de Baja</button></td></tr>')
+                }   
+                  $('.modal-backdrop').remove()               
+            },
+            error:function(data){
+                var asd = Object.keys(data.responseJSON.errors)
+                for(i = 0; i<frutas.length; i++){
+                    if(asd.includes(frutas[i])) {
+                        $( "input[name='"+frutas[i]+"']" ).parent().find("small").text(data.responseJSON.errors[frutas[i]][0])
+                        $( "textarea[name='"+frutas[i]+"']" ).parent().find("small").text(data.responseJSON.errors[frutas[i]][0])
+                    }else{
+                        $( "input[name='"+frutas[i]+"']" ).parent().find("small").text('')
+                        $( "textarea[name='"+frutas[i]+"']" ).parent().find("small").text('')
+                    }              
+                    
+                }                
+            }
+        })
+    })
+    $(document).on('submit','.sendform_medicines',function(e){
+        $('#medicines_register_modal').modal('toggle')
+        $.ajaxSetup({
+            header:$('meta[name="_token"]').attr('content')
+        })
+        e.preventDefault(e)
+        $.ajax({
+            type:$(this).attr('method'),
+            url:$(this).attr('action'),
+            data:$(this).serialize(),
+            success:function(data){  
+                $("#contentGlobal").html(data)          
+                swal(
+                    'Felicidades',
+                    'Se registro correctamente el Nuevo Dato Medico',
+                    'success'
+                  )
+            },
+            error:function(data){
+                swal(
+                    'Good job!',
+                    'You clicked the button!',
+                    'error'
+                  )
+            }
+        })
+    })
+    $(document).on('submit','.sendform_stock_medicines',function(e){
+        $('#medicines_stock_register_modal').modal('toggle')
+        $.ajaxSetup({
+            header:$('meta[name="_token"]').attr('content')
+        })
+        e.preventDefault(e)
+        $.ajax({
+            type:$(this).attr('method'),
+            url:$(this).attr('action'),
+            data:$(this).serialize(),
+            success:function(data){  
+                $("#contentGlobal").html(data)          
+                swal(
+                    'Felicidades',
+                    'Se registro correctamente el Nuevo Dato Medico',
+                    'success'
+                  )
+            },
+            error:function(data){
+                swal(
+                    'Good job!',
+                    'You clicked the button!',
+                    'error'
+                  )
+            }
+        })
+    })
 })
