@@ -343,6 +343,19 @@
           @permission('ver_stock')<li><a href="view_stock_medicines" class="load-page"> <i class="fa fa-circle-o"></i> Stock Mecicamentos</a></li> @endpermission
           </ul>
           @endrole
+        </li>
+        <li class="treeview">
+          @role('activar_editar')  
+          <a href="#">
+            <i class="fa fa-user"></i> <span>Activar Edicion Paciente</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>                 
+          <ul class="treeview-menu">
+          @permission('ver_lista_pacientes')<li><a href="view_list_patients" class="load-page"><i class="fa fa-circle-o"></i> Ver Lista Pacientes</a></li>@endpermission          
+          </ul>
+          @endrole
         </li> 
       </ul>
     </section>
@@ -457,6 +470,11 @@
 <script src="{{ asset('js/bootstrap-timepicker.min.js') }}"></script>
 
 <script src="{{ asset('js/icheck.min.js') }}"></script>
+
+<script src="{{ asset('js/jsqrcode-combined.min.js') }}"></script>
+<script src="{{ asset('js/html5-qrcode.min.js') }}"></script>
+
+
 <script src="{{ asset('js/myScripts.js') }}"></script>
 </body>
 </html>

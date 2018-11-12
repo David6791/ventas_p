@@ -16,6 +16,19 @@ Route::get('/', function () {
 });
 
 Auth::routes();
+Route::get('qrLogin', ['uses' => 'QrLoginController@index']);
+
+
+Route::post('qrLogin', ['uses' => 'QrLoginController@checkUser']);
+
+
+ 
+
+
+Route::get('my-qrcode', ['uses' => 'QrLoginController@ViewUserQrCode']);
+
+
+Route::post('qrLogin-autogenerate', ['uses' => 'QrLoginController@QrAutoGenerate']);
 
 Route::get('/home', 'HomeController@index')->name('home');
 /* Rutas para Roles */
@@ -334,5 +347,9 @@ Route::post('/create_medicines','MedicinesController@create_medicine');
 Route::get('/view_stock_medicines','MedicinesController@view_stock_medicine');
 Route::post('/create_stock_medicines','MedicinesController@create_stock_medicines');
 
+/* Activar edicion para los datos medicos del paciente y de las patologias del paciente */
 
+Route::get('/view_list_patients','PatientsController@view_list_patients');
+
+Route::post('/hability_dates_patients','PatientsController@hability_dates_patients');
 

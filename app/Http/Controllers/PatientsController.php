@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Auth;
 
+
 class PatientsController extends Controller
 {
     public function form_patients(){
@@ -21,6 +22,7 @@ class PatientsController extends Controller
     }
     public function store_patient(Request $request){
         //return $request->all();   
+        //return base64_encode(\QrCode::format('png')->size(200)->generate($request->ci_paciente));
         $validatedData = $request->validate([
             'apellido_materno' => 'required|max:20',
             'apellido_paterno' => 'required',
@@ -49,7 +51,9 @@ class PatientsController extends Controller
             'pais_nacimiento' => $request->pais,
             'ciudad_nacimiento' => $request->ciudad,
             'provincia' => $request->provincia,
-            'localidad_nacimiento' => $request->localidad
+            'localidad_nacimiento' => $request->localidad,
+            'qr_code_patient' => base64_encode(\QrCode::format('png')->size(200)->generate($request->ci_paciente))
+                                  
         ]);
         $query = "select id_paciente from pacientes order by id_paciente desc limit 1";
         $rows=\DB::select(\DB::raw($query));
@@ -276,7 +280,8 @@ class PatientsController extends Controller
             'ciudad_nacimiento' => $request->ciudad,
             'provincia' => $request->provincia,
             'localidad_nacimiento' => $request->localidad,
-            'filiacion_completa' => 's'
+            'filiacion_completa' => 's',
+            'qr_code_patient' => QrCode::format('png')->size(200)->generate($request->ci)
         ]);
         $query = "SELECT * FROM pacientes pa                        
                     WHERE pa.id_paciente = :id_patient";
@@ -296,5 +301,18 @@ class PatientsController extends Controller
         //return $patient;
         //return $rows1;
         return view('admin.patients.completing_dates.load_dates_full')->with('dates_patient',$patient)->with('datos_medicos',$rows2)->with('patologias',$rows1);
+    }
+    public function view_list_patients(){
+        //return 'asdsad sad sad sad ';
+        $query = "SELECT * FROM pacientes WHERE esta_paciente = 'activo' ORDER BY id_paciente";
+        $rows=\DB::select(\DB::raw($query));
+        return view('admin.patients.view_dates_activate')->with('patients',$rows);
+    }
+    public function hability_dates_patients(Request $request){        
+        $query = "SELECT * FROM public.hability_patients(:id)";
+        $rows=\DB::select(\DB::raw($query),array('id'=>$request->id_patients));
+        return redirect()->action(
+            'PatientsController@view_list_patients'
+        );
     }
 }

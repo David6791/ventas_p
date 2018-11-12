@@ -4,7 +4,10 @@
         <!-- Profile Image -->
             <div class="box box-primary">
                 <div class="box-body box-profile">
-                <img class="profile-user-img img-responsive img-circle" src="{{ asset('img/icon.jpg') }}" alt="User profile picture">
+                <center>
+                <div class=""> {!! QrCode::size(200)->generate($rows[0]->ci); !!} </div>
+                </center>
+                
 
                 <h3 class="profile-username text-center">{{ $rows[0]->name }} {{ $rows[0]->apellidos }}</h3>
 

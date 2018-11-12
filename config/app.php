@@ -164,6 +164,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Zizaco\Entrust\EntrustServiceProvider::class,
+        SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -172,6 +173,7 @@ return [
         /*
          * Application Service Providers...
          */
+        Cartalyst\Sentinel\Laravel\SentinelServiceProvider::class,
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
@@ -227,7 +229,10 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Entrust'   => Zizaco\Entrust\EntrustFacade::class,
-
+        'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
+        'Activation' => Cartalyst\Sentinel\Laravel\Facades\Activation::class,
+        'Reminder'   => Cartalyst\Sentinel\Laravel\Facades\Reminder::class,
+        'Sentinel'   => Cartalyst\Sentinel\Laravel\Facades\Sentinel::class,
     ],
 
 ];

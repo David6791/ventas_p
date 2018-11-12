@@ -2985,4 +2985,44 @@
             }
         })
     })
+    $(document).on('click','.create_assignments_1',function(e){
+        //lert('asdasdsads')
+        e.preventDefault(e)
+        $.ajax({
+            type:'POST',
+            url:'/update_appoinment_patient',
+            data:$(this).serialize(),
+            data:{id:$(this).attr('value'),id_ap:$('input:hidden[name=id]').val(),fecha:$('input:hidden[name=schedul]').val(),fecha:$('input:hidden[name=fecha]').val(),id_turno:document.getElementById("selec_schedule").value,_token:$('meta[name="csrf-token"]').attr('content')},
+            success:function(data){
+                $("#contentGlobal").html(data)
+            }
+        })
+    })    
+    $(document).on('click','.hability_dates_patients',function(e){
+        swal({
+            title: "Estas Seguro?",
+            text: "Se habilitara la edicion de datos del Paciente!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+          })
+          .then((willDelete) => {
+            if (willDelete) {
+                e.preventDefault(e)
+                    $.ajax({
+                        type:'POST',
+                        url:'/hability_dates_patients',
+                        data:{id_patients:$(this).attr('value'),_token:$('meta[name="csrf-token"]').attr('content')},
+                        success:function(data){
+                            $('#contentGlobal').html(data)
+                        }
+                    }) 
+              swal("Bien! Se Habilito la Edicion!", {
+                icon: "success",
+              });
+            } else {
+              swal("No se Realizo ninguna MODIFICACION!");
+            }
+          })     
+    })
 })

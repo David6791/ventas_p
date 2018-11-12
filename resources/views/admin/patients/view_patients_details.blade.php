@@ -8,7 +8,13 @@
                     </h3>
                 </div>
                 <div class="box-body box-profile">
-                <img class="profile-user-img img-responsive img-circle" src="{{ asset('img/icon.jpg') }}" alt="User profile picture">
+                
+                <center>
+                
+                <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(100)->generate('Transfórmame en un QrCode!')) !!} ">
+                <div class="img-responsive">{!! base64_decode(QrCode::format('png')->size(200)->generate($dates[0]->pruebas)); !!}</div>
+                </center>
+                
 
                 <h3 class="profile-username text-center">{{ $dates[0]->nombres }} {{ $dates[0]->ap_paterno }} {{ $dates[0]->ap_materno }}</h3>
 
