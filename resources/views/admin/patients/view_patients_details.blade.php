@@ -8,21 +8,17 @@
                     </h3>
                 </div>
                 <div class="box-body box-profile">
-                
+                {!! base64_encode(QrCode::format('png')->size(200)->generate($dates[0]->ci_paciente)); !!}
                 <center>
-                
-                <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(100)->generate('Transfórmame en un QrCode!')) !!} ">
-                <div class="img-responsive">{!! base64_decode(QrCode::format('png')->size(200)->generate($dates[0]->pruebas)); !!}</div>
+                <div class="img-responsive">{!! QrCode::size(200)->generate($dates[0]->ci_paciente); !!}</div>
                 </center>
-                
-
                 <h3 class="profile-username text-center">{{ $dates[0]->nombres }} {{ $dates[0]->ap_paterno }} {{ $dates[0]->ap_materno }}</h3>
 
                 <p class="text-muted text-center">Paciente</p>
 
                 <ul class="list-group list-group-unbordered">
                     <li class="list-group-item">
-                    <b>Matricula</b> <a class="pull-right"></a>
+                    <b>Codigo Paciente:</b> <a class="pull-right"></a>
                     </li>
                     <li class="list-group-item">
                     <b>Cedula de Identidad:</b> <a class="pull-right">{{ $dates[0]->ci_paciente }}</a>
@@ -44,7 +40,8 @@
                     </li>
                 </ul>
 
-                <a href="#" class="btn btn-primary btn-block"><b>Editar</b></a>
+                <a href="#" class="btn btn-primary btn-block"> <span class="fa fa-edit"></span> <b>Editar</b></a>
+                <a href="#" class="btn btn-success btn-block"> <span class="fa fa-print"></span> <b>Imprmir Credencial</b></a>
                 </div>
                 <!-- /.box-body -->
             </div>
