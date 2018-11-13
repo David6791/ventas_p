@@ -12,7 +12,7 @@
         "zizaco/entrust": "5.2.x-dev",
         "simplesoftwareio/simple-qrcode": "~2",
         "cartalyst/sentinel": "2.0.*",
-        "barryvdh/laravel-dompdf": "0.6.1"
+        "barryvdh/laravel-dompdf": "^0.8.1"
     },
     "require-dev": {
         "filp/whoops": "~2.0",

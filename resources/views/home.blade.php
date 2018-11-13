@@ -145,7 +145,7 @@
         @role('admin_pacientes')
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-files-o"></i>
+            <i class="glyphicon glyphicon-unchecked"></i>
             <span>Pacientes</span> 
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
@@ -160,7 +160,7 @@
         @role('admin_horarios')       
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-pie-chart"></i>
+            <i class="glyphicon glyphicon-unchecked"></i>
             <span>Administrar Horarios</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
@@ -176,7 +176,7 @@
         @role('admin_datos')
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-laptop"></i>
+            <i class="glyphicon glyphicon-unchecked"></i>
             <span>Datos del Sistema</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
@@ -194,7 +194,7 @@
         @role('admin_examen_medico')
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-edit"></i> <span>Examenes Medicos</span>
+            <i class="glyphicon glyphicon-unchecked"></i> <span>Examenes Medicos</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -207,7 +207,7 @@
         @role('ver_historial_medico')
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-table"></i> <span>Historiales Medicos</span>
+            <i class="glyphicon glyphicon-unchecked"></i> <span>Historiales Medicos</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -220,7 +220,7 @@
         @role('citas_medicas')
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-calendar"></i> <span>Citas Medicas</span>
+            <i class="glyphicon glyphicon-unchecked"></i> <span>Citas Medicas</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -237,7 +237,7 @@
         @role('editar_reserva')
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-calendar"></i> <span>Editar Reservas</span>
+            <i class="glyphicon glyphicon-unchecked"></i> <span>Editar Reservas</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -250,7 +250,7 @@
         @role('confirmar_citas')
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-calendar"></i> <span>Confirmar Citas Medicas</span>
+            <i class="glyphicon glyphicon-unchecked"></i> <span>Confirmar Citas Medicas</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -263,7 +263,7 @@
         @role('citas_medicas')
         <li class="treeview">
           <a href="">
-            <i class="fa fa-envelope"></i> <span>Atencion Citas Medicas</span>
+            <i class="glyphicon glyphicon-unchecked"></i> <span>Atencion Citas Medicas</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -277,7 +277,7 @@
         <li class="treeview">
           @role('super_admin')  
           <a href="#">
-            <i class="fa fa-user"></i> <span>Administrador de Usuarios</span>
+            <i class="glyphicon glyphicon-unchecked"></i> <span>Administrador de Usuarios</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -294,7 +294,7 @@
         <li class="treeview">
           @role('estadisticas')  
           <a href="#">
-            <i class="fa fa-user"></i> <span>Estadisticas</span>
+            <i class="glyphicon glyphicon-unchecked"></i> <span>Estadisticas</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -307,7 +307,7 @@
         <li class="treeview">
           @role('reportes_usuario')  
           <a href="#">
-            <i class="fa fa-user"></i> <span>Reportes Usuario</span>
+            <i class="glyphicon glyphicon-unchecked"></i> <span>Reportes Usuario</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -320,7 +320,7 @@
         <li class="treeview">
           @role('reportes_general')  
           <a href="#">
-            <i class="fa fa-user"></i> <span>Reportes General</span>
+            <i class="glyphicon glyphicon-unchecked"></i> <span>Reportes General</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -333,7 +333,7 @@
         <li class="treeview">
           @role('medicamentos')  
           <a href="#">
-            <i class="fa fa-user"></i> <span>Medicamentos</span>
+            <i class="glyphicon glyphicon-unchecked"></i> <span>Medicamentos</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -347,13 +347,28 @@
         <li class="treeview">
           @role('activar_editar')  
           <a href="#">
-            <i class="fa fa-user"></i> <span>Activar Edicion Paciente</span>
+            <i class="glyphicon glyphicon-unchecked"></i> <span>Activar Edicion Paciente</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>                 
           <ul class="treeview-menu">
           @permission('ver_lista_pacientes')<li><a href="view_list_patients" class="load-page"><i class="fa fa-circle-o"></i> Ver Lista Pacientes</a></li>@endpermission          
+          </ul>
+          @endrole
+        </li> 
+        <li class="treeview">
+          @role('imprimir_credencial')  
+          <a href="#">
+            <i class="glyphicon glyphicon-unchecked"></i> <span>Credenciales</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>                 
+          <ul class="treeview-menu">
+          @permission('ver_lista_credenciales')<li><a href="view_list_patients_credential" class="load-page"><i class="fa fa-circle-o"></i> Ver Lista Pacientes</a></li>@endpermission          
+      
+          @permission('ver_lista_cred_medicos')<li><a href="view_list_usuarios_credential" class="load-page"><i class="fa fa-circle-o"></i> Ver Lista Usuarios</a></li>@endpermission          
           </ul>
           @endrole
         </li> 
@@ -368,11 +383,11 @@
     <section class="content-header">
       <h1>
         Bienvenido
-        <small>Panel de Control</small>
+        
       </h1>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Inicio</a></li>
-        <li class="active">Panel de Control</li>
+        <li><a href=""><i class="fa fa-dashboard"></i> Inicio</a></li>
+        
       </ol>
     </section>
 

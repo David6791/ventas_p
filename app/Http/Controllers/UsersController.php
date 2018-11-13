@@ -166,4 +166,26 @@ class UsersController extends Controller{
         $rows=\DB::select(\DB::raw($query),array('id'=>$request->id));
         return $rows;
     }
+    public function view_list_usuarios_credential(){
+        $query2 = "SELECT * FROM users us
+                    LEFT JOIN estados_usuarios esu                    
+                    ON us.estado_user = esu.id_estados 
+                    LEFT JOIN tipo_usuarios tu
+                    ON tu.id_tipo = us.tipo_usuario 
+                        WHERE us.estado_user = 1 AND id != 10
+                    ORDER BY id ASC";
+        $rows2=\DB::select(\DB::raw($query2));
+        return view('admin.users.view_dates_list_print_users')->with('users',$rows2);
+    }
+    public function print_credential_user($id_){
+        //return $id_;
+        $query = "SELECT * FROM users WHERE id = :id ORDER BY id";
+        $rows=\DB::select(\DB::raw($query),array('id'=>$id_));
+        //return $rows;
+        $view =  \View::make('admin.users.credential_user', compact('rows'))->render();
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->setPaper(array(0,0,300,200));       
+        $pdf->loadHTML($view);
+        return $pdf->stream();
+    }
 }

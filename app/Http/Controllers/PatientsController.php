@@ -315,4 +315,20 @@ class PatientsController extends Controller
             'PatientsController@view_list_patients'
         );
     }
+    public function view_list_patients_credential(){
+        $query = "SELECT * FROM pacientes WHERE esta_paciente = 'activo' ORDER BY id_paciente";
+        $rows=\DB::select(\DB::raw($query));
+        return view('admin.patients.view_dates_list_print')->with('patients',$rows);
+    }
+    public function print_credential($id_){
+        //return $id_;
+        $query = "SELECT * FROM pacientes WHERE esta_paciente = 'activo' AND id_paciente = :id ORDER BY id_paciente";
+        $rows=\DB::select(\DB::raw($query),array('id'=>$id_));
+        //return $rows;
+        $view =  \View::make('admin.patients.credential', compact('rows'))->render();
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->setPaper(array(0,0,300,200));       
+        $pdf->loadHTML($view);
+        return $pdf->stream();
+    }
 }

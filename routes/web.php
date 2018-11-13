@@ -353,3 +353,15 @@ Route::get('/view_list_patients','PatientsController@view_list_patients');
 
 Route::post('/hability_dates_patients','PatientsController@hability_dates_patients');
 
+/* Rutas para credenciasles de los pacientes */
+
+Route::get('/view_list_patients_credential','PatientsController@view_list_patients_credential');
+
+Route::get('/print_credential/{id_}','PatientsController@print_credential');
+
+
+Route::get('/view_list_usuarios_credential','UsersController@view_list_usuarios_credential');
+
+Route::get('/print_credential_user/{id_}','UsersController@print_credential_user');
+
+
