@@ -7,7 +7,7 @@
             <div class="box-body">         
                 <select name="id_" id="selec_schedule" class="select2_group form-control">
                     @foreach($schedules as $list)                                    
-                        <option name="{{$list->id_schedule}}" value="{{$list->id_schedule}}">{{$list->name_schedules}}</option>                                                         
+                        <option name="{{$list->id_schedule}}" value="{{$list->id_medical_assignments}}">{{$list->name_schedules}} -- Dr. {{$list->name}} {{$list->apellidos}} </option>                                                         
                     @endforeach
                 </select>   <br> 
                 <input type="hidden" name="id" value="{{ $id[0] }}"> 

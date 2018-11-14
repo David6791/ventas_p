@@ -100,7 +100,7 @@ class ReportsController extends Controller
                             ON sapp.id_state_appointments = mapp.state_appointments
                         INNER JOIN pacientes p
                             ON p.id_paciente = mapp.id_patient
-                    WHERE date_appointments = :fecha";
+                    WHERE date_appointments = :fecha AND mapp.state_appointments = 1";
         $rows=\DB::select(\DB::raw($query),array('fecha'=>$request->fecha));
         //return $rows;
         return view('admin.reports.load_page.index_list_attentions_full_users')->with('list_daily',$rows);
@@ -122,7 +122,7 @@ class ReportsController extends Controller
                             ON sapp.id_state_appointments = mapp.state_appointments
                         INNER JOIN pacientes p
                             ON p.id_paciente = mapp.id_patient
-                    WHERE date_appointments BETWEEN :date_start AND :date_end";
+                    WHERE date_appointments BETWEEN :date_start AND :date_end AND mapp.state_appointments = 1";
         //$rows=\DB::select(\DB::raw($query));            
         $rows=\DB::select(\DB::raw($query),array('date_start'=>$as[0],'date_end'=>$as[1]));
         //return $rows;

@@ -50,7 +50,13 @@ class MedicalAppointmentController extends Controller
         return view('admin.medical_appointment.load_pages.reservation_medic')->with('medics',$rows);
     }
     public function create_date_appointment_a(){
-        $query = "select * from schedules order by id_schedule";
+        $query = "SELECT * FROM schedules  sch
+                        INNER JOIN medical_assignments mass
+                            ON mass.id_schedul = sch.id_schedule
+                        INNER JOIN users us
+                            ON us.id = mass.id_user
+                        WHERE mass.state_assignments = 'activo' AND sch.id_schedule != 16
+                    ORDER BY sch.id_schedule";
         $rows=\DB::select(\DB::raw($query));
         return view('admin.medical_appointment.load_pages.reservation_date')->with('schedul',$rows);
     }
@@ -196,20 +202,29 @@ class MedicalAppointmentController extends Controller
     }
     public function load_dates_reserva(Request $request){
         //return $request->all();
-        $query = "select * from schedules order by id_schedule";
+        $query = "SELECT * FROM schedules  sch
+                        INNER JOIN medical_assignments mass
+                            ON mass.id_schedul = sch.id_schedule
+                        INNER JOIN users us
+                            ON us.id = mass.id_user
+                        WHERE mass.state_assignments = 'activo' AND sch.id_schedule != 16
+                    ORDER BY sch.id_schedule";
         $rows=\DB::select(\DB::raw($query));
         $var1 = [$request->id];
         return view('admin.medical_appointment.load_pages.edit_reservations_dates')->with('schedules',$rows)->with('id',$var1);
     }
     public function view_schedules_free(Request $request){
         //return $request->all();
+        $query1 = "SELECT id_schedul FROM medical_assignments where id_medical_assignments = :ids";
+        $rows1=\DB::select(\DB::raw($query1),array('ids'=>$request->schedul));
+        //return $rows1;
         $query = "SELECT ht.id_hour_turn, ht.start_time, ht.end_time, ht.state, ht.id_schedul, sch.name_schedules FROM hour_turns ht
                     INNER JOIN schedules sch
                         ON sch.id_schedule = ht.id_schedul
                     WHERE ht.id_schedul = :id_schedul AND ht.state = 'activo' AND ht.id_hour_turn NOT IN (
                    SELECT id_turn_hour FROM medical_appointments map  
                     WHERE date_trunc('day', map.date_appointments) = :date)";
-        $rows=\DB::select(\DB::raw($query),array('date'=>$request->fecha,'id_schedul'=>$request->schedul));
+        $rows=\DB::select(\DB::raw($query),array('date'=>$request->fecha,'id_schedul'=>$rows1[0]->id_schedul));
         //return '$rows';
         $var1 = [$request->fecha, $request->schedul,$request->id];
         return view('admin.medical_appointment.load_pages.reservation_turns_date_edit')->with('turns',$rows)->with('dat',$var1);
@@ -223,6 +238,7 @@ class MedicalAppointmentController extends Controller
                 'id_turn_hour' => $request->id,
                 'date_appointments' => $request->fecha
             ]);
+        //return $modi;
         return redirect()->action(
             'MedicalAppointmentController@view_list_appinments'
         );

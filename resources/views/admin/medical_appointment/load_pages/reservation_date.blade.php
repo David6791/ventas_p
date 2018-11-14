@@ -7,7 +7,7 @@
     <div class="col-md-12">
         <select name="id_user" id="selec_schedule" class="select2_group form-control">
             @foreach($schedul as $list)                                    
-                <option name="{{$list->id_schedule}}" value="{{$list->id_schedule}}">{{$list->name_schedules}}</option>                                                         
+                <option name="{{$list->id_schedule}}" value="{{$list->id_schedule}}">{{$list->name_schedules}} -- Dr. {{ $list->name }} {{ $list->apellidos }} </option>                                                         
             @endforeach
         </select>
     </div> 
