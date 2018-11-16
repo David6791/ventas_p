@@ -69,7 +69,7 @@ class MedicRecordsController extends Controller
                 where ma.id_medical_appointments = :id_appointments";
         $dr=\DB::select(\DB::raw($dj),array('id_appointments'=>$request->id_appointments));
 
-        /* Notas Medicas en el Momento de la Atencion Medica */
+        /* Notas Medicas en el Momento de la Atencion Medicasadas */
         $query3 = "SELECT * FROM notes_medic_dates_appoinments nmda
                     WHERE nmda.id_medical_appoinments = :id_appointments ORDER BY id_medical_appoinments ASC";
         $rows3=\DB::select(\DB::raw($query3),array('id_appointments'=>$request->id_appointments)); 
@@ -106,6 +106,6 @@ class MedicRecordsController extends Controller
                 WHERE dr.id_appointmetns_ = :id_appointments";
         $notes=\DB::select(\DB::raw($not),array('id_appointments'=>$request->id_appointments));
         //return $notes;
-        return view('admin.record_medics.load_pages_record.view_record_patients_full_details')->with('date_medic',$data)->with('exam_medics',$rows1)->with('patologies_medic',$rows2)->with('notes_medic',$rows3)->with('transfer_medic',$rows4)->with('treatment_medic',$rows5)->with('paciente',$rows6)->with('dr',$dr)->with('not',$notes);
+        return view('admin.record_medics.load_pages_record.view_record_patients_full_details')->with('id',$request->id_appointments)->with('date_medic',$data)->with('exam_medics',$rows1)->with('patologies_medic',$rows2)->with('notes_medic',$rows3)->with('transfer_medic',$rows4)->with('treatment_medic',$rows5)->with('paciente',$rows6)->with('dr',$dr)->with('not',$notes);
     }
 }

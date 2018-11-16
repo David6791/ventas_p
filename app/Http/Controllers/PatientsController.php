@@ -331,4 +331,55 @@ class PatientsController extends Controller
         $pdf->loadHTML($view);
         return $pdf->stream();
     }
+    public function print_record_medic($id_){
+        $q1 = "SELECT * FROM pacientes p
+                    WHERE id_paciente = (SELECT id_patient FROM medical_appointments WHERE id_medical_appointments = :id_appointments)";
+        $paciente=\DB::select(\DB::raw($q1),array('id_appointments'=>$id_));
+        $q2 = "SELECT * FROM pacientes_patologias pp
+        INNER JOIN patologias pa
+            ON pa.id_patologia = pp.id_patologia
+                WHERE pp.id_paciente = (SELECT mapp.id_patient FROM medical_appointments mapp where mapp.id_medical_appointments = :id_appointments) ORDER BY id_pac_pat ASC";
+        $pato=\DB::select(\DB::raw($q2),array('id_appointments'=>$id_));
+
+        $dj = "select * from medical_appointments ma 
+                    inner join patients_dates_medic ptm
+                        on ptm.id_patient = ma.id_patient
+                    inner join datos_medicos dm
+                                on dm.id_dato_medico = ptm.id_date_medic
+                where ma.id_medical_appointments = :id_appointments";
+        $dr=\DB::select(\DB::raw($dj),array('id_appointments'=>$id_));
+        $not = "SELECT * FROM details_dates_register dr 
+            INNER JOIN dates_of_register dof
+                    ON dof.id_date_register = dr.id_dates_register
+            WHERE dr.id_appointmetns_ = :id_appointments";
+        $notes=\DB::select(\DB::raw($not),array('id_appointments'=>$id_));
+        $query4 = "SELECT * FROM transfer_patients trp
+                INNER JOIN medical_appointments mapp
+                    ON mapp.id_medical_appointments = trp.id_appoinments
+                INNER JOIN medical_assignments mass
+                    ON mass.id_medical_assignments = mapp.id_medical_assignments
+                INNER JOIN users us
+                    ON us.id = mass.id_user
+                INNER JOIN types_transfer tp
+                    ON trp.id_type_trasnfer = tp.id_type_transfer
+            WHERE trp.id_appoinments = :id_appointments ORDER BY id_transfer_patient ASC";
+        $transfer_medic=\DB::select(\DB::raw($query4),array('id_appointments'=>$id_));
+        $query1 = "SELECT * FROM medical_exam_patients mep
+                        INNER JOIN medical_exam me
+                            ON me.id_medical_exam = mep.id_medical_exam
+                        INNER JOIN medical_appointments ma
+                ON ma.id_medical_appointments = mep.id_appoinments
+                INNER JOIN medical_assignments mes
+                ON mes.id_medical_assignments = ma.id_medical_assignments
+                INNER JOIN users us
+                ON us.id = mes.id_user 
+                WHERE mep.id_appoinments = :id_appointments ORDER BY id_medical_exam_patient ASC";
+        $exam_medics=\DB::select(\DB::raw($query1),array('id_appointments'=>$id_));  
+
+        $view =  \View::make('admin.patients.medical_record_print', compact('paciente','pato','dr','notes','transfer_medic','exam_medics','id_'))->render();
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->setPaper("letter", "portrait");     
+        $pdf->loadHTML($view);
+        return $pdf->stream();
+    }
 }

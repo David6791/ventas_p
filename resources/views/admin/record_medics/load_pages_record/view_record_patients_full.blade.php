@@ -80,7 +80,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <center>
-                                        <button type="button" class="btn btn-info"> <span class="glyphicon glyphicon-print"></span> Imprimir</button>
+                                    <a class="btn btn-primary btn-sm" target="_blank" href="print_record_medic/{{ $li['id_medical_appointments'] }}"> <span class="glyphicon glyphicon-print"></span> Imprimir</a>
                                     </center>                                    
                                 </div>
                             </div>
@@ -133,7 +133,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <center>
-                                        <button type="button" class="btn btn-info"> <span class="glyphicon glyphicon-print"></span> Imprimir</button>
+                                        <a class="btn btn-primary btn-sm" target="_blank" href="print_record_medic/{{ $li['id_medical_appointments'] }}"> <span class="glyphicon glyphicon-print"></span> Imprimir</a>
                                     </center>                                    
                                 </div>
                             </div>

@@ -365,3 +365,7 @@ Route::get('/view_list_usuarios_credential','UsersController@view_list_usuarios_
 Route::get('/print_credential_user/{id_}','UsersController@print_credential_user');
 
 
+/* reporte de historiales medicos de l;os pacientess */
+
+Route::get('/print_record_medic/{id_}','PatientsController@print_record_medic');
+

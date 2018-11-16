@@ -265,7 +265,7 @@
     <div class="row">
         <div class="col-md-12">
             <center>
-                <button class="btn btn-success btn-sm"> <span class="fa fa-print"></span> Imprimir Historial Medico</button>
+                <a class="btn btn-success btn-sm" target="_blank" href="print_record_medic/{{ $id }}"> <span class="glyphicon glyphicon-print"></span> Imprimir</a>
             </center>
         </div> <br>
     </div> <br>
