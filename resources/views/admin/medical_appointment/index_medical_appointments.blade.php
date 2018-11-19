@@ -37,7 +37,7 @@
                         @endif
                         
                         <td>{{ $lista->m_name }} {{ $lista->m_apellidos }}</td>
-                        <td><!--td><button type="button" class="btn btn-primary btn-xs get_ViewAppointments" value="{{$lista->id_medical_appointments}}">Ver Detalles</button--><a target="_blank" href="http://192.168.1.106:8080/pentaho/api/repos/%3Apublic%3ASteel%20Wheels%3AReports%3Aboleta_reserva_2.prpt/generatedContent?userid=admin&password=password&output-target=pageable/pdf&p={{ $lista->id_medical_appointments }}" type="button" class="btn btn-primary btn-xs" >Imprimir</a></td>
+                        <td><!--td><button type="button" class="btn btn-primary btn-xs get_ViewAppointments" value="{{$lista->id_medical_appointments}}">Ver Detalles</button--><a target="_blank" href="http://localhost:8080/pentaho/api/repos/%3Apublic%3ASteel%20Wheels%3AReports%3Aboleta_reserva.prpt/generatedContent?userid=admin&password=password&output-target=pageable/pdf&p={{ $lista->id_medical_appointments }}" type="button" class="btn btn-primary btn-xs" >Imprimir</a></td>
                         
                     </tr>
                 @else
@@ -55,7 +55,7 @@
                         @endif
                         <!--td><button type="button" class="btn btn-primary btn-xs get_ViewAppointments" value="{{$lista->id_medical_appointments}}">Ver Detalles</button-->
                         <td>{{ $lista->m_name }} {{ $lista->m_apellidos }}</td>                            
-                        <td><!--button type="button" class="btn btn-primary btn-xs get_ViewAppointments" value="{{$lista->id_medical_appointments}}"> <span class="glyphicon glyphicon-eye-open"></span> Ver Detalles</button--><a target="_blank" href="http://192.168.1.106:8080/pentaho/api/repos/%3Apublic%3ASteel%20Wheels%3AReports%3Aboleta_reserva_2.prpt/generatedContent?userid=admin&password=password&output-target=pageable/pdf&p={{ $lista->id_medical_appointments }}" type="button" class="btn btn-info btn-xs" > <span class="glyphicon glyphicon-print"></span> Imprimir</a></td>
+                        <td><!--button type="button" class="btn btn-primary btn-xs get_ViewAppointments" value="{{$lista->id_medical_appointments}}"> <span class="glyphicon glyphicon-eye-open"></span> Ver Detalles</button--><a target="_blank" href="http://localhost:8080/pentaho/api/repos/%3Apublic%3ASteel%20Wheels%3AReports%3Aboleta_reserva.prpt/generatedContent?userid=admin&password=password&output-target=pageable/pdf&p={{$lista->id_medical_appointments }}" type="button" class="btn btn-info btn-xs" > <span class="glyphicon glyphicon-print"></span> Imprimir</a></td>
                         
                     </tr>
                 @endif
