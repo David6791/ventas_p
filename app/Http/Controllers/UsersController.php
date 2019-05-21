@@ -10,8 +10,8 @@ use Illuminate\Support\Facades\DB;
 class UsersController extends Controller{
     public function index_medics(){
         $query2 = "SELECT * FROM users us
-                    LEFT JOIN estados_usuarios esu                    
-                    ON us.estado_user = esu.id_estados 
+                    LEFT JOIN estados_usuarios esu
+                    ON us.estado_user = esu.id_estados
                     LEFT JOIN tipo_usuarios tu
                     ON tu.id_tipo = us.tipo_usuario ORDER BY id ASC";
         $rows2=\DB::select(\DB::raw($query2));
@@ -66,10 +66,10 @@ class UsersController extends Controller{
             'email' => $request->nombre_usuario,
             'password' => bcrypt($request->contraseña),
             'matricula_medico' => $request->matricula,
-            'tipo_usuario' => $request->tipo_usuario         
+            'tipo_usuario' => $request->tipo_usuario
         ]);
         return redirect()->action(
-            'UsersController@index_medics'                   
+            'UsersController@index_medics'
         );
     }
     public function verUsuarios(Request $request){
@@ -91,7 +91,7 @@ class UsersController extends Controller{
         from especialidades es
         where es.tipo_usuario = :tip and es.id_especialidad  NOT IN
             (
-                select id_especialidad 
+                select id_especialidad
                 from usuarios_especialidades
                 where id_usuario = :id_medico and estado = 'activo'
             )";
@@ -99,13 +99,13 @@ class UsersController extends Controller{
         //return $espe;
         return view('admin.users.view_medic_dates')->with('rows',$rows)->with('rows1',$rows1)->with('espe',$espe);
     }
-    public function update1(Request $request, $id){        
+    public function update1(Request $request, $id){
         foreach($request->agregar_especialidad as $esp){
             //return $esp;
             if($esp!=0)
             {
                 $query1 = "select public.agregar_especialidad(:id, :id_espe)";
-                $rows2 = \DB::select(\DB::raw($query1),array('id'=>$id,'id_espe'=>$esp));        
+                $rows2 = \DB::select(\DB::raw($query1),array('id'=>$id,'id_espe'=>$esp));
             }
         }
         foreach($request->eliminar_especialidad as $esp){
@@ -119,7 +119,7 @@ class UsersController extends Controller{
         return redirect()->action(
             'UsersController@index_medics'
         );
-       
+
     }
     public function baja_user(Request $request){
         //return $request->all();
@@ -131,7 +131,7 @@ class UsersController extends Controller{
             ->where('id', '=', $request->id)
             ->update([
                 'estado_user' => 2
-            ]);    
+            ]);
         }else{
             $baja_user = DB::table('users')
             ->where('id', '=', $request->id)
@@ -158,7 +158,7 @@ class UsersController extends Controller{
         }
         return redirect()->action(
             'UsersController@index_medics'
-        );   
+        );
     }
     public function charge_specialty_b(Request $request){
         //return $request->all();
@@ -168,10 +168,10 @@ class UsersController extends Controller{
     }
     public function view_list_usuarios_credential(){
         $query2 = "SELECT * FROM users us
-                    LEFT JOIN estados_usuarios esu                    
-                    ON us.estado_user = esu.id_estados 
+                    LEFT JOIN estados_usuarios esu
+                    ON us.estado_user = esu.id_estados
                     LEFT JOIN tipo_usuarios tu
-                    ON tu.id_tipo = us.tipo_usuario 
+                    ON tu.id_tipo = us.tipo_usuario
                         WHERE us.estado_user = 1 AND id != 10
                     ORDER BY id ASC";
         $rows2=\DB::select(\DB::raw($query2));
@@ -184,8 +184,11 @@ class UsersController extends Controller{
         //return $rows;
         $view =  \View::make('admin.users.credential_user', compact('rows'))->render();
         $pdf = \App::make('dompdf.wrapper');
-        $pdf->setPaper(array(0,0,300,200));       
+        $pdf->setPaper(array(0,0,300,200));
         $pdf->loadHTML($view);
         return $pdf->stream();
+    }
+    public function view_perfil(){
+      return view('admin.users.view_perfil');
     }
 }

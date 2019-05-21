@@ -58,7 +58,7 @@ class AttentionsController extends Controller
             $asdd = json_decode($asd);
             $no[]=json_decode($asdd,true);
         }
-        
+
         $query3 = "SELECT * FROM medical_appointments map
                     INNER JOIN types_appointsment ta
                         on ta.id_type_appointments = map.type_appoinment
@@ -78,7 +78,7 @@ class AttentionsController extends Controller
             $asd = json_encode($rows5[$i]->j);
             $asdd = json_decode($asd);
 
-            
+
 
             //return $asdd;
             //return $asdd;
@@ -142,7 +142,7 @@ class AttentionsController extends Controller
     }
     public function load_dates_appoinment(Request $request){
         //return $request->all();
-        $query = "SELECT ma.reconsulta_register, ma.id_medical_appointments, ma.date_appointments, sc.name_schedules, ht.start_time, us.name, us.apellidos, ta.name_type, ma.appointment_description FROM medical_appointments ma 
+        $query = "SELECT ma.reconsulta_register, ma.id_medical_appointments, ma.date_appointments, sc.name_schedules, ht.start_time, us.name, us.apellidos, ta.name_type, ma.appointment_description FROM medical_appointments ma
                         INNER JOIN medical_assignments mas
                             ON mas.id_medical_assignments = ma.id_medical_assignments
                         INNER JOIN users us
@@ -156,7 +156,7 @@ class AttentionsController extends Controller
                     WHERE ma.id_medical_appointments = :id_appointments";
         $rows=\DB::select(\DB::raw($query),array('id_appointments'=>$request->id_appointments));
         //return $rows;
-        $query1 = "SELECT * FROM details_dates_register dr 
+        $query1 = "SELECT * FROM details_dates_register dr
                         INNER JOIN dates_of_register dof
                             ON dof.id_date_register = dr.id_dates_register
                     WHERE dr.id_appointmetns_ = :id_a";
@@ -176,7 +176,7 @@ class AttentionsController extends Controller
         $query4 = "SELECT mep.id_medical_exam_patient, mep.id_appoinments, mep.reason_medical_examn, mep.observation_medical_exam, mep.date_creation, mass.id_user, us.name, us.apellidos,
                         p.nombres, p.ap_paterno, p.ap_materno, p.fecha_nacimento, p.ci_paciente, mee.name_medical_exam
                         FROM medical_exam_patients mep
-                        INNER JOIN medical_appointments mapp 
+                        INNER JOIN medical_appointments mapp
                             ON mep.id_appoinments = mapp.id_medical_appointments
                         INNER JOIN medical_assignments mass
                             ON mass.id_medical_assignments = mapp.id_medical_assignments
@@ -240,7 +240,7 @@ class AttentionsController extends Controller
                 ]);
             }
         }
-        $query = "SELECT * FROM details_dates_register dr 
+        $query = "SELECT * FROM details_dates_register dr
                         INNER JOIN dates_of_register dof
                             ON dof.id_date_register = dr.id_dates_register
                     WHERE dr.id_appointmetns_ = :id_a";
@@ -271,7 +271,7 @@ class AttentionsController extends Controller
         /*DB::table('notes_medic_dates_appoinments')->insert([
             'id_medical_appoinments' => $request->id_appoinments,
             'observation_medical_appoinments' => $request->observation_appointment_dates,
-            'dates_register_appoinments' => json_encode($data2) 
+            'dates_register_appoinments' => json_encode($data2)
         ]);*/
         if(isset($request->observations_appointments)){
             DB::table('notes_medic_dates_appoinments')->insert([
@@ -299,7 +299,7 @@ class AttentionsController extends Controller
     }
     public function load_medicine_table(Request $request){
         //return $request->all();
-        $query = "SELECT * FROM medicines                        
+        $query = "SELECT * FROM medicines
                     WHERE id_medicines = :id_medicines";
         $rows=\DB::select(\DB::raw($query),array('id_medicines'=>$request->id_medicine));
         return $rows;
@@ -313,9 +313,9 @@ class AttentionsController extends Controller
             'description_treatment' => $request->indications_treatment,
             'id_users_register' => Auth::user()->id
         ]);
-        $query = "SELECT id_treatment FROM treatment_patients                        
+        $query = "SELECT id_treatment FROM treatment_patients
                     ORDER BY id_treatment DESC LIMIT 1";
-        $rows2=\DB::select(\DB::raw($query));        
+        $rows2=\DB::select(\DB::raw($query));
         $tam = count($request->id_medicine);
         for($i  = 0; $i<$tam ; $i++){
             DB::table('treatment_details')->insert([
@@ -324,7 +324,7 @@ class AttentionsController extends Controller
                 'quantity_medicine' => $request->cantidad[$i]
             ]);
             $query2 = "SELECT update_stock(:id_medicine, :quantity)";
-            $rows=\DB::select(\DB::raw($query2),array('id_medicine'=>$request->id_medicine[$i],'quantity'=>$request->cantidad[$i]));    
+            $rows=\DB::select(\DB::raw($query2),array('id_medicine'=>$request->id_medicine[$i],'quantity'=>$request->cantidad[$i]));
         }
         $query1 = "SELECT * FROM treatment_patients tp
                         INNER JOIN treatment_details td
@@ -333,12 +333,12 @@ class AttentionsController extends Controller
                             ON m.id_medicines = td.id_medicine
                     WHERE tp.id_medical_appointments = :id_appointments";
         $rows1=\DB::select(\DB::raw($query1),array('id_appointments'=>$request->id_appoinments));
-        return view('admin.attentions.medical_treatment')->with('treat',$rows1);     
+        return view('admin.attentions.medical_treatment')->with('treat',$rows1);
     }
     public function register_medical_exam(Request $request){
         //return $request->all();
         $query = "SELECT id_patient FROM medical_appointments WHERE id_medical_appointments = :id_appoinments";
-        $rows2=\DB::select(\DB::raw($query),array('id_appoinments'=>$request->id_appoinments));  
+        $rows2=\DB::select(\DB::raw($query),array('id_appoinments'=>$request->id_appoinments));
         DB::table('medical_exam_patients')->insert([
             'id_patient' => $rows2[0]->id_patient,
             'id_appoinments' => $request->id_appoinments,
@@ -350,7 +350,7 @@ class AttentionsController extends Controller
         $query1 = "SELECT mep.id_medical_exam_patient, mep.id_appoinments, mep.reason_medical_examn, mep.observation_medical_exam, mep.date_creation, mass.id_user, us.name, us.apellidos,
                         p.nombres, p.ap_paterno, p.ap_materno, p.fecha_nacimento, p.ci_paciente, mee.name_medical_exam
                         FROM medical_exam_patients mep
-                        INNER JOIN medical_appointments mapp 
+                        INNER JOIN medical_appointments mapp
                             ON mep.id_appoinments = mapp.id_medical_appointments
                         INNER JOIN medical_assignments mass
                             ON mass.id_medical_assignments = mapp.id_medical_assignments
@@ -413,7 +413,7 @@ class AttentionsController extends Controller
     }
     public function view_attention_lists_examen(){
         //return 'sadsadsad';
-        $query = "SELECT * FROM medical_exam_patients mep 
+        $query = "SELECT * FROM medical_exam_patients mep
                         INNER JOIN medical_appointments ma
                             ON ma.id_medical_appointments = mep.id_medical_exam_patient
                         INNER JOIN pacientes p
@@ -425,7 +425,7 @@ class AttentionsController extends Controller
     }
     public function view_dates_for_exam(Request $request){
         //return 'sadsadsad';
-        $query = "select * from medical_appointments map 
+        $query = "select * from medical_appointments map
                         inner join medical_exam_patients mx
                             on mx.id_medical_exam_patient = map.id_medical_appointments
                         inner join medical_exam mex
@@ -451,7 +451,7 @@ class AttentionsController extends Controller
                         'register' => 's'
             ]);
         return redirect()->action(
-            'AttentionsController@view_attention_lists_examen'                   
+            'AttentionsController@view_attention_lists_examen'
         );
         //return $request->all();
     }
@@ -461,7 +461,7 @@ class AttentionsController extends Controller
                             ON pa.id_paciente = map.id_patient
                     WHERE map.id_medical_appointments = :id_appoinments";
         $rows=\DB::select(\DB::raw($query),array('id_appoinments'=>$request->id_appointments));
-        
+
         $query9 = "SELECT * FROM pacientes pa
                         INNER JOIN patients_dates_medic ptm
                             ON pa.id_paciente = ptm.id_patient
@@ -501,6 +501,7 @@ class AttentionsController extends Controller
         $rows=\DB::select(\DB::raw($query));
         $queryy = "SELECT * FROM notes_medic_dates_appoinments nmd WHERE id_medical_appoinments = :id_a";
         $rowss=\DB::select(\DB::raw($queryy),array('id_a'=>$request->id_appointments));
+        //return $rowss;
         return view('admin.attentions.partials.view_atention_patient')->with('datos_1',$rowss)->with('dates_cita_end',$rows3)->with('dates_patient',$rows)->with('dat_register',$no)->with('group',$rows);
     }
     public function view_cites_previus(Request $request){
@@ -517,7 +518,7 @@ class AttentionsController extends Controller
                                 ON ta.id_type_appointments = map.type_appoinment
                         WHERE id_patient =(
                     SELECT id_patient FROM medical_appointments WHERE id_medical_appointments = :id_appoinments
-                    ) ORDER BY data_creation_appointments";
+                ) ORDER BY data_creation_appointments DESC";
         $row=\DB::select(\DB::raw($querys),array('id_appoinments'=>$request->id_appointments));
         return view('admin.attentions.partials.view_previus_app')->with('list_app',$row);
     }
@@ -560,7 +561,7 @@ class AttentionsController extends Controller
             $asd = json_encode($rows5[$i]->j);
             $asdd = json_decode($asd);
 
-            
+
 
             //return $asdd;
             //return $asdd;
@@ -609,4 +610,122 @@ class AttentionsController extends Controller
         $rows3=\DB::select(\DB::raw($query3),array('id_appoinments'=>$request->id_appointments));
         return view('admin.attentions.partials.form_end_appointment')->with('dates_cita_end',$rows3);
     }
-}       
+    public function charge_types_exam_medic(Request $request){
+        //return $request->all();
+        $id_app = $request->id_appointments;
+        $view = "SELECT * FROM appointments_reason_exam_lab arel
+                INNER JOIN reason_laboratory_exam rle
+                    ON rle.id_reason = arel.id_reason
+                WHERE arel.id_appointsments = :id
+                ORDER BY arel.id ASC";
+        $view_det=\DB::select(\DB::raw($view),array('id'=>$id_app));
+        //return $view_det;
+        //return $view_det[0]->id;
+        if( !Empty($view_det[0]->id))
+        {
+            if(($view_det[0]->type_exam) == 1){
+            return view('admin.attentions.partials.exam_lab')->with('rows_exam_lab',$view_det);
+        }else{
+            return view('admin.attentions.partials.exam_lab2')->with('rows_exam_lab',$view_det);
+        }
+        }else{
+
+        $query3 = "SELECT * FROM type_exam_medic WHERE state_medical_exam_type = 'activo'  ORDER BY id_type_exam_medic ASC";
+        $rows3=\DB::select(\DB::raw($query3));
+        return view('admin.attentions.partials.form_select_type_exam')->with('types_exam_medics',$rows3)->with('id_app',$request->id_appointments);
+        }
+    }
+    public function charge_form_type_exam_medic(Request $request){
+        //return $request->all();
+            $id_app = $request->id_appointments;
+            $query2 = "SELECT * FROM reason_laboratory_exam WHERE state_reason = 'activo' and type_exam = :id";
+            $rows2=\DB::select(\DB::raw($query2),array('id'=>$request->id));
+            $query3 = "SELECT * FROM type_exam_medic WHERE id_type_exam_medic = :id";
+            $rows3=\DB::select(\DB::raw($query3),array('id'=>$request->id));
+            //return $rows3;
+            return view('admin.attentions.partials.form_type_exam_medic')->with('types_exam_medics',$rows3)->with('reason_exam',$rows2)->with('id_app',$id_app);
+
+        //return $id_app;
+
+    }
+    public function store_exam_laboratory(Request $request){
+        //return $request->all();
+        if(($request->type) == 1){
+            foreach ($request->reasons as $asd) {
+                DB::table('appointments_reason_exam_lab')->insert([
+                    'id_appointsments' => $request->id_app,
+                    'id_reason' => $asd
+                ]);
+            }
+            $exam_lab = "SELECT * FROM appointments_reason_exam_lab arel
+                            INNER JOIN reason_laboratory_exam rle
+                                ON rle.id_reason = arel.id_reason
+                            WHERE id_appointsments = :id
+                            ORDER BY arel.id ASC";
+            $rows_exam_lab=\DB::select(\DB::raw($exam_lab),array('id'=>$request->id_app));
+            return view('admin.attentions.partials.exam_lab')->with('rows_exam_lab',$rows_exam_lab);
+        }else{
+
+            DB::table('appointments_reason_exam_lab')->insert([
+                'id_appointsments' => $request->id_app,
+                'id_reason' => $request->reasons,
+                'detail_exam' => $request->obs
+            ]);
+            $exam_lab = "SELECT * FROM appointments_reason_exam_lab arel
+                            INNER JOIN reason_laboratory_exam rle
+                                ON rle.id_reason = arel.id_reason
+                            WHERE id_appointsments = :id
+                            ORDER BY arel.id ASC";
+            $rows_exam_lab=\DB::select(\DB::raw($exam_lab),array('id'=>$request->id_app));
+            return view('admin.attentions.partials.exam_lab2')->with('rows_exam_lab',$rows_exam_lab);
+        }
+
+    }
+    public function view_treatment_form_2(Request $request){
+        //return $request->all();
+        $var = $request->id_appointments;
+        $query7 = "SELECT count(id_treatment) FROM treatment_patients WHERE id_medical_appointments = :id_appointments";
+        $rows7=\DB::select(\DB::raw($query7),array('id_appointments'=>$request->id_appointments));
+        if(($rows7[0]->count) === 0)
+        {
+            return view('admin.attentions.partials.form_prescription_medic')->with('id_app',$var);
+        }else{
+
+        }
+        $query3 = "SELECT * FROM medical_appointments map
+                    INNER JOIN types_appointsment ta
+                        on ta.id_type_appointments = map.type_appoinment
+                    where id_medical_appointments = :id_appoinments AND state_appointments = 3";
+        $rows3=\DB::select(\DB::raw($query3),array('id_appoinments'=>$request->id_appointments));
+        $query4 = "SELECT * FROM stock_medicines sm
+                        INNER JOIN medicines m
+                            ON m.id_medicines = sm.id_medicine
+                    WHERE sm.quantity_medicine > 1 AND sm.date_expiration > now() AND m.state_medicine = 'activo'";
+        $rows4=\DB::select(\DB::raw($query4));
+        $query8 = "SELECT * FROM treatment_patients tp
+                    INNER JOIN treatment_details td
+                        ON tp.id_treatment = td.id_treatment
+                    INNER JOIN medicines m
+                        ON m.id_medicines = td.id_medicine
+                WHERE tp.id_medical_appointments = :id_appointments";
+        $rows8=\DB::select(\DB::raw($query8),array('id_appointments'=>$request->id_appointments));
+        if($rows7[0]->count === 0){
+            //return $rows7;
+            $array1 = ["detalle"=>'si'];
+            //return $array1['detalle'];
+            return view('admin.attentions.partials.form_treatment_patient')->with('list_mecines_disponibles',$rows4)->with('dates_cita_end',$rows3)->with('control',$array1);
+        }else{
+            $array1 = ["detalle"=>'no'];
+            return view('admin.attentions.partials.form_treatment_patient')->with('list_mecines_disponibles',$rows4)->with('dates_cita_end',$rows3)->with('control',$array1)->with('view_treatment',$rows8);
+        }
+    }
+
+    public function view_treatment_form_2_add(Request $request){
+        $x = rand(1,50);
+        //return $x;
+        return view('admin.attentions.partials.load_medicine')->with('nombre',$x);
+    }
+    public function url_form_prescription(Request $request){
+        return $request->all();
+    }
+}

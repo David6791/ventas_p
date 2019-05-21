@@ -10,10 +10,9 @@
                     <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
                     <input type="hidden" name="id_appoinments" value="{{ $dates_cita_end[0]->id_medical_appointments }}">
                     <div class="row">
-                        <div class="col-md-1"></div>
-                        <div class="col-md-10">
+                        <div class="col-md-12">
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label class="control-label col-md-4 col-sm-4 col-xs-12">Fecha Incio <span class="required"></span></label>
                                         <div class="form-group">
@@ -26,7 +25,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label class="control-label col-md-4 col-sm-4 col-xs-12">Fecha Fin <span class="required"></span></label>
                                         <div class="form-group">
@@ -78,7 +77,7 @@
                                     <div class="x_panel">
                                         <div class="x_title">
                                             <label for="">Lista de Medicamentos para el Tratamiento</label>
-                                        </div>
+                                        </div> <br> <br>
                                         <div class="x_content">
                                             <table id="datatable" class="table table-bordered datatable add_medicines">
                                                 <tr>
@@ -124,9 +123,11 @@
                 <div class="col-md-10">
                     <div class="x_panel">
                         <div class="row">
-                            <div class="col-md-4"></div>
-                            <div class="col-md-7">
-                                <h4><label>TRATAMIENTO QUE DEBE SEGUIR EL PACIENTE</label></h4>
+                            <div class="col-md-12">
+                                <center>
+                                    <h4><label>TRATAMIENTO QUE DEBE SEGUIR EL PACIENTE</label></h4>
+                                </center>
+
                             </div>
                         </div>
                         <br>
@@ -143,13 +144,13 @@
                         <br>
                         <div class="row">
                             <div class="col-md-4"></div>
-                            <div class="col-md-3">
+                            <div class="col-md-8">
                                 <label for="">MEDICAMENTOS PARA EL TRATAMIENTO</label>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-4"></div>
-                            <div class="col-md-3">
+                            <div class="col-md-2"></div>
+                            <div class="col-md-8">
                                 <table id="" class="table table-striped table-bordered">
                                     <thead>
                                         <tr>

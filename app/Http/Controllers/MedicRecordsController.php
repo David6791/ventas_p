@@ -26,7 +26,7 @@ class MedicRecordsController extends Controller
             $asdd = json_decode($asd);
             $data3[]=json_decode($asdd,true);
         }
-        //return $data3;   
+        //return $data3;
         return view('admin.record_medics.load_pages_record.view_record_patients_full')->with('list_record',$data3);
     }
     public function load_dates_record_medic_full_appoinment(Request $request){
@@ -50,9 +50,9 @@ class MedicRecordsController extends Controller
                         INNER JOIN medical_assignments mes
                         ON mes.id_medical_assignments = ma.id_medical_assignments
                         INNER JOIN users us
-                        ON us.id = mes.id_user 
+                        ON us.id = mes.id_user
                     WHERE mep.id_appoinments = :id_appointments ORDER BY id_medical_exam_patient ASC";
-        $rows1=\DB::select(\DB::raw($query1),array('id_appointments'=>$request->id_appointments));        
+        $rows1=\DB::select(\DB::raw($query1),array('id_appointments'=>$request->id_appointments));
         //return $rows1;
         /* patologias de Paciente registrados al momento de la filiacion */
         $query2 = "SELECT * FROM pacientes_patologias pp
@@ -60,8 +60,8 @@ class MedicRecordsController extends Controller
                                     ON pa.id_patologia = pp.id_patologia
                             WHERE pp.id_paciente = (SELECT mapp.id_patient FROM medical_appointments mapp where mapp.id_medical_appointments = :id_appointments) ORDER BY id_pac_pat ASC";
         $rows2=\DB::select(\DB::raw($query2),array('id_appointments'=>$request->id_appointments));
-        
-        $dj = "select * from medical_appointments ma 
+
+        $dj = "select * from medical_appointments ma
                     inner join patients_dates_medic ptm
                         on ptm.id_patient = ma.id_patient
                     inner join datos_medicos dm
@@ -72,7 +72,7 @@ class MedicRecordsController extends Controller
         /* Notas Medicas en el Momento de la Atencion Medicasadas */
         $query3 = "SELECT * FROM notes_medic_dates_appoinments nmda
                     WHERE nmda.id_medical_appoinments = :id_appointments ORDER BY id_medical_appoinments ASC";
-        $rows3=\DB::select(\DB::raw($query3),array('id_appointments'=>$request->id_appointments)); 
+        $rows3=\DB::select(\DB::raw($query3),array('id_appointments'=>$request->id_appointments));
         /* Trasnferencias medicas que tuvo el paciente en la cita medica */
         $query4 = "SELECT * FROM transfer_patients trp
                         INNER JOIN medical_appointments mapp
@@ -100,7 +100,7 @@ class MedicRecordsController extends Controller
         $rows6=\DB::select(\DB::raw($query6),array('id_appointments'=>$request->id_appointments));
         /*$asd =  json_decode($rows3[0]->dates_register_appoinments);*/
         //return $rows1;
-        $not = "SELECT * FROM details_dates_register dr 
+        $not = "SELECT * FROM details_dates_register dr
                     INNER JOIN dates_of_register dof
                         ON dof.id_date_register = dr.id_dates_register
                 WHERE dr.id_appointmetns_ = :id_appointments";

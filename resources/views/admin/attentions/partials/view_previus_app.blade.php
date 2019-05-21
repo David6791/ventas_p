@@ -8,13 +8,13 @@
                     </li>
                 </ul>
             </div>
-            <table id="datatable " class="table table-striped table-bordered">
+            <table id="datatable" class="table table-striped table-bordered">
                 <thead>
                     <tr>
                         <th>Nro.</th>
                         <th>Fecha</th>
                         <th>Tipo Cita Medica</th>
-                        <th>Descripcion Cita Medica</th>
+                        <!--th>Descripcion Cita Medica</th-->
                         <th>Estado Cita Medica</th>
                         <th>Hora Cita</th>
                         <th>Accion</th>
@@ -27,7 +27,7 @@
                             <td>{{ $a++ }}</td>
                             <td>{{ date('d/m/Y', strtotime($lista->date_appointments)) }}</td>
                             <td>{{ $lista->name_type }}</td>
-                            <td>{{ $lista->appointment_description }}</td>
+                            <!--td>{{ $lista->appointment_description }}</td-->
                             @if( $lista->name_state_appointments === 'Atendido')
                             <td style="color:#1FC125"><span class="glyphicon glyphicon-ok"></span> {{ $lista->name_state_appointments }}</td>
                             @else
@@ -46,3 +46,6 @@
 </div>
 <div class="load_dates_appointments_one">
 </div>
+<script>
+    $('#datatable').DataTable();
+</script>

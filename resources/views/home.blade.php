@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>SanJinez | Panel de Control</title>
+  <title>Virgen de Copacabana | Panel de Control</title>
 
   <!--link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet"-->
   <!-- Tell the browser to be responsive to screen width -->
@@ -24,7 +24,7 @@
   <link rel="stylesheet" href="{{ asset('css/morris.css') }}">
   <!-- jvectormap -->
 
-  
+
 
   <link rel="stylesheet" href="{{ asset('css/jquery-jvectormap.css') }}">
   <!-- Date Picker -->
@@ -60,9 +60,9 @@
 
   <header class="main-header">
     <!-- Logo -->
-    <a href="index2.html" class="logo">
+    <a href="" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>S</b>J</span>
+      <span class="logo-mini"><b>V</b>C</span>
       <!-- logo for regular state and mobile devices -->
       <span class="logo-lg"><b>POLI</b>Clinico</span>
     </a>
@@ -76,12 +76,43 @@
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
           <!-- Messages: style can be found in dropdown.less-->
-          
+
           <!-- Notifications: style can be found in dropdown.less -->
-          
+
           <!-- Tasks: style can be found in dropdown.less -->
-          
+
           <!-- User Account: style can be found in dropdown.less -->
+          <li class="dropdown tasks-menu">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <i class="glyphicon glyphicon-plus-sign bg-red"></i>
+              <span class="label label-danger">{{ $emergencies[0]->count }}</span>
+            </a>
+            <ul class="dropdown-menu">
+              <li class="header">Hay {{ $emergencies[0]->count }} Pacientes con Emergencia</li>
+              <li>
+                <!-- inner menu: contains the actual data -->
+                <ul class="menu">
+                    @foreach($emergencies_list as $list)
+                    <li><!-- Task item -->
+                      <a href="#">
+                        <h3>
+                          {{ $list->nombres }} {{ $list->ap_paterno }} {{ $list->ap_materno }}
+                          <small class="pull-right"> <i class="glyphicon glyphicon-plus-sign bg-red"></i> </small>
+                        </h3>
+                        <div class="">
+                          Cita Confirmada
+                        </div>
+                      </a>
+                    </li>
+                    @endforeach
+                </ul>
+              </li>
+              <li class="footer">
+
+                @permission('ver_citas')<li><a href="view_attention_lists" class="load-page">Ver Lista de Citas Medicas</a></li>@endpermission
+              </li>
+            </ul>
+          </li>
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <img src="{{ asset('img/user2-160x160.jpg') }}" class="user-image" alt="User Image">
@@ -98,14 +129,14 @@
                 </p>
               </li>
               <!-- Menu Body -->
-              
+
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="#" class="btn btn-default btn-flat">Perfil</a>
+                  <a href="view_perfil" class="load-page btn btn-default btn-flat">Perfil</a>
                 </div>
                 <div class="pull-right">
-                  <a href="{{ route('logout') }}" 
+                  <a href="{{ route('logout') }}"
                     onclick="event.preventDefault();document.getElementById('logout-form').submit();">Salir</a>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                         {{ csrf_field() }}
@@ -114,7 +145,7 @@
               </li>
             </ul>
           </li>
-          <!-- Control Sidebar Toggle Button -->          
+          <!-- Control Sidebar Toggle Button -->
         </ul>
       </div>
     </nav>
@@ -130,34 +161,33 @@
         </div>
         <div class="pull-left info">
           <p>{{ Auth::user()->name }}</p>
-          <a href="#"><i class="fa fa-circle text-success"></i> En linea</a>
+
         </div>
       </div>
       <!-- search form -->
       <form action="#" method="get" class="sidebar-form">
-        
+
       </form>
       <!-- /.search form -->
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
-        <li class="header">MENU DE NAVEGACION</li>        
-        
+
         @role('admin_pacientes')
         <li class="treeview">
           <a href="#">
             <i class="glyphicon glyphicon-unchecked"></i>
-            <span>Pacientes</span> 
+            <span>Pacientes</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
-            </span>           
+            </span>
           </a>
           <ul class="treeview-menu">
             @permission('Ver_Pacientes')<li><a href="index_patients" class="load-page"><i class="fa fa-circle-o"></i> Ver Pacientes</a></li>@endpermission
             @permission('Registrar_Pacientes')<li><a href="form_patients" class="load-page"><i class="fa fa-circle-o"></i> Registro Pacientes</a></li>@endpermission
           </ul>
         </li>
-        @endrole 
-        @role('admin_horarios')       
+        @endrole
+        @role('admin_horarios')
         <li class="treeview">
           <a href="#">
             <i class="glyphicon glyphicon-unchecked"></i>
@@ -200,7 +230,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            @permission('ver_exam_medic')<li><a href="index_examen_medic" class="load-page"><i class="fa fa-circle-o"></i> Ver Examenes Medicos</a></li>@endpermission            
+            @permission('ver_exam_medic')<li><a href="index_examen_medic" class="load-page"><i class="fa fa-circle-o"></i> Ver Examenes Medicos</a></li>@endpermission
           </ul>
         </li>
         @endrole
@@ -229,10 +259,11 @@
             @permission('ver_citas')<li><a href="view_medical_appointment" class="load-page"><i class="fa fa-circle-o"></i> Ver Citas</a></li>@endpermission
             @permission('crear_citas')<li><a href="create_medical_appointment" class="load-page"><i class="fa fa-circle-o"></i> Crear Citas Medicas</a></li>@endpermission
             @permission('emergencias')<li><a href="view_emergency" class="load-page"><i class="fa fa-circle-o"></i> Registrar Emergencia</a></li>@endpermission
-            
-            
+            @permission('imprmir_listas')<li><a href="view_list_print_list" class="load-page"><i class="fa fa-circle-o"></i> Imprimir Listas de Atencion</a></li>@endpermission
+
+
           </ul>
-        </li>        
+        </li>
         @endrole
         @role('editar_reserva')
         <li class="treeview">
@@ -242,10 +273,10 @@
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
-          <ul class="treeview-menu">            
-            @permission('editar_reserva')<li><a href="view_list_appinments" class="load-page"><i class="fa fa-circle-o"></i> Editar Reserva</a></li>@endpermission            
+          <ul class="treeview-menu">
+            @permission('editar_reserva')<li><a href="view_list_appinments" class="load-page"><i class="fa fa-circle-o"></i> Editar Reserva</a></li>@endpermission
           </ul>
-        </li> 
+        </li>
         @endrole
         @role('confirmar_citas')
         <li class="treeview">
@@ -255,10 +286,10 @@
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
-          <ul class="treeview-menu">            
+          <ul class="treeview-menu">
             @permission('confirmar_reserva')<li><a href="index_confirm" class="load-page"><i class="fa fa-circle-o"></i> Confirmar Cita Medica</a></li>@endpermission
           </ul>
-        </li> 
+        </li>
         @endrole
         @role('citas_medicas')
         <li class="treeview">
@@ -275,69 +306,69 @@
         </li>
         @endrole
         <li class="treeview">
-          @role('super_admin')  
+          @role('super_admin')
           <a href="#">
             <i class="glyphicon glyphicon-unchecked"></i> <span>Administrador de Usuarios</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
-          </a>                 
+          </a>
           <ul class="treeview-menu">
             @permission('Roles')<li><a href="index_role" class="load-page"><i class="fa fa-circle-o"></i> Roles</a></li>@endpermission
             @permission('Permisos')<li><a href="index_permission" class="load-page"><i class="fa fa-circle-o"></i> Permisos</a></li>@endpermission
             @permission('Asi_roles')<li><a href="index_roles_roles" class="load-page"><i class="fa fa-circle-o"></i> Asignacion de Roles</a></li>@endpermission
-            @permission('Asig_permi')<li><a href="index_roles_permission" class="load-page"><i class="fa fa-circle-o"></i> Asignacion de Permisos</a></li>@endpermission  
+            @permission('Asig_permi')<li><a href="index_roles_permission" class="load-page"><i class="fa fa-circle-o"></i> Asignacion de Permisos</a></li>@endpermission
             @permission('Ver_medicos')<li><a href="index_medics" class="load-page"><i class="fa fa-circle-o"></i> Ver Usuarios</a></li>@endpermission
           </ul>
           @endrole
         </li>
         <li class="treeview">
-          @role('estadisticas')  
+          @role('estadisticas')
           <a href="#">
             <i class="glyphicon glyphicon-unchecked"></i> <span>Estadisticas</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
-          </a>                 
+          </a>
           <ul class="treeview-menu">
             @permission('Ver_estadisticas')<li><a href="index_statistics" class="load-page"><i class="fa fa-circle-o"></i> Ver Estadisticas</a></li>@endpermission
           </ul>
           @endrole
         </li>
         <li class="treeview">
-          @role('reportes_usuario')  
+          @role('reportes_usuario')
           <a href="#">
             <i class="glyphicon glyphicon-unchecked"></i> <span>Reportes Usuario</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
-          </a>                 
+          </a>
           <ul class="treeview-menu">
             @permission('Ver_reportes_usuario')<li><a href="index_reports" class="load-page"><i class="fa fa-circle-o"></i> Ver Reportes Usuario</a></li>@endpermission
           </ul>
           @endrole
-        </li>  
+        </li>
         <li class="treeview">
-          @role('reportes_general')  
+          @role('reportes_general')
           <a href="#">
             <i class="glyphicon glyphicon-unchecked"></i> <span>Reportes General</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
-          </a>                 
+          </a>
           <ul class="treeview-menu">
           @permission('Ver_reportes_general')<li><a href="index_reports_general" class="load-page"><i class="fa fa-circle-o"></i> Ver Reporte General</a></li>@endpermission
           </ul>
           @endrole
-        </li> 
+        </li>
         <li class="treeview">
-          @role('medicamentos')  
+          @role('medicamentos')
           <a href="#">
             <i class="glyphicon glyphicon-unchecked"></i> <span>Medicamentos</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
-          </a>                 
+          </a>
           <ul class="treeview-menu">
           @permission('ver_medicamentos')<li><a href="view_medicines" class="load-page"><i class="fa fa-circle-o"></i> Ver Medicamentos</a></li>@endpermission
           @permission('ver_stock')<li><a href="view_stock_medicines" class="load-page"> <i class="fa fa-circle-o"></i> Stock Mecicamentos</a></li> @endpermission
@@ -345,33 +376,33 @@
           @endrole
         </li>
         <li class="treeview">
-          @role('activar_editar')  
+          @role('activar_editar')
           <a href="#">
             <i class="glyphicon glyphicon-unchecked"></i> <span>Activar Edicion Paciente</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
-          </a>                 
+          </a>
           <ul class="treeview-menu">
-          @permission('ver_lista_pacientes')<li><a href="view_list_patients" class="load-page"><i class="fa fa-circle-o"></i> Ver Lista Pacientes</a></li>@endpermission          
+          @permission('ver_lista_pacientes')<li><a href="view_list_patients" class="load-page"><i class="fa fa-circle-o"></i> Ver Lista Pacientes</a></li>@endpermission
           </ul>
           @endrole
-        </li> 
+        </li>
         <li class="treeview">
-          @role('imprimir_credencial')  
+          @role('imprimir_credencial')
           <a href="#">
             <i class="glyphicon glyphicon-unchecked"></i> <span>Credenciales</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
-          </a>                 
+          </a>
           <ul class="treeview-menu">
-          @permission('ver_lista_credenciales')<li><a href="view_list_patients_credential" class="load-page"><i class="fa fa-circle-o"></i> Ver Lista Pacientes</a></li>@endpermission          
-      
-          @permission('ver_lista_cred_medicos')<li><a href="view_list_usuarios_credential" class="load-page"><i class="fa fa-circle-o"></i> Ver Lista Usuarios</a></li>@endpermission          
+          @permission('ver_lista_credenciales')<li><a href="view_list_patients_credential" class="load-page"><i class="fa fa-circle-o"></i> Ver Lista Pacientes</a></li>@endpermission
+
+          @permission('ver_lista_cred_medicos')<li><a href="view_list_usuarios_credential" class="load-page"><i class="fa fa-circle-o"></i> Ver Lista Usuarios</a></li>@endpermission
           </ul>
           @endrole
-        </li> 
+        </li>
       </ul>
     </section>
     <!-- /.sidebar -->
@@ -380,21 +411,139 @@
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <h1>
-        Bienvenido
-        
-      </h1>
-      <ol class="breadcrumb">
-        <li><a href=""><i class="fa fa-dashboard"></i> Inicio</a></li>
-        
-      </ol>
-    </section>
+
 
     <!-- Main content -->
     <!-- page content -->
     <div class="right_col content" role="main" id="contentGlobal">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box box-primary">
+                    <div class="box-header">
+                        Panel de Notificaciones
+                    </div>
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-md-3">
+                              <!-- small box -->
+                              <div class="small-box bg-red">
+                                <div class="inner">
+                                  <h3>{{ $emergencies[0]->count }}</h3>
+                                  <p>Emergencias</p>
+                                </div>
+                                <div class="icon">
+                                  <i class="ion glyphicon glyphicon-plus"></i>
+                                </div>
+                                @permission('ver_citas')<a href="view_attention_lists" class="load-page small-box-footer">Ver Lista de Citas Medicas <i class="fa fa-arrow-circle-right"></i></a>@endpermission
+                              </div>
+                            </div>
+                            <div class="col-md-3">
+                                <!-- small box -->
+                                <div class="small-box bg-green">
+                                  <div class="inner">
+                                    <h3>{{ $appointments[0]->count }}</h3>
+
+                                    <p>Citas Medicas</p>
+                                  </div>
+                                  <div class="icon">
+                                    <i class="ion ion-stats-bars"></i>
+                                  </div>
+                                  @permission('ver_citas')<a href="view_attention_lists" class="load-page small-box-footer">Ver Lista de Citas Medicas <i class="fa fa-arrow-circle-right"></i></a>@endpermission
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <!-- small box -->
+                                <div class="small-box bg-info">
+                                  <div class="inner">
+                                    <h3>{{ $r_no_ate[0]->count }}</h3>
+
+                                    <p>Citas Medicas NO ANTENDIDAS</p>
+                                  </div>
+                                  <div class="icon">
+                                    <i class="ion ion-stats-bars"></i>
+                                  </div>
+                                  @permission('ver_citas')<a href="view_list_appinments" class="load-page small-box-footer">Ver Lista de Citas Medicas No Atendidas <i class="fa fa-arrow-circle-right"></i></a>@endpermission
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="box box-warning direct-chat direct-chat-warning">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Nuevas Citas Medicas</h3>
+                        <div class="box-tools pull-right">
+                            <span data-toggle="tooltip" title="" class="badge bg-yellow" data-original-title="{{ $appointments[0]->count }} Nuevas Citas Medicas">{{ $appointments[0]->count }}</span>
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="direct-chat-messages">
+                        @forelse($resum_app as $list)
+                            <div class="direct-chat-msg">
+                                <div class="direct-chat-info clearfix">
+                                    <span class="direct-chat-name pull-left">Paciente: {{ $list->r_nombres }} {{ $list->r_apaterno }} {{ $list->r_amaterno }}</span>
+                                    <span class="direct-chat-timestamp pull-right">Hora Cita Medica {{ $list->r_start_time }}</span>
+                                </div>
+                                <div class="direct-chat-text">
+                                    {{ $list->r_appointment_description }}
+                                </div>
+                            </div>
+                        @empty
+                            <p class="text-danger">No Existen Citas Medicas Confirmadas</p>
+                        @endforelse
+                        </div>
+                    </div>
+                    <div class="box-footer">
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="box box-success direct-chat direct-chat-warning">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Citas Medicas Atendidas</h3>
+                        <div class="box-tools pull-right">
+                            <span data-toggle="tooltip" title="" class="badge bg-green" data-original-title="{{ $resum_app_1_1[0]->count }} Citas Medicas Atendidas">{{ $resum_app_1_1[0]->count }}</span>
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="direct-chat-messages">
+                        @foreach($resum_app_1 as $list)
+                            <div class="direct-chat-msg">
+                                <div class="direct-chat-info clearfix">
+                                    <span class="direct-chat-name pull-left">Paciente: {{ $list->nombres }} {{ $list->ap_paterno }} {{ $list->ap_materno }}</span>
+                                    <span class="direct-chat-timestamp pull-right">Hora Cita Medica {{ $list->start_time }}</span>
+                                </div>
+                                <div class="direct-chat-text">
+                                    {{ $list->appointment_description }}
+                                </div>
+                            </div>
+                        @endforeach
+                        </div>
+                    </div>
+                    <div class="box-footer">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box box-primary">
+                    <div class="box-header">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
         <!-- /page content -->
     <!-- /.content -->
   </div>
@@ -403,7 +552,7 @@
     <div class="pull-right hidden-xs">
       <b>Version</b> 0.0.1
     </div>
-    <strong>Corporacion &copy; 2018 <a href="">Paola Cuellar</a>.</strong> Todos los Derechos Reservados.
+    <strong>Policlinico &copy; <a href="">Virgen de Copacabana</a>.</strong> Todos los Derechos Reservados.
   </footer>
 
   <!-- Control Sidebar -->
@@ -411,17 +560,17 @@
     <!-- Create the tabs -->
     <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
       <li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
-      
+
     </ul>
     <!-- Tab panes -->
     <div class="tab-content">
       <!-- Home tab content -->
-      
+
       <!-- /.tab-pane -->
       <!-- Stats tab content -->
       <!-- /.tab-pane -->
       <!-- Settings tab content -->
-      
+
       <!-- /.tab-pane -->
     </div>
   </aside>

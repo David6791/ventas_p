@@ -17,7 +17,7 @@
                                 <small class="text-red" id=""></small>
                                 <select class="select2_group form-control name_form" name="nacionalidad">
                                     @foreach($group as $g)
-                                        <option value="{{ $g->_id }}">{{ $g->name_group }}</option>                                    
+                                        <option value="{{ $g->_id }}">{{ $g->name_group }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -44,7 +44,7 @@
                                 <div class="col-md-2">
                                     <button type="button" class="btn btn-danger click_cancel_1" value="">NO </button>
                                 </div>
-                                <div class="form-group col-md-6">
+                                <div class="form-group col-md-8">
                                     <label for="">Observaciones...</label>
                                     <div class="form-group col-md-12">
                                         <textarea class="form-control" rows="3" disabled placeholder="Escribir aqui ..." id="datos" name="observations_appointments"></textarea>
@@ -72,7 +72,7 @@
                         </div>
                     </div>
                 </div>
-                    
+
             </form>
         </div>
         @else

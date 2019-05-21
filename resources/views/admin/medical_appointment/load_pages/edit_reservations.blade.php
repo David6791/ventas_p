@@ -22,24 +22,39 @@
             <tbody>
                 <?php $a = 1 ?>
                 @foreach($medics as $lista)
+                    @if(date('m-d-Y', strtotime( $lista->date_appointments )) === date("m-d-Y") )
                     <tr>
                         <td>{{ $a++ }}</td>
                         <td>{{ $lista->nombres }} {{ $lista->ap_paterno }} {{ $lista->ap_materno }}</td>
-                        <td>{{ $lista->name_type }}</td>             
+                        <td>{{ $lista->name_type }}</td>
                         <td>{{ date('m-d-Y', strtotime( $lista->date_appointments )) }}</td>
                         <td>{{ $lista->name_schedules }}</td>
                         <td>{{ $lista->start_time }}</td>
-                        <td> {{ $lista->name_state_appointments }} </td>       
+                        <td> {{ $lista->name_state_appointments }} </td>
                         <td>{{ $lista->m_name }} {{ $lista->m_apellidos }}</td>
                         <td><button  value="{{ $lista->id_medical_appointments }}" type="button" class="btn btn-primary btn-xs load_dates_reserva" >Edtiar Cita Medica</button></td>
-                        
+
                     </tr>
-                
+                    @else
+                    <tr bgcolor='FCEBEB'>
+                        <td>{{ $a++ }}</td>
+                        <td>{{ $lista->nombres }} {{ $lista->ap_paterno }} {{ $lista->ap_materno }}</td>
+                        <td>{{ $lista->name_type }}</td>
+                        <td>{{ date('m-d-Y', strtotime( $lista->date_appointments )) }}</td>
+                        <td>{{ $lista->name_schedules }}</td>
+                        <td>{{ $lista->start_time }}</td>
+                        <td> {{ $lista->name_state_appointments }} </td>
+                        <td>{{ $lista->m_name }} {{ $lista->m_apellidos }}</td>
+                        <td><button  value="{{ $lista->id_medical_appointments }}" type="button" class="btn btn-primary btn-xs load_dates_reserva" >Edtiar Cita Medica</button></td>
+
+                    </tr>
+                    @endif
+
                 @endforeach
             </tbody>
-        </table>        
+        </table>
     </div>
-    <div class="x_footer">        
+    <div class="x_footer">
     </div>
 </div>
 <div class="load_edit_reserva"></div>

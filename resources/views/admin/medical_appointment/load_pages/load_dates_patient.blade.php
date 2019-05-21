@@ -9,7 +9,7 @@
                 </span>
             </div>
         </div>
-    </div>   
+    </div>
 </div>
 <div class="col-md-1"></div>
 <div class="col-md-3">
@@ -22,7 +22,7 @@
                 </span>
             </div>
         </div>
-    </div>   
+    </div>
 </div>
 <div class="col-md-1"></div>
 <div class="col-md-3">
@@ -35,7 +35,7 @@
                 </span>
             </div>
         </div>
-    </div>   
+    </div>
 </div> <br>
 <div class="col-md-3">
     <div class="form-group">
@@ -47,7 +47,7 @@
                 </span>
             </div>
         </div>
-    </div>   
+    </div>
 </div>
 <div class="col-md-1"></div>
 <div class="col-md-3">
@@ -60,7 +60,7 @@
                 </span>
             </div>
         </div>
-    </div>   
+    </div>
 </div>
 <div class="col-md-1"></div>
 <div class="col-md-3">
@@ -73,20 +73,20 @@
                 </span>
             </div>
         </div>
-    </div>   
+    </div>
 </div> <br>
 <div class="col-md-1"></div>
-<div class="col-md-12">
+<!--div class="col-md-12">
     <div class="form-group">
         <label for="">Describa brevemente los motivos de la cita Medica</label>
             <div class="form-group">
                 <textarea name="description_appointment" id="" class="col-md-12" placeholder="Escriba aqui...">
 
                 </textarea>
-            </div>            
+            </div>
     </div>
-    
-</div>
+
+</div-->
 
 <div class="row">
     <div class="col-md-5"></div>

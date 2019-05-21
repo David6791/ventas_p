@@ -12,9 +12,9 @@ use Validator;
 
 class MedicalExamController extends Controller
 {
-  
+
     public function index_examn_medic(){
-        $query = "select * from medical_exam";
+        $query = "select * from medical_exam order by id_medical_exam";
         $rows=\DB::select(\DB::raw($query));
         return view('admin.medical_exam.index_medical_exam')->with('list',$rows);
     }
@@ -24,7 +24,7 @@ class MedicalExamController extends Controller
             'medical_exam_description'  => 'required|min:5',
             'name_medical_exam'      => 'required'
         ]);
-    
+
         if ($v->fails())
         {
             return redirect()->back()->withErrors($v->errors());
@@ -61,6 +61,16 @@ class MedicalExamController extends Controller
                 'name_medical_exam' => $request->nombre_examen_medico,
                 'description_medical_exam' => $request->descripcion
             ]);
+        return redirect()->action(
+            'MedicalExamController@index_examn_medic'
+        );
+    }
+    public function low_exam_medic(Request $request){
+        //return 'asdsadsadsadsads';
+        //return $request;
+        $query = "select * from delete_exam_medic(:id)";
+        $rows=\DB::select(\DB::raw($query),array('id'=>$request->id_exam_medic));
+        //return $rows;
         return redirect()->action(
             'MedicalExamController@index_examn_medic'
         );

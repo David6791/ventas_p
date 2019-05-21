@@ -4,7 +4,7 @@
 			<div class="box-header">
                 <center>
                     <h3 class="box-title text-green">DETALLE CITA MEDICA</h3>
-                </center>				
+                </center>
 			</div>
 		</div>
 	</div>
@@ -34,13 +34,13 @@
 		<div class="col-md-10">
 			<label for="">Observaciones Cita Medica: </label> {{ $dates_cita[0]->appointment_description }}
 		</div>
-		<div class="col-md-2">
+		<!--div class="col-md-2">
 			@if($dates_cita[0]->reconsulta_register == 'N')
 			<label class="text-red" for="">No tiene RECONSULTA</label>
 			@else
 			<label class="text-green" for="">Si tiene RECONSULTA</label>
 			@endif
-		</div>
+		</div-->
 	</div>
 	<br>
 </div>
@@ -268,7 +268,7 @@
 						<label for="">Ci:</label> {{ $dat->ci }}
 					</div>
 					<div class="col-md-3">
-						<label for="">Edad:</label> 
+						<label for="">Edad:</label>
 					</div>
 				</div>
 				<hr>
@@ -312,5 +312,3 @@
 		</div>
 	</div>
 </div>
-
-

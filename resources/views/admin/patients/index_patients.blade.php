@@ -25,7 +25,7 @@
                             <tbody>
                                 <?php $a = 1 ?>
                                     @foreach($list_patients as $lista)
-                                        <tr>   
+                                        <tr>
                                             <td>{{ $a++ }}</td>
                                             <td>{{ $lista->ci_paciente }}</td>
                                             <td>{{ $lista->nombres }} {{ $lista->ap_paterno }} {{ $lista->ap_materno }} </td>
@@ -33,13 +33,17 @@
                                             <td>{{ $lista->fecha_nacimento }}</td>
                                             <td>{{ $lista->localidad_nacimiento }}</td>
                                             <td>{{ $lista->esta_paciente }}</td>
-                                            <td><button class="btn btn-success btn-xs"> <span class="glyphicon glyphicon-eye-open"></span> Ver</button> <button class="btn btn-info btn-xs"> <span class="glyphicon glyphicon-print"></span> Imprimir</button> <button class="btn btn-danger btn-xs edit_dates_patients" value="{{ $lista->id_paciente }}"> <span class="glyphicon glyphicon-edit"></span> Editar</button></td>
+                                            <td>
+                                                <!--button class="btn btn-success btn-xs"> <span class="glyphicon glyphicon-eye-open"></span> Ver</button>
+                                                <button class="btn btn-info btn-xs"> <span class="glyphicon glyphicon-print"></span> Imprimir</button-->
+                                                <button class="btn btn-danger btn-xs edit_dates_patients" value="{{ $lista->id_paciente }}"> <span class="glyphicon glyphicon-edit"></span> Editar</button>
+                                            </td>
                                         </tr>
                                     @endforeach
                             </tbody>
                         </table>
                     </div>
-                </div>                
+                </div>
             </div>
         </div>
     </div>

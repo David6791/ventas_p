@@ -8,7 +8,7 @@
                     </h3>
                 </div>
                 <div class="box-body box-profile">
-                {!! base64_encode(QrCode::format('png')->size(200)->generate($dates[0]->ci_paciente)); !!}
+                
                 <center>
                 <div class="img-responsive">{!! QrCode::size(200)->generate($dates[0]->ci_paciente); !!}</div>
                 </center>
@@ -72,13 +72,13 @@
                                                 <p for="" id="{{ $li->id_patent_date_medic }}">{{ $li->descripcion }}</p>
                                             </td>
                                             <td>
-                                                <button class="btn btn-info btn-xs edit_dates_medic_patient" value="{{ $li->id_patent_date_medic }}"> <span class="glyphicon glyphicon-edit"></span> Editar</button>    
+                                                <button class="btn btn-info btn-xs edit_dates_medic_patient" value="{{ $li->id_patent_date_medic }}"> <span class="glyphicon glyphicon-edit"></span> Editar</button>
                                             </td>
                                         </tr>
                                     </tbody>
-                                </table>    
+                                </table>
                             </div>
-                        </div>                         
+                        </div>
                     @empty
                         <label for="">No existen datos medicos</label>
                     @endforelse
@@ -99,7 +99,7 @@
                             <th>Accion</th>
                         </thead>
                         <tbody class="charge_modify">
-                            <?php $a = 1 ?> 
+                            <?php $a = 1 ?>
                             @forelse($pat as $d)
                             <tr>
                                 <td>{{ $a++ }}</td>
@@ -113,7 +113,7 @@
                                 </tr>
                                 </tr>
                             @endforelse
-                            
+
                         </tbody>
                     </table>
                     <table id="example2" class="table table-bordered table-hover">
@@ -167,7 +167,7 @@
                     <button type="submit" class="btn btn-primary">Guardar Cambios</button>
                 </div>
             </form>
-        </div>        
+        </div>
     <!-- /.modal-content -->
     </div>
 <!-- /.modal-dialog -->
@@ -224,7 +224,7 @@
                     <button type="submit" class="btn btn-primary">Guardar Cambios</button>
                 </div>
             </form>
-        </div>        
+        </div>
     <!-- /.modal-content -->
     </div>
 <!-- /.modal-dialog -->

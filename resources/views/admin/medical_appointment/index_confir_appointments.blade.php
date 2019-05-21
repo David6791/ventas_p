@@ -26,24 +26,24 @@
                     <tr>
                         <td>{{ $a++ }}</td>
                         <td>{{ $lista->nombres }} {{ $lista->ap_paterno }} {{ $lista->ap_materno }}</td>
-                        <td>{{ $lista->name_type }}</td>             
+                        <td>{{ $lista->name_type }}</td>
                         <td>{{ date('m-d-Y', strtotime( $lista->date_appointments )) }}</td>
                         <td>{{ $lista->name_schedules }}</td>
                         <td>{{ $lista->start_time }}</td>
                         @if( $lista->name_state_appointments == "Reservado")
-                        <td class="text-red"> {{ $lista->name_state_appointments }} </td>   
+                        <td class="text-red"> {{ $lista->name_state_appointments }} </td>
                         @else
-                        <td class="text-green"> {{ $lista->name_state_appointments }} </td>   
+                        <td class="text-green"> {{ $lista->name_state_appointments }} </td>
                         @endif
                         <td>{{ $lista->m_name }} {{ $lista->m_apellidos }}</td>
-                        
+
                         <td> <button class="btn btn-success btn-xs confirm_function" value="{{ $lista->id_medical_appointments }}"> <i class="glyphicon glyphicon-ok"></i> </button></td>
-                        <td><!--td><button type="button" class="btn btn-primary btn-xs get_ViewAppointments" value="{{$lista->id_medical_appointments}}">Ver Detalles</button--><a target="_blank" href="http://192.168.1.106:8080/pentaho/api/repos/%3Apublic%3ASteel%20Wheels%3AReports%3Aboleta_reserva_2.prpt/generatedContent?userid=admin&password=password&output-target=pageable/pdf&p={{ $lista->id_medical_appointments }}" type="button" class="btn btn-primary btn-xs" ><i class="glyphicon glyphicon-print"></i> </a></td>                        
-                    </tr>               
+                        <td><!--td><button type="button" class="btn btn-primary btn-xs get_ViewAppointments" value="{{$lista->id_medical_appointments}}">Ver Detalles</button--><a target="_blank" href="http://localhost:8080/pentaho/api/repos/%3Apublic%3ASteel%20Wheels%3AReports%3Aboleta_reserva.prpt/generatedContent?userid=admin&password=password&output-target=pageable/pdf&p={{ $lista->id_medical_appointments }}" type="button" class="btn btn-primary btn-xs" ><i class="glyphicon glyphicon-print"></i> </a></td>
+                    </tr>
                 @endforeach
             </tbody>
-        </table>        
+        </table>
     </div>
-    <div class="x_footer">        
+    <div class="x_footer">
     </div>
 </div>

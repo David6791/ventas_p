@@ -82,7 +82,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>                    
+                    </div>
                 </div>
                 <div class="box box-primary">
                     <div class="box-header">
@@ -107,7 +107,7 @@
                                         <option value="1">Boliviano</option>
                                         <option value="2">Argentino</option>
                                         <option value="3">Chileno</option>
-                                        <option value="4">Peruano</option>                                       
+                                        <option value="4">Peruano</option>
                                     </select>
                                 </div>
                             </div>
@@ -117,14 +117,14 @@
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Ciudad</label> <br>
                                     <small class="text-red" id=""></small>
-                                    <input type="text" class="form-control col-md-7 col-xs-12 name_form" name="ciudad"> 
+                                    <input type="text" class="form-control col-md-7 col-xs-12 name_form" name="ciudad">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Provincia</label> <br>
                                     <small class="text-red" id=""></small>
-                                    <input type="text" class="form-control col-md-7 col-xs-12 name_form" name="provincia"> 
+                                    <input type="text" class="form-control col-md-7 col-xs-12 name_form" name="provincia">
                                 </div>
                             </div>
                         </div> <br>
@@ -133,7 +133,7 @@
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Localidad</label> <br>
                                     <small class="text-red" id=""></small>
-                                    <input type="text" class="form-control col-md-7 col-xs-12 name_form" name="localidad"> 
+                                    <input type="text" class="form-control col-md-7 col-xs-12 name_form" name="localidad">
                                 </div>
                             </div>
                         </div>
@@ -150,7 +150,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 @foreach(array_chunk($row, 3) as $chunk)
-                                    <div class="row">                                            
+                                    <div class="row">
                                         @foreach($chunk as $add)
                                             <div class="col-md-4">
                                                 <div class="form-group col-md-12">
@@ -165,14 +165,14 @@
                                         @endforeach
                                     </div>
                                 @endforeach
-                            </div>                            
+                            </div>
                             <div class="col-md-12">
                                 <div class="text-green"> Datos Medicos</div> <br>
                                 @foreach(array_chunk($rows, 1) as $chunk)
-                                <div class="row">                                            
+                                <div class="row">
                                     @foreach($chunk as $add)
                                         <div class="col-md-5">
-                                            <div class="form-group col-md-12">                                                     
+                                            <div class="form-group col-md-12">
                                                 {{$add->nombre_dato_medico}}
                                                 <div class="row"> <br>
                                                     <div class="col-md-6">
@@ -201,7 +201,7 @@
                 </div>
             </div>
             <center><button type="submit" class="btn btn-success btn-ms"> <span class=""></span> Guardar Datos Paciente</button></center>
-        </form>        
+        </form>
     </div>
 </section>
 <style>
@@ -210,5 +210,5 @@
     }
   </style>
 <script>
-    $('#datepicker').datepicker({});  
+    $('#datepicker').datepicker({});
 </script>

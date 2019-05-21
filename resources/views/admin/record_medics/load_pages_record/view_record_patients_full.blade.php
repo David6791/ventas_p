@@ -6,10 +6,10 @@
                     <div class="col-md-12">
                         <h3 class="box-title text-green">Paciente: {{ $list_record[0]['nombres'] }} {{ $list_record[0]['ap_paterno'] }} {{ $list_record[0]['ap_materno'] }}</h3>
                     </div>
-                </div>             
+                </div>
             <div class="row"> <br>
                 <div class="col-md-1"></div>
-                <div class="col-md-2">                       
+                <div class="col-md-2">
                     <h3 class="box-title text-green">CI: {{ $list_record[0]['ci_paciente'] }} </h3>
                 </div>
                 <div class="col-md-3">
@@ -19,7 +19,7 @@
                     <h3 class="box-title text-green">Direccion:  </h3>
                 </div>
             </div>
-              
+
             </div>
             <div class="row">
                 <div class="col-md-12">
@@ -33,7 +33,7 @@
                     </div>
                 </div>
                 @else
-                @forelse($list_record as $li)            
+                @forelse($list_record as $li)
                 @if($a==1)
                 <div class="box box-primary">
                     <div class="box-header with-border">
@@ -46,13 +46,16 @@
                     <div id="{{ $li['id_medical_appointments'] }}" class="panel-collapse collapse in">
                         <div class="box-body">
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-3">
+                                    <p class="text-red">Cita Medica Nro: {{ str_pad($li['id_medical_appointments'], 6, '0', STR_PAD_LEFT) }}</p>
+                                </div>
+                                <div class="col-md-3">
                                     Turno: {{ $li['name_schedules'] }}
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     Hora: {{ $li['start_time'] }}
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     Estado: {{ $li['name_state_appointments'] }}
                                 </div>
                             </div> <br>
@@ -65,7 +68,7 @@
                                 <div class="col-md-12">
                                     <label for="" class="text-green"> DATOS DEL MEDICO</label>
                                 </div>
-                            </div>                                            
+                            </div>
                             <div class="row">
                                 <div class="col-md-8">
                                     Nombre Medico: {{ $li['name'] }} {{ $li['apellidos'] }}
@@ -80,11 +83,11 @@
                                 </div>
                                 <div class="col-md-6">
                                     <center>
-                                    <a class="btn btn-primary btn-sm" target="_blank" href="print_record_medic/{{ $li['id_medical_appointments'] }}"> <span class="glyphicon glyphicon-print"></span> Imprimir</a>
-                                    </center>                                    
+                                        <a class="btn btn-primary btn-sm" target="_blank" href="http://localhost:8080/pentaho/api/repos/%3Apublic%3ASteel%20Wheels%3AReports%3Ahistoria_clinica.prpt/generatedContent?userid=admin&password=password&output-target=pageable/pdf&p={{ $li['id_medical_appointments'] }}"> <span class="glyphicon glyphicon-print"></span> Imprimir Historial Medico</a>
+                                    </center>
                                 </div>
                             </div>
-                        </div>                    
+                        </div>
                     </div>
                 </div>
                 @else
@@ -98,14 +101,17 @@
                     </div>
                     <div id="{{ $li['id_medical_appointments'] }}" class="panel-collapse collapse">
                         <div class="box-body">
-                                <div class="row">
-                                <div class="col-md-4">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <p class="text-red">Cita Medica Nro: {{ str_pad($li['id_medical_appointments'], 6, '0', STR_PAD_LEFT) }}</p>
+                                </div>
+                                <div class="col-md-3">
                                     Turno: {{ $li['name_schedules'] }}
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     Hora: {{ $li['start_time'] }}
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     Estado: {{ $li['name_state_appointments'] }}
                                 </div>
                             </div> <br>
@@ -118,7 +124,7 @@
                                 <div class="col-md-12">
                                     <label for="" class="text-green"> DATOS DEL MEDICO</label>
                                 </div>
-                            </div>                                            
+                            </div>
                             <div class="row">
                                 <div class="col-md-8">
                                     Nombre Medico: {{ $li['name'] }} {{ $li['apellidos'] }}
@@ -133,8 +139,8 @@
                                 </div>
                                 <div class="col-md-6">
                                     <center>
-                                        <a class="btn btn-primary btn-sm" target="_blank" href="print_record_medic/{{ $li['id_medical_appointments'] }}"> <span class="glyphicon glyphicon-print"></span> Imprimir</a>
-                                    </center>                                    
+                                        <a class="btn btn-primary btn-sm" target="_blank" href="http://localhost:8080/pentaho/api/repos/%3Apublic%3ASteel%20Wheels%3AReports%3Ahistoria_clinica.prpt/generatedContent?userid=admin&password=password&output-target=pageable/pdf&p={{ $li['id_medical_appointments'] }}"> <span class="glyphicon glyphicon-print"></span> Imprimir Historial Medico</a>
+                                    </center>
                                 </div>
                             </div>
                         </div>
@@ -145,7 +151,7 @@
                     asdasdsa
                 @endforelse
                 @endif
-                </div>    
+                </div>
             </div>
             <!-- /.box-body -->
           </div>

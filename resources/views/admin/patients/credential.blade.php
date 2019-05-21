@@ -67,7 +67,7 @@
         <div class="row qr">
             <div class="col-md-12">
                 <img src="data:image/png;base64, {{ base64_encode(QrCode::format('png')->size(100)->generate($rows[0]->ci_paciente)) }} ">
-            </div>    
+            </div>
         </div> <br> <br> <br> <br> <br> <br>
         <div class="row qr1">
             <div class="col-md-12">
@@ -112,6 +112,6 @@
         margin: auto;
         margin-top:30px;
         margin-left:150px;
-        
+
     }
 </style>

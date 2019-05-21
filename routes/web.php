@@ -22,7 +22,7 @@ Route::get('qrLogin', ['uses' => 'QrLoginController@index']);
 Route::post('qrLogin', ['uses' => 'QrLoginController@checkUser']);
 
 
- 
+
 
 
 Route::get('my-qrcode', ['uses' => 'QrLoginController@ViewUserQrCode']);
@@ -48,34 +48,36 @@ Route::post('/create_rol', 'Role@create_role');
 Route::get('/index_roles_roles', 'Role@index_roles_roles');
 
 /* Rutas para los Permisos */
-Route::get('/index_permission', 'Permission@index_permission'); 
+Route::get('/index_permission', 'Permission@index_permission');
 Route::post('/create_permission', 'PermissionController@create_permission');
 Route::post('/load_dates_edit_permission', 'PermissionController@load_dates_edit_permission');
-Route::post('/edit_permission', 'PermissionController@edit_permission'); 
-Route::post('/delete_permission', 'PermissionController@delete_permission'); 
+Route::post('/edit_permission', 'PermissionController@edit_permission');
+Route::post('/delete_permission', 'PermissionController@delete_permission');
 
-Route::post('/load_dates_roles_users', 'UserRoleController@load_dates_roles_users'); 
+Route::post('/load_dates_roles_users', 'UserRoleController@load_dates_roles_users');
 
 
 /* Agregar y eliminar roles de usuario */
-Route::post('/add_role_user', 'UserRoleController@add_role_user'); 
-Route::post('/load_dates_view_rol', 'UserRoleController@load_dates_view_rol'); 
+Route::post('/add_role_user', 'UserRoleController@add_role_user');
+Route::post('/load_dates_view_rol', 'UserRoleController@load_dates_view_rol');
 
 
 /* Rutas para la asignacion de permisos a los roles */
-Route::get('/index_roles_permission', 'Permission@index_roles_permission'); 
-Route::post('/load_dates_view_permisos', 'Permission@load_dates_view_permisos'); 
-Route::post('/load_dates_roles_permission', 'Permission@load_dates_roles_permission'); 
-Route::post('/add_permissions_roles', 'Permission@add_permissions_roles'); 
+Route::get('/index_roles_permission', 'Permission@index_roles_permission');
+Route::post('/load_dates_view_permisos', 'Permission@load_dates_view_permisos');
+Route::post('/load_dates_roles_permission', 'Permission@load_dates_roles_permission');
+Route::post('/add_permissions_roles', 'Permission@add_permissions_roles');
 
 /* Rutas para administrar usuarios  */
-Route::get('/index_medics', 'UsersController@index_medics'); 
+Route::get('/index_medics', 'UsersController@index_medics');
 Route::post('/create_medics', 'UsersController@create_medics');
 Route::post('/add_user_medic', 'UsersController@add_user_medics');
 Route::post('/verUsuarios', 'UsersController@verUsuarios');
 Route::post('update1/{id}', 'UsersController@update1');
 Route::post('/darBajaUser', 'UsersController@baja_user');
 Route::post('/charge_specialty_b','UsersController@charge_specialty_b');
+
+Route::get('/view_perfil','UsersController@view_perfil');
 
 
 /* Rutas para administrar Pacientes */
@@ -151,6 +153,7 @@ Route::post('/create_medical_exam','MedicalExamController@create_medical_exam');
 
 Route::post('/edit_medical_exam_charge','MedicalExamController@edit_medical_exam_charge');
 
+Route::post('/low_exam_medic','MedicalExamController@low_exam_medic');
 
 Route::post('/edit_medical_exam','MedicalExamController@edit_medical_exam');
 
@@ -175,6 +178,9 @@ Route::post('/insert_appointsments','MedicalAppointmentController@insert_appoint
 
 Route::post('/modifi_appointments_save','MedicalAppointmentController@modifi_appointment_save');
 
+
+/* Rutas para poder imprimir lista para la atencion diaria */
+Route::get('/view_list_print_list','MedicalAppointmentController@view_list_print_list');
 
 /* Rutas para escoger metodo cita medica */
 Route::get('/create_medical_appointments','MedicalAppointmentController@create_medical_appointments_a');
@@ -205,15 +211,15 @@ Route::post('/store_emergencies','EmergenciesController@store_emergency');
 
 
 /* Rutas para la atencion de Citas Medicas */
-Route::get('/view_attention_lists','AttentionsController@view_attention_list'); 
+Route::get('/view_attention_lists','AttentionsController@view_attention_list');
 
 Route::post('/start_appointment_date','AttentionsController@start_appointment_dates');
 Route::post('/save_dates_appoinments_dates','AttentionsController@save_dates_appoinments_date');
 Route::post('/load_medicine_table','AttentionsController@load_medicine_table');
-Route::post('/save_dates_treatment','AttentionsController@save_dates_treatment'); 
+Route::post('/save_dates_treatment','AttentionsController@save_dates_treatment');
 Route::post('/store_patients_transfer','AttentionsController@store_patients_transfer');
 Route::post('/end_medical_appointment','AttentionsController@end_medical_appointment');
-Route::get('/view_attention_lists_full_medic','AttentionsController@view_attention_lists_full_medic'); 
+Route::get('/view_attention_lists_full_medic','AttentionsController@view_attention_lists_full_medic');
 
 
 
@@ -224,8 +230,8 @@ Route::post('/load_dates_filiation_full','AttentionsController@load_dates_filiat
 
 /* Ruta para guardar datos de examen medico de un paciente. */
 Route::post('/register_medical_exam','AttentionsController@register_medical_exam');
- 
-/* Para completar los datos de los pacientes. */ 
+
+/* Para completar los datos de los pacientes. */
 Route::post('/filiation_completing', 'PatientsController@filiation_completing');
 
 Route::post('/add_date_new_medic_url', 'PatientsController@add_date_new_medic_url');
@@ -240,9 +246,9 @@ Route::post('/update_patients_dates', 'PatientsController@update_patients_dates'
 
 /* Rutas para las estadisticas del Policlinico */
 Route::get('/index_statistics', 'StatisticsController@index_statistics');
-Route::post('/view_day', 'StatisticsController@view_day'); 
+Route::post('/view_day', 'StatisticsController@view_day');
 
-Route::post('/view_range', 'StatisticsController@view_range'); 
+Route::post('/view_range', 'StatisticsController@view_range');
 
 Route::post('/statistic_for_range', 'StatisticsController@statistic_for_range');
 Route::post('/statistic_for_day', 'StatisticsController@statistic_for_days');
@@ -321,6 +327,16 @@ Route::post('/view_attention_patient', 'AttentionsController@view_attention_pati
 Route::post('/view_cites_previus', 'AttentionsController@view_cites_previus');
 
 Route::post('/view_treatment_form', 'AttentionsController@view_treatment_form');
+/* Segundo formilario para tratamientos */
+Route::post('/view_treatment_form_2', 'AttentionsController@view_treatment_form_2');
+
+Route::post('/view_treatment_form_2_add', 'AttentionsController@view_treatment_form_2_add');
+
+Route::post('/url_form_prescription', 'AttentionsController@url_form_prescription');
+
+
+
+
 
 Route::post('/view_exam_medic', 'AttentionsController@view_exam_medic');
 
@@ -369,3 +385,12 @@ Route::get('/print_credential_user/{id_}','UsersController@print_credential_user
 
 Route::get('/print_record_medic/{id_}','PatientsController@print_record_medic');
 
+
+/* Para poder ver y Editar el perfil del medico */
+
+
+
+/* Para poder cargar el tipo de examen Medico */
+Route::post('/charge_types_exam_medic','AttentionsController@charge_types_exam_medic');
+Route::post('/charge_form_type_exam_medic','AttentionsController@charge_form_type_exam_medic');
+Route::post('/store_exam_laboratory','AttentionsController@store_exam_laboratory');

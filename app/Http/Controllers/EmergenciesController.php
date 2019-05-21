@@ -27,7 +27,16 @@ class EmergenciesController extends Controller
     }
     public function store_emergency(Request $request){
         $query1 = "select public.register_emergency(:id_patient,:ci_patient,:name_patient,:apaterno,:amaterno,:f_nacimiento,:direccion,:sexo,:descryption)";
-        $rows2 = \DB::select(\DB::raw($query1),array('id_patient'=>$request->id_patient,'ci_patient'=>$request->ci_patient,'name_patient'=>$request->name_patient,'apaterno'=>$request->apaterno_patient,'amaterno'=>$request->amaterno_patient,'f_nacimiento'=>$request->fnacimiento_patient,'direccion'=>$request->direccion_patient,'sexo'=>$request->sexo,'descryption'=>$request->descryption_emergecy));
+        $rows2 = \DB::select(\DB::raw($query1),array(
+            'id_patient'=>$request->id_patient,
+            'ci_patient'=>$request->ci_patient,
+            'name_patient'=>$request->name_patient,
+            'apaterno'=>$request->apaterno_patient,
+            'amaterno'=>$request->amaterno_patient,
+            'f_nacimiento'=>$request->fnacimiento_patient,
+            'direccion'=>$request->direccion_patient,
+            'sexo'=>$request->sexo,
+            'descryption'=>$request->descryption_emergecy));
         return redirect()->action(
             'MedicalAppointmentController@index_Appointment'
         );

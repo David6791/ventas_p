@@ -12,6 +12,8 @@ use Auth;
 class MedicalAppointmentController extends Controller
 {
     public function index_Appointment(){
+        //return Auth::user()->id;
+        if( Auth::user()->id == 1 ){
         $query = "SELECT map.id_medical_appointments, map.appointment_description, pa.nombres, pa.ap_paterno, pa.ap_materno, mass.id_user, us.name m_name, us.apellidos m_apellidos, sch.name_schedules, ht.start_time, sap.name_state_appointments, map.date_appointments, ta.name_type FROM medical_appointments map
                             INNER JOIN pacientes pa
                         ON pa.id_paciente = map.id_patient
@@ -27,11 +29,34 @@ class MedicalAppointmentController extends Controller
                         ON sap.id_state_appointments = map.state_appointments
                     INNER JOIN types_appointsment ta
                     ON ta.id_type_appointments = map.type_appoinment
-                        ORDER BY map.id_medical_appointments DESC ";
+                        ORDER BY map.date_appointments DESC, map.id_medical_appointments DESC";
         $rows=\DB::select(\DB::raw($query));
         $query1 = "SELECT * FROM state_appointments";
         $rows1=\DB::select(\DB::raw($query1));
         return view('admin.medical_appointment.index_medical_appointments')->with('row',$rows)->with('row1',$rows1);
+        }else{
+            $query = "SELECT map.id_medical_appointments, map.appointment_description, pa.nombres, pa.ap_paterno, pa.ap_materno, mass.id_user, us.name m_name, us.apellidos m_apellidos, sch.name_schedules, ht.start_time, sap.name_state_appointments, map.date_appointments, ta.name_type FROM medical_appointments map
+                                INNER JOIN pacientes pa
+                            ON pa.id_paciente = map.id_patient
+                                INNER JOIN medical_assignments mass
+                            ON mass.id_medical_assignments = map.id_medical_assignments
+                                INNER JOIN users us
+                            ON us.id = mass.id_user
+                                INNER JOIN schedules sch
+                            ON sch.id_schedule = mass.id_schedul
+                                INNER JOIN hour_turns ht
+                            ON ht.id_hour_turn = map.id_turn_hour
+                                INNER JOIN state_appointments sap
+                            ON sap.id_state_appointments = map.state_appointments
+                            INNER JOIN types_appointsment ta
+                            ON ta.id_type_appointments = map.type_appoinment
+                        where mass.id_user = :id or mass.id_user = 10
+                            ORDER BY map.date_appointments DESC, map.id_medical_appointments DESC";
+            $rows=\DB::select(\DB::raw($query),array('id'=>Auth::user()->id));
+            $query1 = "SELECT * FROM state_appointments";
+            $rows1=\DB::select(\DB::raw($query1));
+            return view('admin.medical_appointment.index_medical_appointments')->with('row',$rows)->with('row1',$rows1);
+        }
     }
     public function create_Medical_Appointment(Request $request){
         return view('admin.medical_appointment.create_medical_appointsments');
@@ -44,7 +69,7 @@ class MedicalAppointmentController extends Controller
                         ON sch.id_schedule = mass.id_schedul
                         INNER JOIN tipo_usuarios tp
                         ON us.tipo_usuario = tp.id_tipo
-                    WHERE state_assignments = 'activo' AND mass.id_schedul != 16 ";
+                    WHERE state_assignments = 'activo' AND mass.id_schedul != 16 AND us.estado_user != 2";
         $rows=\DB::select(\DB::raw($query));
         //return $rows;
         return view('admin.medical_appointment.load_pages.reservation_medic')->with('medics',$rows);
@@ -66,7 +91,7 @@ class MedicalAppointmentController extends Controller
                     INNER JOIN schedules sch
                         ON sch.id_schedule = ht.id_schedul
                     WHERE ht.id_schedul = :id_schedul AND ht.state = 'activo' AND ht.id_hour_turn NOT IN (
-                   SELECT id_turn_hour FROM medical_appointments map  
+                   SELECT id_turn_hour FROM medical_appointments map
                     WHERE date_trunc('day', map.date_appointments) = :date)";
         $rows=\DB::select(\DB::raw($query),array('date'=>$request->fecha,'id_schedul'=>$request->id_turno));
         //return $rows;
@@ -74,7 +99,7 @@ class MedicalAppointmentController extends Controller
     }
     public function create_assignments_view_user_medic(Request $request){
         //return $request->all();
-        $query = "SELECT * FROM hour_turns ht 
+        $query = "SELECT * FROM hour_turns ht
                         INNER JOIN schedules sch
                         ON sch.id_schedule = ht.id_schedul
                     WHERE id_hour_turn = :id_hour_turn AND ht.state = 'activo' ";
@@ -111,6 +136,7 @@ class MedicalAppointmentController extends Controller
             'appointment_description' => $request->description_appointment,
             'date_appointments' => $request->date_appointsment,
             'type_appoinment' => $request->type_appointments,
+            'state_appointments' => 3,
             'emergency' => 'N',
             'type_disease' => 1
         ]);
@@ -140,7 +166,7 @@ class MedicalAppointmentController extends Controller
                     INNER JOIN schedules sch
                         ON sch.id_schedule = ht.id_schedul
                     WHERE ht.id_schedul = :id_schedul AND ht.state = 'activo' AND ht.id_hour_turn NOT IN (
-                   SELECT id_turn_hour FROM medical_appointments map  
+                   SELECT id_turn_hour FROM medical_appointments map
                     WHERE date_trunc('day', map.date_appointments) = :date) order by ht.id_hour_turn";
         $rows=\DB::select(\DB::raw($query),array('date'=>$request->fecha,'id_schedul'=>$id_sc[0]->id_schedul));
         //return $rows;
@@ -173,6 +199,7 @@ class MedicalAppointmentController extends Controller
             'appointment_description' => $request->description_appointment,
             'date_appointments' => $request->date_appointsment,
             'type_appoinment' => $request->type_appointments,
+            'state_appointments' => 3,
             'emergency' => 'N',
             'type_disease' => 1
         ]);
@@ -181,24 +208,47 @@ class MedicalAppointmentController extends Controller
         );
     }
     public function view_list_appinments(){
-        $query = "select mep.id_medical_appointments, mep.appointment_description, pa.nombres, pa.ap_paterno, pa.ap_materno, mass.id_user, us.name m_name, us.apellidos m_apellidos, sch.name_schedules, ht.start_time, sap.name_state_appointments, mep.date_appointments, ta.name_type from medical_appointments mep 
-                        inner join pacientes pa
-                            on pa.id_paciente = mep.id_patient
-                        inner join medical_assignments mass
-                            on mass.id_medical_assignments = mep.id_medical_assignments
-                        inner join users us
-                            on us.id = mass.id_user
-                        inner join schedules sch
-                            on sch.id_schedule = mass.id_schedul
-                        inner join hour_turns ht
-                            on ht.id_hour_turn = mep.id_turn_hour
-                        inner join types_appointsment ta
-                            on mep.type_appoinment = ta.id_type_appointments   
-                        inner join state_appointments sap
-                            on sap.id_state_appointments = mep.state_appointments 
-                    where mep.state_appointments != 1 and mep.emergency != 'S'";
-        $rows=\DB::select(\DB::raw($query));
-        return view('admin.medical_appointment.load_pages.edit_reservations')->with('medics',$rows);
+        if( Auth::user()->tipo_usuario == 1 or Auth::user()->tipo_usuario == 3 ){
+            $query = "select mep.id_medical_appointments, mep.appointment_description, pa.nombres, pa.ap_paterno, pa.ap_materno, mass.id_user, us.name m_name, us.apellidos m_apellidos, sch.name_schedules, ht.start_time, sap.name_state_appointments, mep.date_appointments, ta.name_type from medical_appointments mep
+                            inner join pacientes pa
+                                on pa.id_paciente = mep.id_patient
+                            inner join medical_assignments mass
+                                on mass.id_medical_assignments = mep.id_medical_assignments
+                            inner join users us
+                                on us.id = mass.id_user
+                            inner join schedules sch
+                                on sch.id_schedule = mass.id_schedul
+                            inner join hour_turns ht
+                                on ht.id_hour_turn = mep.id_turn_hour
+                            inner join types_appointsment ta
+                                on mep.type_appoinment = ta.id_type_appointments
+                            inner join state_appointments sap
+                                on sap.id_state_appointments = mep.state_appointments
+                        --where mep.state_appointments != 1 and mep.emergency != 'S' and mep.state_appointments != 3
+                        where mep.state_appointments != 1 and mep.emergency != 'S'";
+            $rows=\DB::select(\DB::raw($query));
+            return view('admin.medical_appointment.load_pages.edit_reservations')->with('medics',$rows);
+        }else{
+            $query = "select mep.id_medical_appointments, mep.appointment_description, pa.nombres, pa.ap_paterno, pa.ap_materno, mass.id_user, us.name m_name, us.apellidos m_apellidos, sch.name_schedules, ht.start_time, sap.name_state_appointments, mep.date_appointments, ta.name_type from medical_appointments mep
+                            inner join pacientes pa
+                                on pa.id_paciente = mep.id_patient
+                            inner join medical_assignments mass
+                                on mass.id_medical_assignments = mep.id_medical_assignments
+                            inner join users us
+                                on us.id = mass.id_user
+                            inner join schedules sch
+                                on sch.id_schedule = mass.id_schedul
+                            inner join hour_turns ht
+                                on ht.id_hour_turn = mep.id_turn_hour
+                            inner join types_appointsment ta
+                                on mep.type_appoinment = ta.id_type_appointments
+                            inner join state_appointments sap
+                                on sap.id_state_appointments = mep.state_appointments
+                        --where mep.state_appointments != 1 and mep.emergency != 'S' and mep.state_appointments != 3
+                        where mep.state_appointments != 1 and mep.emergency != 'S' and mass.id_user = :id";
+            $rows=\DB::select(\DB::raw($query),array('id'=>Auth::user()->id));
+            return view('admin.medical_appointment.load_pages.edit_reservations')->with('medics',$rows);
+        }
     }
     public function load_dates_reserva(Request $request){
         //return $request->all();
@@ -222,7 +272,7 @@ class MedicalAppointmentController extends Controller
                     INNER JOIN schedules sch
                         ON sch.id_schedule = ht.id_schedul
                     WHERE ht.id_schedul = :id_schedul AND ht.state = 'activo' AND ht.id_hour_turn NOT IN (
-                   SELECT id_turn_hour FROM medical_appointments map  
+                   SELECT id_turn_hour FROM medical_appointments map
                     WHERE date_trunc('day', map.date_appointments) = :date)";
         $rows=\DB::select(\DB::raw($query),array('date'=>$request->fecha,'id_schedul'=>$rows1[0]->id_schedul));
         //return '$rows';
@@ -259,7 +309,7 @@ class MedicalAppointmentController extends Controller
                         ON sap.id_state_appointments = map.state_appointments
                     INNER JOIN types_appointsment ta
                     ON ta.id_type_appointments = map.type_appoinment
-                    WHERE map.state_appointments != 1 
+                    WHERE map.state_appointments != 1 AND map.emergency = 'N'
                         ORDER BY map.id_medical_appointments DESC";
         $rows=\DB::select(\DB::raw($query));
         $query1 = "SELECT * FROM state_appointments";
@@ -276,5 +326,13 @@ class MedicalAppointmentController extends Controller
         return redirect()->action(
             'MedicalAppointmentController@index_confirm'
         );
+    }
+    public function view_list_print_list(){
+        $query = "SELECT * FROM medical_assignments mass
+                	INNER JOIN users us
+                		ON us.id = id_user
+                WHERE mass.state_assignments = 'activo' AND mass.id_user != 10 and us.estado_user != 2 ORDER BY us.id";
+        $rows=\DB::select(\DB::raw($query));
+        return view('admin.medical_appointment.partials.index_lists_print')->with('dates',$rows);
     }
 }

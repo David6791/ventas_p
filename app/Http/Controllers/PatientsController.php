@@ -18,10 +18,10 @@ class PatientsController extends Controller
         $rows=\DB::select(\DB::raw($query));
         $query1 = "select * from datos_medicos where estado_dato_medico = 'activo'";
         $rows1=\DB::select(\DB::raw($query1));
-        return view('admin.patients.form_patients')->with('row',$rows)->with('rows',$rows1);        
+        return view('admin.patients.form_patients')->with('row',$rows)->with('rows',$rows1);
     }
     public function store_patient(Request $request){
-        //return $request->all();   
+        //return $request->all();
         //return base64_encode(\QrCode::format('png')->size(200)->generate($request->ci_paciente));
         $validatedData = $request->validate([
             'apellido_materno' => 'required|max:20',
@@ -37,7 +37,7 @@ class PatientsController extends Controller
             'nombre' => 'required',
             'provincia' => 'required',
             'telefono' => 'required'
-        ]); 
+        ]);
         DB::table('pacientes')->insert([
             'ci_paciente' => $request->ci,
             'ap_paterno' => $request->apellido_paterno,
@@ -53,7 +53,7 @@ class PatientsController extends Controller
             'provincia' => $request->provincia,
             'localidad_nacimiento' => $request->localidad,
             'qr_code_patient' => base64_encode(\QrCode::format('png')->size(200)->generate($request->ci_paciente))
-                                  
+
         ]);
         $query = "select id_paciente from pacientes order by id_paciente desc limit 1";
         $rows=\DB::select(\DB::raw($query));
@@ -64,7 +64,7 @@ class PatientsController extends Controller
                     'id_paciente' => $rows[0]->id_paciente,
                     'id_patologia' => $pat
                 ]);
-            }            
+            }
         }
         if($request->patologias != null){
             //return 'lleno';
@@ -73,7 +73,7 @@ class PatientsController extends Controller
                     'id_paciente' => $rows[0]->id_paciente,
                     'id_patologia' => $pat
                 ]);
-            }            
+            }
         }
         $al = $request->all();
         foreach($al as $row =>$val) {
@@ -94,13 +94,13 @@ class PatientsController extends Controller
         $query = "SELECT * FROM pacientes";
         $rows=\DB::select(\DB::raw($query));
         return view('admin.patients.index_patients')->with('list_patients',$rows);
-    }   
+    }
     public function load_dates_patient_edit(Request $request){
-        
+
         $query = "SELECT * FROM pacientes p
                     WHERE p.id_paciente = :id";
         $rows=\DB::select(\DB::raw($query),array('id'=>$request->id_patient));
-        $query2 = "SELECT * FROM pacientes_patologias  pp                        
+        $query2 = "SELECT * FROM pacientes_patologias  pp
                         LEFT JOIN patologias pt
                         ON pt.id_patologia = pp.id_patologia
                     WHERE pp.id_paciente = :id AND pp.estado_pac_pat = 'activo'";
@@ -112,9 +112,9 @@ class PatientsController extends Controller
         $rows1=\DB::select(\DB::raw($query1),array('id'=>$request->id_patient));
         //return $rows;
         return view('admin.patients.view_patients_details')->with('pat',$rows2)->with('dates',$rows)->with('dates_medic',$rows1);
-    }     
+    }
     public function load_dates_medic_edit_patient(Request $request){
-        $query = "SELECT * FROM patients_dates_medic pmd 
+        $query = "SELECT * FROM patients_dates_medic pmd
                         INNER JOIN datos_medicos dm
                         ON dm.id_dato_medico = pmd.id_date_medic
                     WHERE pmd.id_patent_date_medic = :id";
@@ -127,7 +127,7 @@ class PatientsController extends Controller
             ->where('id_patent_date_medic', $request->id_date_medic)
             ->update(['descripcion' => $request->rol_edit
             ]);
-            $query = "SELECT * FROM patients_dates_medic pmd 
+            $query = "SELECT * FROM patients_dates_medic pmd
                         INNER JOIN datos_medicos dm
                         ON dm.id_dato_medico = pmd.id_date_medic
                     WHERE pmd.id_patent_date_medic = :id";
@@ -138,7 +138,7 @@ class PatientsController extends Controller
         //return $request->all();
         $query = "SELECT * FROM pacientes_patologias pp
                         INNER JOIN patologias p
-                    ON pp.id_patologia = p.id_patologia        
+                    ON pp.id_patologia = p.id_patologia
                         WHERE pp.id_paciente = :id and pp.estado_pac_pat = 'activo'";
         $rows=\DB::select(\DB::raw($query),array('id'=>$request->id_patient));
         $query1 = "SELECT * FROM patologias p WHERE p.estado_patologia = 'activo' and p.id_patologia NOT IN(
@@ -159,7 +159,7 @@ class PatientsController extends Controller
                 if($esp!=0)
                 {
                     $query = "select public.agregar_patologie(:id, :id_pat)";
-                    $rows = \DB::select(\DB::raw($query),array('id'=>$request->id_patient,'id_pat'=>$esp));        
+                    $rows = \DB::select(\DB::raw($query),array('id'=>$request->id_patient,'id_pat'=>$esp));
                 }
             }
         }
@@ -169,16 +169,16 @@ class PatientsController extends Controller
                 if($esp!=0)
                 {
                     $query = "select public.eliminar_patologie_patient(:id, :id_pat)";
-                    $rows = \DB::select(\DB::raw($query),array('id'=>$request->id_patient,'id_pat'=>$esp));        
+                    $rows = \DB::select(\DB::raw($query),array('id'=>$request->id_patient,'id_pat'=>$esp));
                 }
             }
-        }  
+        }
         $query = "SELECT * FROM pacientes_patologias pp
                         INNER JOIN patologias p
-                    ON pp.id_patologia = p.id_patologia        
+                    ON pp.id_patologia = p.id_patologia
                         WHERE pp.id_paciente = :id and pp.estado_pac_pat = 'activo'";
-        $rows=\DB::select(\DB::raw($query),array('id'=>$request->id_patient)); 
-        return $rows; 
+        $rows=\DB::select(\DB::raw($query),array('id'=>$request->id_patient));
+        return $rows;
     }
     public function filiation_completing(Request $request){
         $query = "SELECT * FROM pacientes pa
@@ -195,7 +195,7 @@ class PatientsController extends Controller
                             ON dm.id_dato_medico = ptm.id_date_medic
                     WHERE pa.id_paciente = :id_patient";
         $rows1=\DB::select(\DB::raw($query1),array('id_patient'=>$request->id));
-        $query2 = "SELECT * FROM pacientes p 
+        $query2 = "SELECT * FROM pacientes p
                         WHERE p.id_paciente =  :id_patient";
         $rows2=\DB::select(\DB::raw($query2),array('id_patient'=>$request->id));
         //return $rows2;
@@ -226,25 +226,25 @@ class PatientsController extends Controller
                         ON dm.id_dato_medico = ptm.id_date_medic
                     WHERE ptm.id_patient = :id_patient";
         $rows1=DB::select(DB::raw($query1),array('id_patient'=>$id));
-        $query2 = "SELECT * FROM pacientes p 
+        $query2 = "SELECT * FROM pacientes p
                         WHERE p.id_paciente =  :id_patient";
         $rows2=\DB::select(\DB::raw($query2),array('id_patient'=>$request->id_patient_dates));
         //return $rows1;
         return view('admin.patients.completing_dates.table_new_dates_medic')->with('dates_medic',$rows1)->with('dates_patient',$rows2);
     }
     public function delete_dates_medic_patient(Request $request){
-        
+
         $query = "select public.delete_date_medic(:id, :id_pat)";
-        $rows = \DB::select(\DB::raw($query),array('id'=>$request->id_patient,'id_pat'=>$request->id));        
+        $rows = \DB::select(\DB::raw($query),array('id'=>$request->id_patient,'id_pat'=>$request->id));
         $query1 = "SELECT * FROM patients_dates_medic pdm
                         INNER JOIN datos_medicos dm
                         ON pdm.id_date_medic = dm.id_dato_medico
                     WHERE id_patient = :id";
         $rows1=\DB::select(\DB::raw($query1),array('id'=>$request->id_patient));
-        $query2 = "SELECT * FROM pacientes p 
+        $query2 = "SELECT * FROM pacientes p
                         WHERE p.id_paciente =  :id_patient";
         $rows2=\DB::select(\DB::raw($query2),array('id_patient'=>$request->id_patient));
-        //return $rows2; 
+        //return $rows2;
         return view('admin.patients.completing_dates.table_new_dates_medic')->with('dates_medic',$rows1)->with('dates_patient',$rows2);
     }
     public function update_patients_dates(Request $request){
@@ -280,10 +280,10 @@ class PatientsController extends Controller
             'ciudad_nacimiento' => $request->ciudad,
             'provincia' => $request->provincia,
             'localidad_nacimiento' => $request->localidad,
-            'filiacion_completa' => 's',
-            'qr_code_patient' => QrCode::format('png')->size(200)->generate($request->ci)
+            'filiacion_completa' => 's'
+            //'qr_code_patient' => QrCode::format('png')->size(200)->generate($request->ci)
         ]);
-        $query = "SELECT * FROM pacientes pa                        
+        $query = "SELECT * FROM pacientes pa
                     WHERE pa.id_paciente = :id_patient";
         $patient=\DB::select(\DB::raw($query),array('id_patient'=>$request->id_patient));
         $query1 = "SELECT * FROM pacientes pa
@@ -308,7 +308,7 @@ class PatientsController extends Controller
         $rows=\DB::select(\DB::raw($query));
         return view('admin.patients.view_dates_activate')->with('patients',$rows);
     }
-    public function hability_dates_patients(Request $request){        
+    public function hability_dates_patients(Request $request){
         $query = "SELECT * FROM public.hability_patients(:id)";
         $rows=\DB::select(\DB::raw($query),array('id'=>$request->id_patients));
         return redirect()->action(
@@ -327,7 +327,7 @@ class PatientsController extends Controller
         //return $rows;
         $view =  \View::make('admin.patients.credential', compact('rows'))->render();
         $pdf = \App::make('dompdf.wrapper');
-        $pdf->setPaper(array(0,0,300,200));       
+        $pdf->setPaper(array(0,0,300,200));
         $pdf->loadHTML($view);
         return $pdf->stream();
     }
@@ -341,14 +341,14 @@ class PatientsController extends Controller
                 WHERE pp.id_paciente = (SELECT mapp.id_patient FROM medical_appointments mapp where mapp.id_medical_appointments = :id_appointments) ORDER BY id_pac_pat ASC";
         $pato=\DB::select(\DB::raw($q2),array('id_appointments'=>$id_));
 
-        $dj = "select * from medical_appointments ma 
+        $dj = "select * from medical_appointments ma
                     inner join patients_dates_medic ptm
                         on ptm.id_patient = ma.id_patient
                     inner join datos_medicos dm
                                 on dm.id_dato_medico = ptm.id_date_medic
                 where ma.id_medical_appointments = :id_appointments";
         $dr=\DB::select(\DB::raw($dj),array('id_appointments'=>$id_));
-        $not = "SELECT * FROM details_dates_register dr 
+        $not = "SELECT * FROM details_dates_register dr
             INNER JOIN dates_of_register dof
                     ON dof.id_date_register = dr.id_dates_register
             WHERE dr.id_appointmetns_ = :id_appointments";
@@ -372,13 +372,13 @@ class PatientsController extends Controller
                 INNER JOIN medical_assignments mes
                 ON mes.id_medical_assignments = ma.id_medical_assignments
                 INNER JOIN users us
-                ON us.id = mes.id_user 
+                ON us.id = mes.id_user
                 WHERE mep.id_appoinments = :id_appointments ORDER BY id_medical_exam_patient ASC";
-        $exam_medics=\DB::select(\DB::raw($query1),array('id_appointments'=>$id_));  
+        $exam_medics=\DB::select(\DB::raw($query1),array('id_appointments'=>$id_));
 
         $view =  \View::make('admin.patients.medical_record_print', compact('paciente','pato','dr','notes','transfer_medic','exam_medics','id_'))->render();
         $pdf = \App::make('dompdf.wrapper');
-        $pdf->setPaper("letter", "portrait");     
+        $pdf->setPaper("letter", "portrait");
         $pdf->loadHTML($view);
         return $pdf->stream();
     }

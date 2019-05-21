@@ -9,10 +9,10 @@
                   <h3 class="box-title">Permisos de Usuario</h3>
                 </div>
                 <div class="col-md-2">
-                <button type="button" class="btn btn-success btn-ms"  data-toggle="modal" data-target="#modal_add_permisions"> <span class="fa fa-plus"> </span>  Agregar Nuevo Permiso</button>  
-                </div>              
+                <button type="button" class="btn btn-success btn-ms"  data-toggle="modal" data-target="#modal_add_permisions"> <span class="fa fa-plus"> </span>  Agregar Nuevo Permiso</button>
+                </div>
               </div>
-              
+
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -22,7 +22,7 @@
                         <th>Nro.</th>
                         <th>Permisos</th>
                         <th>Nombre Permiso</th>
-                        <th>Descripcion Permiso</th>
+                        <!--th>Descripcion Permiso</th-->
                         <th>Fecha Creacion</th>
                         <th>Estado Permiso</th>
                         <th>Accion</th>
@@ -35,7 +35,7 @@
                             <td>{{ $a++ }}</td>
                             <td>{{ $roles->name }}</td>
                             <td>{{ $roles->display_name }}</td>
-                            <td>{{ $roles->description }}</td>
+                            <!--td>{{ $roles->description }}</td-->
                             <td>{{ $roles->created_at }}</td>
                             <td>{{ $roles->state_permissions }}</td>
                             <td> <button type="button" class="btn btn-primary btn-xs load_dates_permission_edit" value="{{ $roles->id }}"> <span class="fa fa-edit"></span> Editar</button> <button type="button" class="btn btn-danger btn-xs delete_permission" value="{{ $roles->id }}"> <span class="fa fa-edit"></span> Borrar</button> </td>
@@ -43,7 +43,7 @@
                     @empty
                         <p>No users</p>
                     @endforelse
-                </tbody>                              
+                </tbody>
                 <tfoot>
                 </tfoot>
               </table>
@@ -108,7 +108,7 @@
                     <button type="submit" class="btn btn-primary">Guardar</button>
                 </div>
             </form>
-        </div>        
+        </div>
     <!-- /.modal-content -->
     </div>
 <!-- /.modal-dialog -->
@@ -164,7 +164,7 @@
                     <button type="submit" class="btn btn-primary">Guardar</button>
                 </div>
             </form>
-        </div>        
+        </div>
     <!-- /.modal-content -->
     </div>
 <!-- /.modal-dialog -->

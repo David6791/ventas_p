@@ -96,16 +96,18 @@
                     </div>
                     <br>
                     <div class="row">
-                        <div class="col-md-2"></div>
-                        <div class="col-md-6">
+                        <div class="col-md-1">
+
+                        </div>
+                        <div class="col-md-10">
                             <label for="">Describa el Motivo para solicitar el Exame Medico</label>
                             <textarea class="select2_group form-control" name="reason_medical_exam" id="" placeholder="Ingrese aqui los motivos."></textarea>
                         </div>
                     </div>
                     <br>
                     <div class="row">
-                        <div class="col-md-2"></div>
-                        <div class="col-md-6">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-10">
                             <label for="">Observaciones...</label>
                             <textarea class="select2_group form-control" name="observations_medical_exam" id="" placeholder="Ingrese observaciones."></textarea>
                         </div>

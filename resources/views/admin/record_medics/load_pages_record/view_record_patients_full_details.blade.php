@@ -7,13 +7,13 @@
     <div class="row">
         <div class="col-md-9"></div>
         <div class="col-md-3">
-            <label for="">Fecha:</label> 
+            <label for="">Fecha:</label>
         </div>
     </div>
     <div class="row">
         <div class="col-md-12">
             <h4>Informacion del Paciente</h4>
-        </div>        
+        </div>
     </div>
     <div class="row">
         <div class="col-md-3">
@@ -30,11 +30,11 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-6">  
+        <div class="col-md-6">
             <label for="">FECHA NACIMIENTO:</label> {{ $paciente[0]->fecha_nacimento }}
         </div>
         <div class="col-md-6">
-            <label for="">EDAD:</label> 
+            <label for="">EDAD:</label>
         </div>
     </div>
     <div class="row">
@@ -52,7 +52,7 @@
 <div class="row separar">
     <div class="col-md-6">
         <div class="box box-body box-primary">
-            
+
             <div class="box-body">
                 <div class="box-header">
                     <h3 class="box-title">Patologias</h3>
@@ -119,7 +119,7 @@
             </div>
             <div class="box-body">
                 <div class="row">
-                    <div class="col-md-12">                        
+                    <div class="col-md-12">
                         <div class="row">
                             <div class="col-md-12">
                                 <?php $a = 1 ?>
@@ -138,7 +138,7 @@
                         </div>
                     </div>
                 </div>
-                
+
             </div>
         </div>
     </div>
@@ -154,7 +154,7 @@
                     <div class="col-md-12">
                         <div class="x_panel">
                             @forelse($transfer_medic as $dat)
-                            <div class="x_content">                                
+                            <div class="x_content">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label for="">Fecha:</label> {{ date('d/m/Y', strtotime($dat->date_creation)) }}
@@ -163,7 +163,7 @@
                                         <label for="">Nro. Transferencia:</label> {{ $dat->id_transfer_patient }}
                                     </div>
                                 </div>
-                                <hr>                                
+                                <hr>
                                 <div class="row">
                                     <div class="col-md-8">
                                         <label for="">Medico Solicitante:</label> {{ $dat->name }} {{ $dat->apellidos }}
@@ -217,7 +217,7 @@
                     <div class="col-md-12">
                         @forelse($exam_medics as $das)
                         <div class="x_panel">
-                            <div class="x_content">                                
+                            <div class="x_content">
                                 <div class="row">
                                     <div class="col-md-3">
                                         <label for="">Fecha:</label> {{ date('d/m/Y', strtotime($das->date_creation)) }}
@@ -226,7 +226,7 @@
                                     <div class="col-md-3">
                                         <label for="">Nro. Cita Medica</label> {{ $das->id_appoinments }}
                                     </div>
-                                </div>                                
+                                </div>
                                 <hr>
                                 <div class="row">
                                     <div class="col-md-8">
@@ -265,13 +265,14 @@
     <div class="row">
         <div class="col-md-12">
             <center>
-                <a class="btn btn-success btn-sm" target="_blank" href="print_record_medic/{{ $id }}"> <span class="glyphicon glyphicon-print"></span> Imprimir</a>
+                <!--a class="btn btn-success btn-sm" target="_blank" href="print_record_medic/{{ $id }}"> <span class="glyphicon glyphicon-print"></span> Imprimir</a-->
+                <a class="btn btn-primary btn-sm" target="_blank" href="http://localhost:8080/pentaho/api/repos/%3Apublic%3ASteel%20Wheels%3AReports%3Ahistoria_clinica.prpt/generatedContent?userid=admin&password=password&output-target=pageable/pdf&p={{ $id }}"> <span class="glyphicon glyphicon-print"></span> Imprimir H.</a>
             </center>
         </div> <br>
     </div> <br>
 </div>
 <style>
-.spa{    
+.spa{
     margin:10px;
 }
 .separar{
