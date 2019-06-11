@@ -331,7 +331,8 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            @permission('Ver_estadisticas')<li><a href="index_statistics" class="load-page"><i class="fa fa-circle-o"></i> Ver Estadisticas</a></li>@endpermission
+            @permission('Ver_estadisticas')<li><a href="index_statistics" class="load-page"><i class="fa fa-circle-o"></i> Por Enfermedades</a></li>@endpermission
+            @permission('Ver_estadisticas')<li><a href="index_statistics_medics" class="load-page"><i class="fa fa-circle-o"></i> Por Medicos</a></li>@endpermission
           </ul>
           @endrole
         </li>
@@ -626,6 +627,8 @@
 <!--script src="{{ asset('js/sweetalert2.min.js') }}"></script-->
 <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('js/dataTables.bootstrap.min.js') }}"></script>
+
+<script src="{{ asset('js/jquery.flot.js') }}"></script>
 
 
 

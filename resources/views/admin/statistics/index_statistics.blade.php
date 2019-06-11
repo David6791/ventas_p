@@ -10,14 +10,14 @@
                     <a class="btn btn-success btn-sm view_range" >Por Rango de Fecha</a>
                 </div> <br> <br>
                 <div class="load_page_appointsment">
-                    
-                </div>     
-            </div>             
+
+                </div>
+            </div>
         </div>
     </div>
     <div class="col-md-9">
         <div class="load_statistic">
-                  
+
         </div>
     </div>
 </div>

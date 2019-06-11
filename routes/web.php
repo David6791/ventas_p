@@ -253,6 +253,13 @@ Route::post('/view_range', 'StatisticsController@view_range');
 Route::post('/statistic_for_range', 'StatisticsController@statistic_for_range');
 Route::post('/statistic_for_day', 'StatisticsController@statistic_for_days');
 
+Route::get('/index_statistics_medics', 'StatisticsController@index_statistics_medics');
+
+Route::post('/load_datas_graphic', 'StatisticsController@load_datas_graphic');
+Route::post('/load_datas_graphic_da', 'StatisticsController@load_datas_graphic_da');
+
+
+
 
 
 

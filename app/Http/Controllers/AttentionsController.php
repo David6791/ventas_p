@@ -226,6 +226,13 @@ class AttentionsController extends Controller
     public function save_dates_appoinments_date(Request $request){
         //return $request->all();
         /* Modificar los datos de aqui para cer que se puede insertar. */
+        $add_re = DB::table('medical_appointments')
+        ->where('id_medical_appointments', '=', $request->id_appoinments)
+        ->update([
+            //'reconsulta_register' => 'S',
+            //'state_appointments' => 1,
+            'type_disease' => $request->group_disease
+        ]);
         $al = $request->all();
         foreach($al as $row =>$val) {
             if(is_numeric($row)){
@@ -273,6 +280,14 @@ class AttentionsController extends Controller
             'observation_medical_appoinments' => $request->observation_appointment_dates,
             'dates_register_appoinments' => json_encode($data2)
         ]);*/
+        $add_re = DB::table('medical_appointments')
+        ->where('id_medical_appointments', '=', $request->id_appoinments)
+        ->update([
+            //'reconsulta_register' => 'S',
+            //'state_appointments' => 1,
+            'type_disease' => $request->group_disease
+        ]);
+
         if(isset($request->observations_appointments)){
             DB::table('notes_medic_dates_appoinments')->insert([
                 'id_medical_appoinments' => $request->id_appoinments,
@@ -280,12 +295,7 @@ class AttentionsController extends Controller
                 'observation_re_medical_consusltation' => $request->observations_appointments,
                 're_medical_consultation' => 'S'
             ]);
-            /*$add_re = DB::table('medical_appointments')
-            ->where('id_medical_appointments', '=', $request->id_appoinments)
-            ->update([
-                'reconsulta_register' => 'S',
-                'state_appointments' => 1
-            ]);*/
+
         }else{
             DB::table('notes_medic_dates_appoinments')->insert([
                 'id_medical_appoinments' => $request->id_appoinments,

@@ -273,7 +273,7 @@ class MedicalAppointmentController extends Controller
                         ON sch.id_schedule = ht.id_schedul
                     WHERE ht.id_schedul = :id_schedul AND ht.state = 'activo' AND ht.id_hour_turn NOT IN (
                    SELECT id_turn_hour FROM medical_appointments map
-                    WHERE date_trunc('day', map.date_appointments) = :date)";
+                    WHERE date_trunc('day', map.date_appointments) = :date) ORDER BY ht.id_hour_turn";
         $rows=\DB::select(\DB::raw($query),array('date'=>$request->fecha,'id_schedul'=>$rows1[0]->id_schedul));
         //return '$rows';
         $var1 = [$request->fecha, $request->schedul,$request->id];

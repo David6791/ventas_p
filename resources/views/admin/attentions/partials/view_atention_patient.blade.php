@@ -15,7 +15,7 @@
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Grupo Enfermedad</label>
                                 <small class="text-red" id=""></small>
-                                <select class="select2_group form-control name_form" name="nacionalidad">
+                                <select class="select2_group form-control name_form" name="group_disease">
                                     @foreach($group as $g)
                                         <option value="{{ $g->_id }}">{{ $g->name_group }}</option>
                                     @endforeach

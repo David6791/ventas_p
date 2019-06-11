@@ -2375,6 +2375,8 @@
 
     $(document).on('click','.ver_info',function(e){
         //alert($('input:text[name=fecha]').val())
+        //onsole.log('asdasdasdasd')
+        date = $('input:text[name=fecha]').val();
         e.preventDefault(e)
         $.ajax({
             type:'POST',
@@ -2382,7 +2384,16 @@
             data:$(this).serialize(),
             data:{fecha:$('input:text[name=fecha]').val(),_token:$('meta[name="csrf-token"]').attr('content')},
             success:function(data){
+                //console.log(data)
+                uno(date);
+                dos(date);
+                //var xs = data.label
+                //var da = (data.datos).length
+                //console.log(xs)
+                //alert('asdasdas')
+                //console.log(data.rows[1]);
                 $(".load_statistic").html(data)
+
 
             },error:function(data){
             }
@@ -3181,5 +3192,83 @@
         })
     })
 
+    $(document).on('click','.btn_charge_graphicsd',function(e){
+        //alert('asdasdasd')
+        e.preventDefault(e)
+        $.ajax({
+            type:'POST',
+            url:'/load_datas_graphic',
+            data:$(this).serialize(),
+            data:{date:$(this).attr('value'),_token:$('meta[name="csrf-token"]').attr('content')},
+            success:function(data){
+                la=data.label;
+                //da=data.can;
+                console.log(la);
+                //da=data.cant;
 
+            },error:function(data){
+            }
+
+        })
+    })
+    $(document).on('click','.btn_charge_graphic_daasdas',function(e){
+        //alert('asdasdasd')
+        date = $(this).attr('value');
+        e.preventDefault(e)
+        $.ajax({
+            type:'POST',
+            url:'/load_datas_graphic_da',
+            data:$(this).serialize(),
+            data:{date:$(this).attr('value'),_token:$('meta[name="csrf-token"]').attr('content')},
+            success:function(data){
+                da=data.can;
+                //da=data.can;
+
+                uno(date);
+                console.log(da);
+                //da=data.cant;
+
+            },error:function(data){
+            }
+
+        })
+    })
+    function uno(asd){
+        //console.log(asd);
+        $.ajax({
+            type:'POST',
+            url:'/load_datas_graphic',
+            data:$(this).serialize(),
+            data:{date:asd,_token:$('meta[name="csrf-token"]').attr('content')},
+            success:function(data){
+                la=data.label;
+                //da=data.can;
+                //console.log(la);
+                //da=data.cant;
+
+            },error:function(data){
+            }
+
+        })
+    }
+    function dos(asd){
+        //console.log(asd);
+        $.ajax({
+            type:'POST',
+            url:'/load_datas_graphic_da',
+            data:$(this).serialize(),
+            data:{date:asd,_token:$('meta[name="csrf-token"]').attr('content')},
+            success:function(data){
+                //console.log('asdasds')
+                //console.log(data)
+                da=data;
+                //da=data.can;
+                //console.log(da);
+                //da=data.cant;
+
+            },error:function(data){
+            }
+
+        })
+    }
 })
