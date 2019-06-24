@@ -17,6 +17,7 @@ class MedicalExamController extends Controller
         $query = "select * from medical_exam order by id_medical_exam";
         $rows=\DB::select(\DB::raw($query));
         return view('admin.medical_exam.index_medical_exam')->with('list',$rows);
+        
     }
     public function create_medical_exam(Request $request){
         //return $request->all();

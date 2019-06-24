@@ -13,14 +13,19 @@ use Auth;
 class PatientsController extends Controller
 {
     public function form_patients(){
+        if(\Entrust::hasRole('admin_pacientes')){
         //return 'asdasdsad';
         $query = "select * from patologias where estado_patologia = 'activo'";
         $rows=\DB::select(\DB::raw($query));
         $query1 = "select * from datos_medicos where estado_dato_medico = 'activo'";
         $rows1=\DB::select(\DB::raw($query1));
         return view('admin.patients.form_patients')->with('row',$rows)->with('rows',$rows1);
+    }else{
+        return view('error.user_not_permission');
+    }
     }
     public function store_patient(Request $request){
+        if(\Entrust::hasRole('admin_pacientes')){
         //return $request->all();
         //return base64_encode(\QrCode::format('png')->size(200)->generate($request->ci_paciente));
         $validatedData = $request->validate([
@@ -89,14 +94,22 @@ class PatientsController extends Controller
         return redirect()->action(
             'PatientsController@index_patients'
         );
+    }else{
+        return view('error.user_not_permission');
+    }
     }
     public function index_patients(){
+        if(\Entrust::hasRole('admin_pacientes')){
+        //return Auth::roles();
         $query = "SELECT * FROM pacientes";
         $rows=\DB::select(\DB::raw($query));
         return view('admin.patients.index_patients')->with('list_patients',$rows);
+        }else{
+            return view('error.user_not_permission');
+        }
     }
     public function load_dates_patient_edit(Request $request){
-
+        if(\Entrust::hasRole('admin_pacientes')){
         $query = "SELECT * FROM pacientes p
                     WHERE p.id_paciente = :id";
         $rows=\DB::select(\DB::raw($query),array('id'=>$request->id_patient));
@@ -112,16 +125,24 @@ class PatientsController extends Controller
         $rows1=\DB::select(\DB::raw($query1),array('id'=>$request->id_patient));
         //return $rows;
         return view('admin.patients.view_patients_details')->with('pat',$rows2)->with('dates',$rows)->with('dates_medic',$rows1);
+    }else{
+        return view('error.user_not_permission');
+    }
     }
     public function load_dates_medic_edit_patient(Request $request){
+        if(\Entrust::hasRole('admin_pacientes')){
         $query = "SELECT * FROM patients_dates_medic pmd
                         INNER JOIN datos_medicos dm
                         ON dm.id_dato_medico = pmd.id_date_medic
                     WHERE pmd.id_patent_date_medic = :id";
         $rows=\DB::select(\DB::raw($query),array('id'=>$request->id_date_medic_patient));
         return $rows;
+        }else{
+            return view('error.user_not_permission');
+        }
     }
     public function edit_date_medic_patient(Request $request){
+        if(\Entrust::hasRole('admin_pacientes')){
         //return $request->all();
         DB::table('patients_dates_medic')
             ->where('id_patent_date_medic', $request->id_date_medic)
@@ -133,8 +154,12 @@ class PatientsController extends Controller
                     WHERE pmd.id_patent_date_medic = :id";
             $rows=\DB::select(\DB::raw($query),array('id'=>$request->id_date_medic));
             return $rows;
+        }else{
+            return view('error.user_not_permission');
+        }
     }
     public function load_dates_edit_pat_patient(Request $request){
+        if(\Entrust::hasRole('admin_pacientes')){
         //return $request->all();
         $query = "SELECT * FROM pacientes_patologias pp
                         INNER JOIN patologias p
@@ -150,8 +175,12 @@ class PatientsController extends Controller
         return $var=['datos'=>$rows, 'datos1'=>$rows1, 'id'=>$request->id_patient];
         //return $var=['datos'=>$rows, 'datos1'=>$rows1];
         //return view('admin.patients.index_patients')->with('list_pat_asig',$rows);
+        }else{
+            return view('error.user_not_permission');
+        }
     }
     public function edit_pat_patient(Request $request){
+        if(\Entrust::hasRole('admin_pacientes')){
         //return $request->all();
         if(! empty($request->pat_add)){
             foreach($request->pat_add as $esp){
@@ -179,8 +208,12 @@ class PatientsController extends Controller
                         WHERE pp.id_paciente = :id and pp.estado_pac_pat = 'activo'";
         $rows=\DB::select(\DB::raw($query),array('id'=>$request->id_patient));
         return $rows;
+        }else{
+            return view('error.user_not_permission');
+        }
     }
     public function filiation_completing(Request $request){
+        if(\Entrust::hasRole('admin_pacientes')){
         $query = "SELECT * FROM pacientes pa
                         INNER JOIN pacientes_patologias pap
                             ON pa.id_paciente = pap.id_paciente
@@ -200,8 +233,12 @@ class PatientsController extends Controller
         $rows2=\DB::select(\DB::raw($query2),array('id_patient'=>$request->id));
         //return $rows2;
         return view('admin.patients.completing_dates.form_completing_dates')->with('pat',$rows)->with('dates_medic',$rows1)->with('dates_patient',$rows2);
+        }else{
+            return view('error.user_not_permission');
+        }
     }
     public function add_date_new_medic_url(Request $request){
+        if(\Entrust::hasRole('admin_pacientes')){
         //return $request->all();
         $query1 = "SELECT * FROM datos_medicos dm WHERE dm.estado_dato_medico = 'activo' and dm.id_dato_medico NOT IN(
             SELECT id_date_medic FROM patients_dates_medic WHERE id_patient = :id  AND estate = 'activo'
@@ -209,8 +246,12 @@ class PatientsController extends Controller
         $rows1=\DB::select(\DB::raw($query1),array('id'=>$request->id));
         //return $rows1;
         return $var=['datos'=>$rows1, 'id'=>$request->id];
+        }else{
+            return view('error.user_not_permission');
+        }
     }
     public function completing_dates_patient(Request $request){
+        if(\Entrust::hasRole('admin_pacientes')){
         //return $request;
         $val = $request->dates_medic_add;
         $id = $request->id_patient_dates;
@@ -231,9 +272,12 @@ class PatientsController extends Controller
         $rows2=\DB::select(\DB::raw($query2),array('id_patient'=>$request->id_patient_dates));
         //return $rows1;
         return view('admin.patients.completing_dates.table_new_dates_medic')->with('dates_medic',$rows1)->with('dates_patient',$rows2);
+        }else{
+            return view('error.user_not_permission');
+        }
     }
     public function delete_dates_medic_patient(Request $request){
-
+        if(\Entrust::hasRole('admin_pacientes')){
         $query = "select public.delete_date_medic(:id, :id_pat)";
         $rows = \DB::select(\DB::raw($query),array('id'=>$request->id_patient,'id_pat'=>$request->id));
         $query1 = "SELECT * FROM patients_dates_medic pdm
@@ -246,8 +290,12 @@ class PatientsController extends Controller
         $rows2=\DB::select(\DB::raw($query2),array('id_patient'=>$request->id_patient));
         //return $rows2;
         return view('admin.patients.completing_dates.table_new_dates_medic')->with('dates_medic',$rows1)->with('dates_patient',$rows2);
+        }else{
+            return view('error.user_not_permission');
+        }
     }
     public function update_patients_dates(Request $request){
+        if(\Entrust::hasRole('admin_pacientes')){
         //return $request->all();
         $validatedData = $request->validate([
             'apellido_materno' => 'required|max:20',
@@ -301,26 +349,42 @@ class PatientsController extends Controller
         //return $patient;
         //return $rows1;
         return view('admin.patients.completing_dates.load_dates_full')->with('dates_patient',$patient)->with('datos_medicos',$rows2)->with('patologias',$rows1);
+        }else{
+            return view('error.user_not_permission');
+        }
     }
     public function view_list_patients(){
+        if(\Entrust::hasRole('activar_editar')){
         //return 'asdsad sad sad sad ';
         $query = "SELECT * FROM pacientes WHERE esta_paciente = 'activo' ORDER BY id_paciente";
         $rows=\DB::select(\DB::raw($query));
         return view('admin.patients.view_dates_activate')->with('patients',$rows);
+        }else{
+            return view('error.user_not_permission');
+        }
     }
     public function hability_dates_patients(Request $request){
+        if(\Entrust::hasRole('admin_pacientes')){
         $query = "SELECT * FROM public.hability_patients(:id)";
         $rows=\DB::select(\DB::raw($query),array('id'=>$request->id_patients));
         return redirect()->action(
             'PatientsController@view_list_patients'
         );
+        }else{
+            return view('error.user_not_permission');
+        }
     }
     public function view_list_patients_credential(){
+        if(\Entrust::hasRole('imprimir_credencial')){
         $query = "SELECT * FROM pacientes WHERE esta_paciente = 'activo' ORDER BY id_paciente";
         $rows=\DB::select(\DB::raw($query));
         return view('admin.patients.view_dates_list_print')->with('patients',$rows);
+        }else{
+            return view('error.user_not_permission');
+        }
     }
     public function print_credential($id_){
+        if(\Entrust::hasRole('admin_pacientes')){
         //return $id_;
         $query = "SELECT * FROM pacientes WHERE esta_paciente = 'activo' AND id_paciente = :id ORDER BY id_paciente";
         $rows=\DB::select(\DB::raw($query),array('id'=>$id_));
@@ -330,8 +394,12 @@ class PatientsController extends Controller
         $pdf->setPaper(array(0,0,300,200));
         $pdf->loadHTML($view);
         return $pdf->stream();
+        }else{
+            return view('error.user_not_permission');
+        }
     }
     public function print_record_medic($id_){
+        if(\Entrust::hasRole('admin_pacientes')){
         $q1 = "SELECT * FROM pacientes p
                     WHERE id_paciente = (SELECT id_patient FROM medical_appointments WHERE id_medical_appointments = :id_appointments)";
         $paciente=\DB::select(\DB::raw($q1),array('id_appointments'=>$id_));
@@ -381,5 +449,8 @@ class PatientsController extends Controller
         $pdf->setPaper("letter", "portrait");
         $pdf->loadHTML($view);
         return $pdf->stream();
+    }else{
+        return view('error.user_not_permission');
+    }
     }
 }

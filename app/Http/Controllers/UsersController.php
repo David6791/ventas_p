@@ -43,14 +43,14 @@ class UsersController extends Controller{
             'nombre_usuario' => 'required|max:20',
             'numero_documento' => 'required|max:20',
             'estado_civil' => 'required|max:20',
-            'telefono' => 'required|max:20|numeric',
+            'telefono' => 'required|numeric',
             'tipo_documento' => 'required|max:20',
         ]);
         DB::table('users')->insert([
             'ci' => $request->numero_documento,
             'tipo_documento' => $request->tipo_documento,
             'name' => $request->nombre,
-            'apellidos' => $request->apellido_paterno . $request->apellido_materno,
+            'apellidos' => $request->apellido_paterno .' '. $request->apellido_materno,
             'genero' => $request->genero,
             'a_egreso' => $request->año_egreso,
             'egreso' => $request->egreso,
@@ -167,6 +167,7 @@ class UsersController extends Controller{
         return $rows;
     }
     public function view_list_usuarios_credential(){
+        if(\Entrust::hasRole('imprimir_credencial')){
         $query2 = "SELECT * FROM users us
                     LEFT JOIN estados_usuarios esu
                     ON us.estado_user = esu.id_estados
@@ -176,6 +177,9 @@ class UsersController extends Controller{
                     ORDER BY id ASC";
         $rows2=\DB::select(\DB::raw($query2));
         return view('admin.users.view_dates_list_print_users')->with('users',$rows2);
+        }else{
+            return view('error.user_not_permission');
+        }
     }
     public function print_credential_user($id_){
         //return $id_;

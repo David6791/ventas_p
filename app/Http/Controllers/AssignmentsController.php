@@ -12,6 +12,8 @@ use Auth;
 class AssignmentsController extends Controller
 {
     public function index_Assignments(){
+        if(\Entrust::hasRole('admin_horarios')){
+
         /*$query = "SELECT mass.id_medical_assignments, us.name, us.apellidos, tus.nombre_tipo, sch.name_schedules, mass.date_creation FROM medical_assignments mass
                             INNER JOIN users us
                         ON mass.id_user = us.id
@@ -55,8 +57,14 @@ class AssignmentsController extends Controller
         $query2 = "SELECT * FROM schedules WHERE state = 'activo'";
         $schedul = \DB::select(\DB::raw($query2));
         return view('admin.assignments_user.index_assignments')->with('rows',$rows)->with('users',$users)->with('schedul',$schedul);
+
+        }else{
+            return view('error.user_not_permission');
+        }
     }
     public function create_Assignments(Request $request){
+        if(\Entrust::hasRole('admin_horarios')){
+
         //return $request->all();
         foreach($request->add_schedule as $esp){
             //return $esp;
@@ -68,8 +76,15 @@ class AssignmentsController extends Controller
         return redirect()->action(
             'AssignmentsController@index_Assignments'
         );
+        }else{
+            return view('error.user_not_permission');
+        }
     }
+
+
     public function view_Assignment(Request $request){
+        if(\Entrust::hasRole('admin_horarios')){
+
         $query = "SELECT tus.nombre_tipo, us.name, us.apellidos, sch.name_schedules, sch.schedules_start, sch.schedules_end, sch.state FROM medical_assignments mass
                             INNER JOIN users us
                         ON us.id = mass.id_user
@@ -80,8 +95,14 @@ class AssignmentsController extends Controller
                     WHERE id_user = :id AND state_assignments = 'activo'";
         $rows=\DB::select(\DB::raw($query),array('id'=>$request->id_user));
         return $rows;
+
+        }else{
+            return view('error.user_not_permission');
+        }
     }
     public function edit_Assignment(Request $request){
+        if(\Entrust::hasRole('admin_horarios')){
+
         $query2 = "SELECT * FROM users us
                     INNER JOIN tipo_usuarios tus
                             ON us.tipo_usuario = tus.id_tipo
@@ -103,8 +124,14 @@ class AssignmentsController extends Controller
             WHERE mass.id_user = :id and state_assignments = 'activo')";
         $rows1=\DB::select(\DB::raw($query1),array('id'=>$request->id_user));
         return $var=['datos'=>$rows, 'datos1'=>$rows1,'us'=>$rows2];
+
+        }else{
+            return view('error.user_not_permission');
+        }
     }
     public function save_edit_assignment(Request $request){
+        if(\Entrust::hasRole('admin_horarios')){
+
         //return $request->all();
         //Terminar de hacer aqui llamando las funciones de DB eliminar_schedul
         if(isset($request->schedul_remove)){
@@ -138,5 +165,8 @@ class AssignmentsController extends Controller
         return redirect()->action(
             'AssignmentsController@index_Assignments'
         );
+            }else{
+                return view('error.user_not_permission');
+        }
     }
 }

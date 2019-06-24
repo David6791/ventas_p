@@ -10,10 +10,23 @@
                         <tr>
                             <th>Nro.</th>
                             <th>Nombre Medico</th>
-                            <th></th>
+                            <th>Opcion</th>
                         </tr>
                     </thead>
-
+                    <tbody>
+                        <?php $a = 1 ;
+                            $count = 0;
+                        ?>
+                        @foreach($row as $lista)
+                            <tr>
+                                <td>{{ $a++ }}</td>
+                                <td>{{ $lista->name }}</td>
+                                <td>
+                                    <button type="button" class="btn btn-info btn-sm" name="button"> Ver </button>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
                 </table>
             </div>
         </div>

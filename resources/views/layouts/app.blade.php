@@ -28,7 +28,7 @@
                     </button>
 
                     <!-- Branding Image -->
-                        
+
                     </a>
                 </div>
 
@@ -75,4 +75,16 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
 </body>
+<style media="screen">
+    html, body{
+        background: rgba(254,254,254,1);
+background: -moz-linear-gradient(left, rgba(254,254,254,1) 0%, rgba(219,219,219,1) 0%, rgba(214,214,214,1) 50%, rgba(212,212,212,1) 74%, rgba(209,209,209,1) 100%);
+background: -webkit-gradient(left top, right top, color-stop(0%, rgba(254,254,254,1)), color-stop(0%, rgba(219,219,219,1)), color-stop(50%, rgba(214,214,214,1)), color-stop(74%, rgba(212,212,212,1)), color-stop(100%, rgba(209,209,209,1)));
+background: -webkit-linear-gradient(left, rgba(254,254,254,1) 0%, rgba(219,219,219,1) 0%, rgba(214,214,214,1) 50%, rgba(212,212,212,1) 74%, rgba(209,209,209,1) 100%);
+background: -o-linear-gradient(left, rgba(254,254,254,1) 0%, rgba(219,219,219,1) 0%, rgba(214,214,214,1) 50%, rgba(212,212,212,1) 74%, rgba(209,209,209,1) 100%);
+background: -ms-linear-gradient(left, rgba(254,254,254,1) 0%, rgba(219,219,219,1) 0%, rgba(214,214,214,1) 50%, rgba(212,212,212,1) 74%, rgba(209,209,209,1) 100%);
+background: linear-gradient(to right, rgba(254,254,254,1) 0%, rgba(219,219,219,1) 0%, rgba(214,214,214,1) 50%, rgba(212,212,212,1) 74%, rgba(209,209,209,1) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fefefe', endColorstr='#d1d1d1', GradientType=1 );
+    }
+</style>
 </html>

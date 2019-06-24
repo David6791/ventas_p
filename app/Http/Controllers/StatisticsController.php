@@ -12,7 +12,11 @@ use Auth;
 class StatisticsController extends Controller
 {
     public function index_statistics(){
+        if(\Entrust::hasRole('estadisticas')){
         return view('admin.statistics.index_statistics');
+        }else{
+            return view('error.user_not_permission');
+        }
     }
     public function view_day(){
         return view('admin.statistics.load_pages.calendar');
@@ -53,7 +57,17 @@ class StatisticsController extends Controller
         return view('admin.statistics.load_pages.statistic_range')->with('asd',$row);
     }
     public function index_statistics_medics(){
-        return view('admin.statistics.index_statistics_medics');
+        if(\Entrust::hasRole('estadisticas')){
+
+        $query = "SELECT us.id, us.name,us.apellidos FROM medical_assignments mass
+                	INNER JOIN users us
+                		ON us.id = mass.id_user
+                WHERE state_assignments = 'activo'";
+        $row=\DB::select(\DB::raw($query));
+        return view('admin.statistics.index_statistics_medics_menu')->with('medics',$row);
+    }else{
+        return view('error.user_not_permission');
+    }
     }
     public function load_datas_graphic(Request $request){
         //return $request->all();
@@ -97,5 +111,84 @@ class StatisticsController extends Controller
         //return $var=['datos'=>$row, 'datos1'=>$rows1, 'id'=>$request->id_patient];
         return $row;
         return $asd1 = ['label'=>$labels,'can'=>$cant];
+    }
+    public function url_statistics_medics(Request $request){
+        //return $request->all();
+        $query = "SELECT concat(us.name, ' ' ,us.apellidos) as label, count(*) as value,
+            	       '#' ||
+                    b10_b16(trunc(random() * 255)::INTEGER,2) ||
+                    b10_b16(trunc(random() * 255)::INTEGER,2) ||
+                    b10_b16(trunc(random() * 255)::INTEGER,2) AS color,
+            	       '#' ||
+                    b10_b16(trunc(random() * 255)::INTEGER,2) ||
+                    b10_b16(trunc(random() * 255)::INTEGER,2) ||
+                    b10_b16(trunc(random() * 255)::INTEGER,2) AS highlight
+            		FROM medical_assignments mass
+            	INNER JOIN medical_appointments map
+            		ON map.id_medical_assignments = mass.id_medical_assignments
+            	INNER JOIN users us
+            		ON us.id = mass.id_user
+            WHERE mass.state_assignments = 'activo' AND map.date_appointments = :fecha AND map.state_appointments = 1 GROUP BY mass.id_user,us.name,us.apellidos";
+        $row=\DB::select(\DB::raw($query),array('fecha'=>$request->date));
+        return view('admin.statistics.load_pages.table_medics')->with('medics',$row);
+    }
+    public function load_datas_graphic_da_mdeics(Request $request){
+        //return $request->all();
+        $query = "SELECT concat(us.name, ' ' ,us.apellidos) as label, count(*) as value,
+            	       '#' ||
+                    b10_b16(trunc(random() * 255)::INTEGER,2) ||
+                    b10_b16(trunc(random() * 255)::INTEGER,2) ||
+                    b10_b16(trunc(random() * 255)::INTEGER,2) AS color,
+            	       '#' ||
+                    b10_b16(trunc(random() * 255)::INTEGER,2) ||
+                    b10_b16(trunc(random() * 255)::INTEGER,2) ||
+                    b10_b16(trunc(random() * 255)::INTEGER,2) AS highlight
+            		FROM medical_assignments mass
+            	INNER JOIN medical_appointments map
+            		ON map.id_medical_assignments = mass.id_medical_assignments
+            	INNER JOIN users us
+            		ON us.id = mass.id_user
+            WHERE mass.state_assignments = 'activo' AND map.date_appointments = :fecha AND map.state_appointments = 1 GROUP BY mass.id_user,us.name,us.apellidos";
+        $row=\DB::select(\DB::raw($query),array('fecha'=>$request->date));
+        return $row;
+    }
+    public function url_statistics_medics_range(Request $request){
+        //return $request->all();
+        $query = "SELECT concat(us.name, ' ' ,us.apellidos) as label, count(*) as value,
+            	       '#' ||
+                    b10_b16(trunc(random() * 255)::INTEGER,2) ||
+                    b10_b16(trunc(random() * 255)::INTEGER,2) ||
+                    b10_b16(trunc(random() * 255)::INTEGER,2) AS color,
+            	       '#' ||
+                    b10_b16(trunc(random() * 255)::INTEGER,2) ||
+                    b10_b16(trunc(random() * 255)::INTEGER,2) ||
+                    b10_b16(trunc(random() * 255)::INTEGER,2) AS highlight
+            		FROM medical_assignments mass
+            	INNER JOIN medical_appointments map
+            		ON map.id_medical_assignments = mass.id_medical_assignments
+            	INNER JOIN users us
+            		ON us.id = mass.id_user
+            WHERE mass.state_assignments = 'activo' AND map.date_appointments BETWEEN :f1 AND :f2 AND map.state_appointments = 1 GROUP BY mass.id_user,us.name,us.apellidos";
+        $row=\DB::select(\DB::raw($query),array('f1'=>$request->date1,'f2'=>$request->date2));
+        return view('admin.statistics.load_pages.table_medics')->with('medics',$row);
+    }
+    public function load_datas_graphic_da_mdeics_range(Request $request){
+        $query = "SELECT concat(us.name, ' ' ,us.apellidos) as label, count(*) as value,
+            	       '#' ||
+                    b10_b16(trunc(random() * 255)::INTEGER,2) ||
+                    b10_b16(trunc(random() * 255)::INTEGER,2) ||
+                    b10_b16(trunc(random() * 255)::INTEGER,2) AS color,
+            	       '#' ||
+                    b10_b16(trunc(random() * 255)::INTEGER,2) ||
+                    b10_b16(trunc(random() * 255)::INTEGER,2) ||
+                    b10_b16(trunc(random() * 255)::INTEGER,2) AS highlight
+            		FROM medical_assignments mass
+            	INNER JOIN medical_appointments map
+            		ON map.id_medical_assignments = mass.id_medical_assignments
+            	INNER JOIN users us
+            		ON us.id = mass.id_user
+            WHERE mass.state_assignments = 'activo' AND map.date_appointments BETWEEN :f1 AND :f2 AND map.state_appointments = 1 GROUP BY mass.id_user,us.name,us.apellidos";
+        $row=\DB::select(\DB::raw($query),array('f1'=>$request->date,'f2'=>$request->date1));
+        return $row;
     }
 }

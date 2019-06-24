@@ -136,7 +136,7 @@
         <div class="row">
             <div class="col-md-12">
                 <center>
-                    <button class="btn btn-success"> Editar Datos</button>
+                    <!--button class="btn btn-success"> Editar Datos</button-->
                 </center>
             </div>
         </div>

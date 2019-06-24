@@ -12,9 +12,14 @@ use Auth;
 class MedicRecordsController extends Controller
 {
     public function view_medical_record(){
+        if(\Entrust::hasRole('ver_historial_medico')){
+
         $query = "SELECT * FROM pacientes ORDER BY id_paciente ASC";
         $rows=\DB::select(\DB::raw($query));
         return view('admin.record_medics.index_patients')->with('list',$rows);
+        }else{
+        return view('error.user_not_permission');
+        }
     }
     public function load_dates_record_medic_full(Request $request){
         //return $request->all();

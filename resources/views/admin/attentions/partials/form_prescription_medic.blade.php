@@ -1,7 +1,9 @@
 <div class="row">
     <div class="col-md-12">
         <div class="box-header">
-            Receta Medica
+            <center>
+                <h1 class="box-title">RECETA MEDICA</h1>
+            </center>
         </div>
         <div class="box-body">
             <form class="send_form_prescription" action="{{url('url_form_prescription')}}" method="post" autocomplete="off">
@@ -11,13 +13,13 @@
                     <div class="col-md-5">
                         <div class="form-group">
                             <label for="exampleInputEmail1">Nombre Medicamento</label>
-                            <input type="text" name="medicine" class="form-control" id="exampleInputEmail1" placeholder="Paracetamol">
+                            <input type="text" name="medicine[]" class="form-control" id="exampleInputEmail1" placeholder="Paracetamol">
                         </div>
                     </div>
                     <div class="col-md-5">
                         <div class="form-group">
                             <label for="exampleInputEmail1">Cantidad</label>
-                            <input type="text" name="cant" class="form-control" id="exampleInputEmail1" placeholder="4">
+                            <input type="text" name="cant[]" class="form-control" id="exampleInputEmail1" placeholder="4">
                         </div>
                     </div>
                     <div class="col-md-1">

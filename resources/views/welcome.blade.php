@@ -13,12 +13,14 @@
         <!-- Styles -->
         <style>
             html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Raleway', sans-serif;
-                font-weight: 100;
-                height: 100vh;
-                margin: 0;
+                background: rgba(254,254,254,1);
+background: -moz-linear-gradient(left, rgba(254,254,254,1) 0%, rgba(219,219,219,1) 0%, rgba(214,214,214,1) 50%, rgba(212,212,212,1) 74%, rgba(209,209,209,1) 100%);
+background: -webkit-gradient(left top, right top, color-stop(0%, rgba(254,254,254,1)), color-stop(0%, rgba(219,219,219,1)), color-stop(50%, rgba(214,214,214,1)), color-stop(74%, rgba(212,212,212,1)), color-stop(100%, rgba(209,209,209,1)));
+background: -webkit-linear-gradient(left, rgba(254,254,254,1) 0%, rgba(219,219,219,1) 0%, rgba(214,214,214,1) 50%, rgba(212,212,212,1) 74%, rgba(209,209,209,1) 100%);
+background: -o-linear-gradient(left, rgba(254,254,254,1) 0%, rgba(219,219,219,1) 0%, rgba(214,214,214,1) 50%, rgba(212,212,212,1) 74%, rgba(209,209,209,1) 100%);
+background: -ms-linear-gradient(left, rgba(254,254,254,1) 0%, rgba(219,219,219,1) 0%, rgba(214,214,214,1) 50%, rgba(212,212,212,1) 74%, rgba(209,209,209,1) 100%);
+background: linear-gradient(to right, rgba(254,254,254,1) 0%, rgba(219,219,219,1) 0%, rgba(214,214,214,1) 50%, rgba(212,212,212,1) 74%, rgba(209,209,209,1) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fefefe', endColorstr='#d1d1d1', GradientType=1 );
             }
 
             .full-height {
@@ -72,6 +74,7 @@
             .rojo{
                 margin-left:80%;
                 color:red;
+                width: 100%;
                 font-size: 250%;
                 margin-top:-20%;
             }
@@ -85,7 +88,7 @@
                         <a href="{{ url('/home') }}">INICIO</a>
                     @else
                         <a href="{{ route('login') }}">Ingresar</a>
-                        
+
                     @endauth
                 </div>
             @endif
@@ -98,10 +101,9 @@
                 </div>
 
                 <div class="rojo">
-                    Virgen de Copacabana
+                    "Virgen de Copacabana"
                 </div>
             </div>
         </div>
     </body>
 </html>
-

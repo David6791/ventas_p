@@ -1,25 +1,25 @@
 <div class="bg-green-gradient">
-    <div class="row date"> 
+    <div class="row date">
             <div class="col-md-12 dato">
                 <div class="form-group">
                 <label>Seleccion Rango de Fechas:</label>
 
-                <div class="input-group">                    
+                <div class="input-group">
                     <input type="text" class="form-control pull-right" id="reservationtime" name="date_range">
                     <div class="input-group-addon">
                     <i class="glyphicon glyphicon-calendar"></i>
                     </div>
                 </div>
-                <!-- /.input group --> <br> 
+                <!-- /.input group --> <br>
                 <center>
                     <button class="btn btn-primary ver_info_statics">Ver Estadisticas</button>
                 </center> <br>
             </div>
         </div>
-    </div>    
+    </div>
 </div>
 <script>
-  
+
   $('#reservationtime').daterangepicker({
     "locale": {
         "format": "MM/DD/YYYY",
@@ -54,7 +54,7 @@
         ],
         "Primer Dia": 1
     }
-  });  
+  });
 </script>
 <style>
 .date{

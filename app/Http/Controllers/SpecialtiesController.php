@@ -12,6 +12,7 @@ use Auth;
 class SpecialtiesController extends Controller
 {
     public function index_especialidad(){
+        if(\Entrust::hasRole('admin_datos')){
         $query = "select id_tipo, nombre_tipo from tipo_usuarios where id_tipo != 1";
         $rows=\DB::select(\DB::raw($query));
         $query2 = "select es.id_especialidad, es.nombre_especialidad, es.descripcion_especialidad, es.estado_especialidad, tp.nombre_tipo from especialidades es
@@ -20,6 +21,10 @@ class SpecialtiesController extends Controller
         $rows2=\DB::select(\DB::raw($query2));
 
         return view('admin.specialties.index_specialties')->with('row',$rows2)->with('rows',$rows);
+
+        }else{
+            return view('error.user_not_permission');
+        }
     }
     public function crear_especialidad(Request $request){
         //return $request->all();
@@ -42,7 +47,7 @@ class SpecialtiesController extends Controller
             ->where('id_especialidad', '=', $request->id)
             ->update([
                 'estado_especialidad' => 'Inactivo'
-            ]);    
+            ]);
         }else{
             $baja_specialties = DB::table('especialidades')
             ->where('id_especialidad', '=', $request->id)
@@ -67,7 +72,7 @@ class SpecialtiesController extends Controller
                 'nombre_especialidad' => $request->nombre_especialidad,
                 'descripcion_especialidad' => $request->descripcion_esp,
                 'tipo_usuario' => $request->tipo_usuario
-        ]); 
+        ]);
         return redirect()->action(
             'SpecialtiesController@index_especialidad'
         );

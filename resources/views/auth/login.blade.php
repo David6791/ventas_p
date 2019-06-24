@@ -1,8 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row">
+<br> <br> <br> <br> <br>
+<div class="container bg">
+    <div class="row"> <br>
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
                 <div class="panel-heading">Policlinico "Virgen de Copacabana"</div>
@@ -12,7 +13,7 @@
                         {{ csrf_field() }}
 
                         <div class="form-group {{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">Direccion de Correo Electronico</label>
+                            <label for="email" class="col-md-4 control-label">Correo Electronico</label>
 
                             <div class="col-md-6">
                                 <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus>

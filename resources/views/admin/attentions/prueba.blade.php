@@ -946,11 +946,11 @@
         position: relative;
         text-align: center;
     }
-    
+
     .alinear {
         text-align: center;
     }
-    
+
     .vertical-menu a {
         width: 100%;
         margin-top: 10px;

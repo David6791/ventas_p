@@ -12,9 +12,14 @@ use Auth;
 class ManageDatesController extends Controller
 {
     public function index_pathologie(){
+        if(\Entrust::hasRole('admin_datos')){
         $query = "select * from patologias order by id_patologia";
         $rows=\DB::select(\DB::raw($query));
         return view('admin.manage_dates.index_phatologies')->with('list',$rows);
+
+        }else{
+            return view('error.user_not_permission');
+        }
     }
     public function create_phatologies(Request $request){
         //return $request->all();
@@ -26,12 +31,17 @@ class ManageDatesController extends Controller
         return redirect()->action(
             'ManageDatesController@index_pathologie'
         );
-    }   
+    }
 
     public function index_medical_date(){
+        if(\Entrust::hasRole('admin_datos')){
+
         $query = "select * from datos_medicos order by id_dato_medico";
         $rows=\DB::select(\DB::raw($query));
         return view('admin.manage_dates.view_medical_dates')->with('list',$rows);
+        }  else{
+        return view('error.user_not_permission');
+    }
     }
     public function create_medical_date(Request $request){
         DB::table('datos_medicos')->insert([
@@ -110,9 +120,13 @@ class ManageDatesController extends Controller
         );
     }
     public function index_dates_register(){
+        if(\Entrust::hasRole('admin_datos')){
         $query = "SELECT * FROM dates_of_register  ORDER BY id_date_register";
         $rows=\DB::select(\DB::raw($query));
         return view('admin.manage_dates.index_dates_register')->with('list',$rows);
+        }else{
+        return view('error.user_not_permission');
+    }
     }
     public function darBajaDates_register(Request $request){
         $query = "select * from eliminar_date_register_cita(:pat,:us)";
@@ -126,7 +140,7 @@ class ManageDatesController extends Controller
         $rows=\DB::select(\DB::raw($query),array('id_med'=>$request->id));
         return $rows;
     }
-    public function edit_dates_register(Request $request){        
+    public function edit_dates_register(Request $request){
         $validatedData = $request->validate([
             'nombre_dato' => 'required|max:30',
             'descripcion_dato' => 'required'
@@ -137,7 +151,7 @@ class ManageDatesController extends Controller
                         'description_dates' => $request->descripcion_dato
             ]);
         return redirect()->action(
-            'ManageDatesController@index_dates_register'                   
+            'ManageDatesController@index_dates_register'
         );
     }
     public function create_date_register(Request $request){
@@ -151,7 +165,7 @@ class ManageDatesController extends Controller
             Auth::user()->id
             ]);
         return redirect()->action(
-            'ManageDatesController@index_dates_register'                   
+            'ManageDatesController@index_dates_register'
         );
     }
 }

@@ -12,10 +12,18 @@ use Auth;
 class ReportsController extends Controller
 {
     public function index_reports(){
+        if(\Entrust::hasRole('reportes_usuario')){
         return view('admin.reports.index_reports');
+        }else{
+            return view('error.user_not_permission');
+        }
     }
     public function index_reports_general(){
+        if(\Entrust::hasRole('reportes_general')){
         return view('admin.reports.index_reports_general');
+        }else{
+            return view('error.user_not_permission');
+        }
     }
     public function view_day_reports(){
         return view('admin.reports.load_page.calendar');
@@ -56,7 +64,7 @@ class ReportsController extends Controller
                         INNER JOIN pacientes p
                             ON p.id_paciente = mapp.id_patient
                     WHERE date_appointments = current_date";*/
-        //$rows=\DB::select(\DB::raw($query));          
+        //$rows=\DB::select(\DB::raw($query));
         $rows=\DB::select(\DB::raw($query),array('fecha'=>$request->fecha,'id_user'=>Auth::user()->id));
         //return (Auth::user()->id);
        /// return $rows;
@@ -80,7 +88,7 @@ class ReportsController extends Controller
                         INNER JOIN pacientes p
                             ON p.id_paciente = mapp.id_patient
                     WHERE date_appointments BETWEEN :date_start AND :date_end AND mass.id_user = :id_user";
-        //$rows=\DB::select(\DB::raw($query));            
+        //$rows=\DB::select(\DB::raw($query));
         $rows=\DB::select(\DB::raw($query),array('date_start'=>$as[0],'date_end'=>$as[1],'id_user'=>Auth::user()->id));
         //return $rows;
         //return (Auth::user()->id);
@@ -123,7 +131,7 @@ class ReportsController extends Controller
                         INNER JOIN pacientes p
                             ON p.id_paciente = mapp.id_patient
                     WHERE date_appointments BETWEEN :date_start AND :date_end AND mapp.state_appointments = 1";
-        //$rows=\DB::select(\DB::raw($query));            
+        //$rows=\DB::select(\DB::raw($query));
         $rows=\DB::select(\DB::raw($query),array('date_start'=>$as[0],'date_end'=>$as[1]));
         //return $rows;
         //return (Auth::user()->id);

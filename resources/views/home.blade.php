@@ -5,7 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Virgen de Copacabana | Panel de Control</title>
 
-  <!--link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet"-->
+  <!--link hrefASDSA="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet"-->
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -115,16 +115,16 @@
           </li>
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <img src="{{ asset('img/user2-160x160.jpg') }}" class="user-image" alt="User Image">
-              <span class="hidden-xs">{{ Auth::user()->name }}</span>
+              <img src="{{ asset('img/perfil_nuevo.png') }}" class="user-image" alt="User Image">
+              <span class="hidden-xs">{{ Auth::user()->name }} {{ Auth::user()->apellidos }}</span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
-                <img src="{{ asset('img/user2-160x160.jpg') }}" class="img-circle" alt="User Image">
+                <img src="{{ asset('img/perfil_nuevo.png') }}" class="img-circle" alt="User Image">
 
                 <p>
-                {{ Auth::user()->name }}
+                {{ Auth::user()->name }} {{ Auth::user()->apellidos }}
                   <small></small>
                 </p>
               </li>
@@ -157,10 +157,10 @@
       <!-- Sidebar user panel -->
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="{{ asset('img/user2-160x160.jpg') }}" class="img-circle" alt="User Image">
+          <img src="{{ asset('img/perfil_nuevo.png') }}" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
-          <p>{{ Auth::user()->name }}</p>
+          <p>{{ Auth::user()->name }} {{ Auth::user()->apellidos }}</p>
 
         </div>
       </div>
@@ -291,7 +291,7 @@
           </ul>
         </li>
         @endrole
-        @role('citas_medicas')
+        @role('atencion_citas_medicas')
         <li class="treeview">
           <a href="">
             <i class="glyphicon glyphicon-unchecked"></i> <span>Atencion Citas Medicas</span>
@@ -301,12 +301,12 @@
           </a>
           <ul class="treeview-menu">
             @permission('lista_cita')<li><a href="view_attention_lists" class="load-page"><i class="fa fa-circle-o"></i> Lista de Citas Medicas</a></li>@endpermission
-            @permission('registro_examenes')<li><a href="view_attention_lists_examen" class="load-page"><i class="fa fa-circle-o"></i> Registro de Examenes Medicos</a></li>@endpermission
+            @permission('registro_examenes')<!--li><a href="view_attention_lists_examen" class="load-page"><i class="fa fa-circle-o"></i> Registro de Examenes Medicos</a></li-->@endpermission
           </ul>
         </li>
         @endrole
         <li class="treeview">
-          @role('super_admin')
+          @role('administrar_usuarios')
           <a href="#">
             <i class="glyphicon glyphicon-unchecked"></i> <span>Administrador de Usuarios</span>
             <span class="pull-right-container">
@@ -466,7 +466,40 @@
                                   @permission('ver_citas')<a href="view_list_appinments" class="load-page small-box-footer">Ver Lista de Citas Medicas No Atendidas <i class="fa fa-arrow-circle-right"></i></a>@endpermission
                                 </div>
                             </div>
+                            <div class="col-md-3">
+                                <!-- small box -->
+                                <div class="small-box bg-yellow">
+                                  <div class="inner">
+                                    <h3 style="color:#F39C12">0</h3>
+
+                                    <p>Lista de Citas Medicas</p>
+                                  </div>
+                                  <div class="icon">
+                                    <i class="glyphicon glyphicon-th-list"></i>
+                                  </div>
+                                  @permission('imprimir_lista')
+                                  <a target="_blank" href="http://localhost:8080/pentaho/api/repos/%3Apublic%3ASteel%20Wheels%3AReports%3Alista_pacientes_medicos.prpt/generatedContent?userid=admin&password=password&output-target=pageable/pdf&p={{ Auth::user()->id }}" type="button" name="button" class="load-page small-box-footer">Imprimir lista de pacientes <i class="fa fa-arrow-circle-right"></i></a>@endpermission
+                                </div>
+                            </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row docs-premium-template">
+            <div class="col-sm-12 col-md-6">
+                <div class="box box-solid">
+                    <div class="box-body li_delete">
+                        @permission('emergencias_inicio')<li><a href="view_emergency" type="button" class="load-page btn btn-danger col-md-12"> Registrar Emergencia</a></li>@endpermission
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6">
+                <div class="box box-solid">
+                    <div class="box-body li_delete">
+                        @permission('crear_citas_inicio')<li><a type="button" href="create_medical_appointment" class="load-page btn btn-success col-md-12"> Crear Citas Medicas</a></li>@endpermission
+
                     </div>
                 </div>
             </div>

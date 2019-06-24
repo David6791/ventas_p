@@ -10,8 +10,8 @@
                     <a class="btn  btn-sm view_cites_previus" > <i class="glyphicon glyphicon-dashboard"></i> Citas Anteriores</a>
                     <a class="btn  btn-sm view_attention_patient" > <i class="glyphicon glyphicon-dashboard"></i> Atencion Cita</a>
                     <!-- Solo cambiar la Clase para poder ver el formulario anterior -->
-                    <a class="btn  btn-sm view_treatment_form" > <i class="glyphicon glyphicon-dashboard"></i> Tratamiento</a>
-                    <!--a class="btn  btn-sm view_treatment_form_2" > <i class="glyphicon glyphicon-dashboard"></i> Receta Medica</a-->
+                    <!--a class="btn  btn-sm view_treatment_form" > <i class="glyphicon glyphicon-dashboard"></i> Tratamiento</a-->
+                    <a class="btn  btn-sm view_treatment_form_2" > <i class="glyphicon glyphicon-dashboard"></i> Receta Medica</a>
                     <a class="btn  btn-sm view_exam_medic_select" ><i class="glyphicon glyphicon-dashboard"></i> Examen Medico</a>
                     <a class="btn  btn-sm vew_transfer_patient" > <i class="glyphicon glyphicon-dashboard"></i> Traslado de Paciente</a>
                     <a class="btn  btn-sm view_end_cite_medic" ><i class="glyphicon glyphicon-dashboard"></i> Finalizar Cita Medica</a>

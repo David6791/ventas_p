@@ -416,12 +416,18 @@ class AttentionsController extends Controller
             );
     }
     public function view_attention_lists_full_medic(){
+        if(\Entrust::hasRole('citas_medicas')){
         $query = "select * from view_list_appoinments_atendidos(:id_user)";
         $rows=\DB::select(\DB::raw($query),array('id_user'=>Auth::user()->id));
         //return $rows;
         return view('attentions.view_appoinments_list_completo')->with('list',$rows);
+        }else{
+            return view('error.user_not_permission');
+        }
     }
     public function view_attention_lists_examen(){
+        if(\Entrust::hasRole('atencion_citas_medicas')){
+
         //return 'sadsadsad';
         $query = "SELECT * FROM medical_exam_patients mep
                         INNER JOIN medical_appointments ma
@@ -432,6 +438,9 @@ class AttentionsController extends Controller
         $rows=\DB::select(\DB::raw($query));
         //return $rows;
         return view('admin.attentions.view_appoinments_completing_examen')->with('list',$rows);
+        }else{
+            return view('error.user_not_permission');
+        }
     }
     public function view_dates_for_exam(Request $request){
         //return 'sadsadsad';
@@ -694,13 +703,19 @@ class AttentionsController extends Controller
     public function view_treatment_form_2(Request $request){
         //return $request->all();
         $var = $request->id_appointments;
-        $query7 = "SELECT count(id_treatment) FROM treatment_patients WHERE id_medical_appointments = :id_appointments";
+        $query7 = "SELECT count(id_prescription) FROM prescription WHERE id_appointments = :id_appointments";
         $rows7=\DB::select(\DB::raw($query7),array('id_appointments'=>$request->id_appointments));
+        //return $rows7;
         if(($rows7[0]->count) === 0)
         {
             return view('admin.attentions.partials.form_prescription_medic')->with('id_app',$var);
         }else{
-
+            $query = "SELECT * FROM prescription p
+                    	INNER JOIN prescription_detail pd
+                    		ON pd.id_appointments = p.id_prescription
+                    WHERE p.id_appointments = :id";
+            $rows2=\DB::select(\DB::raw($query),array('id'=>$request->id_appointments));
+            return view('admin.attentions.partials.prescription_view')->with('prescription_detail',$rows2)->with('id_app',$var);
         }
         $query3 = "SELECT * FROM medical_appointments map
                     INNER JOIN types_appointsment ta
@@ -736,6 +751,42 @@ class AttentionsController extends Controller
         return view('admin.attentions.partials.load_medicine')->with('nombre',$x);
     }
     public function url_form_prescription(Request $request){
-        return $request->all();
+        //return $request->all();
+        //return $request->id_app;
+        DB::table('prescription')->insert([
+            'duration_treatment' => $request->duration_treatment,
+            'pauta_medicines' => $request->pauta,
+            'famaceutic_indications' => $request->indications,
+            'id_appointments' => $request->id_app
+            //'id_users_register' => Auth::user()->id
+        ]);
+        $query = "SELECT id_prescription FROM prescription
+                    ORDER BY id_prescription DESC LIMIT 1";
+        $rows2=\DB::select(\DB::raw($query));
+        for($i = 0 ; $i < count($request->medicine); $i++){
+            DB::table('prescription_detail')->insert([
+                'name_medicine' => $request->medicine[$i],
+                'quantity_prescription' => $request->cant[$i],
+                'id_appointments' => $rows2[0]->id_prescription
+                //'id_users_register' => Auth::user()->id
+            ]);
+        }
+        //return 'asdasdas';
+        $query = "SELECT * FROM prescription p
+                	INNER JOIN prescription_detail pd
+                		ON pd.id_appointments = p.id_prescription
+                WHERE p.id_appointments = :id";
+        $rows2=\DB::select(\DB::raw($query),array('id'=>$request->id_app));
+        return view('admin.attentions.partials.prescription_view')->with('prescription_detail',$rows2)->with('id_app',$request->id_app);
+    }
+    public function delete_prescription_url(Request $request){
+        $var = $request->id_app;
+        $query = "DELETE FROM prescription_detail pd
+            WHERE pd.id_appointments = (SELECT id_prescription FROM prescription WHERE id_appointments = :id)";
+        $rows2=\DB::select(\DB::raw($query),array('id'=>$request->id_app));
+        $query = "DELETE FROM prescription p
+            WHERE p.id_appointments = :id";
+        $rows2=\DB::select(\DB::raw($query),array('id'=>$request->id_app));
+        return view('admin.attentions.partials.form_prescription_medic')->with('id_app',$var);
     }
 }

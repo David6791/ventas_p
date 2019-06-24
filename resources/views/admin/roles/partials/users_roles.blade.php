@@ -3,7 +3,7 @@
         <div class="col-md-12">
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title">Roles Asignados a: {{ $dates[0]->name }}</h3>
+                    <h3 class="box-title">Roles Asignados a: Dr(a). {{ $dates[0]->name }} {{ $dates[0]->apellidos }}</h3>
                 </div>
                 <div class="box-body">
                     <form class="form-horizontal form-label-left sendform_modifi_role_user" novalidate action="{{url('add_role_user')}}" method="post" autocomplete="off">
@@ -21,15 +21,15 @@
                                             <th>Nombre Rol</th>
                                             <th>Fecha Designacion</th>
                                             <th><span class="glyphicon glyphicon-trash"></span> Quitar Designacion</th>
-                                            
+
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php $a = 1 ?>
                                         @foreach($row as $lista)
                                         <tr>
-                                            <td>{{ $a++ }}</td>   
-                                            <td>{{ $lista->rol_name }}</td>                                         
+                                            <td>{{ $a++ }}</td>
+                                            <td>{{ $lista->rol_name }}</td>
                                             <td>{{ $lista->ru_created_at }}</td>
                                             <td><input type="checkbox" class="flat-red" name="delete_role[]" value="{{$lista->rol_id}}"></td>
                                         </tr>
@@ -41,22 +41,22 @@
                                 <div class="box-header">
                                     <h4 class="box-title text-red"> Roles para Asignar</h4>
                                 </div>
-                                <table id="datatable" class="table table-striped table-bordered">
+                                <table id="datatable1" class="table table-striped table-bordered">
                                     <thead>
                                         <tr>
                                             <th>Nro.</th>
                                             <th>Nombre Rol</th>
                                             <th>Fecha Designacion</th>
                                             <th> <span class="glyphicon glyphicon-plus"></span> Agregar Designacion</th>
-                                            
+
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php $a = 1 ?>
                                         @foreach($rol as $lista)
                                         <tr>
-                                            <td>{{ $a++ }}</td>   
-                                            <td>{{ $lista->name }}</td>                                         
+                                            <td>{{ $a++ }}</td>
+                                            <td>{{ $lista->name }}</td>
                                             <td>{{ $lista->created_at }}</td>
                                             <td><input type="checkbox" class="flat-red" name="add_role[]" value="{{$lista->id}}"></td>
                                         </tr>
@@ -81,4 +81,16 @@
         </div>
     </div>
 </div>
-    
+<script>
+$(function () {
+$('#datatable').DataTable()
+$('#datatable1').DataTable({
+  'paging'      : true,
+  'lengthChange': false,
+  'searching'   : true,
+  'ordering'    : true,
+  'info'        : false,
+  'autoWidth'   : true
+})
+})
+</script>

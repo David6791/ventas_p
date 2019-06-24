@@ -9,9 +9,13 @@ use Illuminate\Support\Facades\DB;
 
 class DiseaseGroupController extends Controller{
     public function index_group_disease(){
+        if(\Entrust::hasRole('admin_datos')){
         $query = "select * from disease_group order by _id asc";
         $row=\DB::select(\DB::raw($query));
         return view('admin.disease_group.index_disease_group')->with('row',$row);
+        }  else{
+        return view('error.user_not_permission');
+        }
     }
     public function create_group_disease(Request $request){
         //return $request->all();
@@ -25,7 +29,7 @@ class DiseaseGroupController extends Controller{
             1
             ]);
         return redirect()->action(
-            'DiseaseGroupController@index_group_disease'                   
+            'DiseaseGroupController@index_group_disease'
         );
     }
     public function baja_group_disease(Request $request){
@@ -37,7 +41,7 @@ class DiseaseGroupController extends Controller{
             ->where('_id', '=', $request->id)
             ->update([
                 'state_group' => 'inactivo'
-            ]);    
+            ]);
         }else{
             $baja_schedules = DB::table('disease_group')
             ->where('_id', '=', $request->id)
@@ -46,7 +50,7 @@ class DiseaseGroupController extends Controller{
             ]);
         }
         return redirect()->action(
-            'DiseaseGroupController@index_group_disease' 
+            'DiseaseGroupController@index_group_disease'
         );
     }
     public function load_dates_edit_group(Request $request){
@@ -66,7 +70,7 @@ class DiseaseGroupController extends Controller{
                         'description_group' => $request->descripcion_grupo
             ]);
         return redirect()->action(
-            'DiseaseGroupController@index_group_disease'                  
+            'DiseaseGroupController@index_group_disease'
         );
     }
 }

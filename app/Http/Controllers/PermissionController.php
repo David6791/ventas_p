@@ -20,7 +20,7 @@ class PermissionController extends Controller{
             $request->description_permission
             ]);
         return redirect()->action(
-            'Permission@index_permission'                   
+            'Permission@index_permission'
         );
     }
     public function load_dates_edit_permission(Request $request){
@@ -32,7 +32,7 @@ class PermissionController extends Controller{
     public function edit_permission(Request $request){
         //return $request->all();
         $validatedData = $request->validate([
-            'permission_edit' => 'required|max:10',
+            'permission_edit' => 'required|max:30',
             'name_permission_edit' => 'required',
             'description_permission_edit' => 'required'
         ]);
@@ -43,14 +43,14 @@ class PermissionController extends Controller{
                         'description' => $request->description_permission_edit
             ]);
         return redirect()->action(
-            'Permission@index_permission'                   
+            'Permission@index_permission'
         );
     }
     public function delete_permission(Request $request){
         //return $request->all();
         DB::table('permissions')->where('id', '=', $request->id_permission)->delete();
         return redirect()->action(
-            'Permission@index_permission'                   
+            'Permission@index_permission'
         );
     }
 }
