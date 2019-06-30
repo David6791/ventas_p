@@ -31,7 +31,7 @@
                                             <td>{{ $lista->nombres }} {{ $lista->ap_paterno }} {{ $lista->ap_materno }} </td>
                                             <td>{{ $lista->sexo }}</td>
                                             <td>{{ $lista->fecha_nacimento }}</td>
-                                            <td>{{ $lista->localidad_nacimiento }}</td>
+                                            <td>{{ $lista->nombre_localidad }}</td>
                                             <td>{{ $lista->esta_paciente }}</td>
                                             <td>
                                                 <!--button class="btn btn-success btn-xs"> <span class="glyphicon glyphicon-eye-open"></span> Ver</button>

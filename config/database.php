@@ -65,6 +65,9 @@ return [
             'prefix' => '',
             'schema' => 'public',
             'sslmode' => 'prefer',
+            //'dump_command_path' => '"C:\Program Files\PostgreSQL\9.5\bin\"',
+            //'dump_command_timeout' => 60*5,
+            //'dump_using_single_transaction' => true,
         ],
 
         'sqlsrv' => [

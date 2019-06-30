@@ -647,10 +647,15 @@
                 //console.log(data)
                 $('.delete_table').remove()
                 var da = (data).length
-                for(var i = 0; i < da ; i++){
-                    //alert(i)
-                    x = i+1
-                    $('.add_specialty tbody').append('<tr><td>'+x+'</td><td>'+data[i].nombre_especialidad+'</td><td>'+data[i].descripcion_especialidad+'</td><td><input type="checkbox" name="schedul_add[]" value="'+data[i].id_especialidad+'"></td></tr>')
+                if (da>0) {
+                    for(var i = 0; i < da ; i++){
+                        //alert(i)
+                        x = i+1
+                        $('.add_specialty tbody').append('<tr><td>'+x+'</td><td>'+data[i].nombre_especialidad+'</td><td>'+data[i].descripcion_especialidad+'</td><td><input type="checkbox" name="specialty[]" value="'+data[i].id_especialidad+'"></td></tr>');
+
+                    }
+                } else {
+                    $('.add_specialty tbody').append('<tr style="text-align:center; color:red;"><td colspan="4">El tipo de Usuario no tiene Especialidades...</td></tr>');
                 }
                 //$("#contentGlobal").html(data)
 
@@ -732,7 +737,25 @@
             }
         })
     })
-
+    $(document).on('click','.edit_dates_patients_form',function(e){
+        e.preventDefault(e)
+        $.ajax({
+            type:'POST',
+            url:'/edit_dates_patients_form',
+            data:{id_patient:$(this).attr('value'),_token:$('meta[name="csrf-token"]').attr('content')},
+            success:function(data){
+                //console.log('data.id')
+                $(".editar_pciente").html(data)
+            },
+            error:function(data){
+                swal(
+                    'Error!',
+                    'El Paciente aun no esta registrado',
+                    'error'
+                  )
+            }
+        })
+    })
     $(document).on('click','.edit_dates_medic_patient',function(e){
         //alert('asdsadsa')
         e.preventDefault(e)
@@ -1603,6 +1626,12 @@
         })
     })
     $(document).on('click','.search',function(e){
+        frutas = []
+        $('.name_form').each(function(){
+            aux = $(this).attr("name")
+            frutas.push(aux)
+
+        })
         e.preventDefault(e)
         $.ajax({
             type:'POST',
@@ -1612,9 +1641,19 @@
             success:function(data){
                 $('#load_dates_patient').html(data)
             },error:function(data){
+                var asd = Object.keys(data.responseJSON.errors)
+                for(i = 0; i<frutas.length; i++){
+                    if(asd.includes(frutas[i])) {
+                        $( "input[name='"+frutas[i]+"']" ).parent().parent().parent().parent().find("small").text(data.responseJSON.errors[frutas[i]][0])
+                        $( "textarea[name='"+frutas[i]+"']" ).parent().find("small").text(data.responseJSON.errors[frutas[i]][0])
+                    }else{
+                        $( "input[name='"+frutas[i]+"']" ).parent().parent().find("small").text('')
+                        $( "textarea[name='"+frutas[i]+"']" ).parent().find("small").text('')
+                    }
+                }
                 swal(
                     'Error!',
-                    'El Paciente aun no esta registrado',
+                    'Revise los datos que Ingreso',
                     'error'
                   )
             }
@@ -3479,5 +3518,102 @@
             }
           })
     })
+    $(document).on('click','.reservationEspecialty',function(e){
+        e.preventDefault(e)
+        //alert('Medico')
+        $.ajax({
+            type:'GET',
+            url:'/reservationEspecialty',
+            data:$(this).serialize(),
+            success:function(data){
+                $('#load_page_appointsment').html(data)
+                //alert("asdsad")
+            }
+        })
+    })
+    $(document).on('change','.charge_city',function(e){
+        //alert($(this).find(":selected").val())
+        //$('.add_specialty tbody tr').closest('tr').remove()
+         $('.depa option').remove();
+         $('.provi option').remove();
+         $('.localidades option').remove();
+        e.preventDefault(e)
+        $.ajax({
+            type:'POST',
+            url:'/charge_depa_b',
+            data:{id:$(this).find(":selected").val(),_token:$('meta[name="csrf-token"]').attr('content')},
+            success:function(data){
+                //console.log(data)
+                $('.delete_table').remove()
+                var da = (data).length
+                $('#departamento').append('<option value=' + 'Seleccione ciudad' + '>' + 'Seleccione ciudad' + '</option>');
+                for(var i = 0; i < da ; i++){
+                    //alert(i)
+                    $('#departamento').append('<option value=' + data[i].id_departamento + '>' + data[i].nombre_departamento + '</option>');
 
+                }
+                //$("#contentGlobal").html(data)
+
+            },
+            error:function(data){
+                //console.log(data)
+            }
+        })
+    })
+    $(document).on('change','.charge_provincia',function(e){
+        //alert($(this).find(":selected").val())
+        //$('.add_specialty tbody tr').closest('tr').remove()
+         $('.provi option').remove();
+        e.preventDefault(e)
+        $.ajax({
+            type:'POST',
+            url:'/charge_provincia',
+            data:{id:$(this).find(":selected").val(),_token:$('meta[name="csrf-token"]').attr('content')},
+            success:function(data){
+                //console.log(data)
+
+                var da = (data).length
+                $('#provincia').append('<option value=' + 'Seleccione provincia' + '>' + 'Seleccione provincia' + '</option>');
+                //$('#provi option').remove();
+                for(var i = 0; i < da ; i++){
+                    //alert(i)
+                    $('#provincia').append('<option value=' + data[i].id_provincia + '>' + data[i].nombre_provincia + '</option>');
+
+                }
+                //$("#contentGlobal").html(data)
+
+            },
+            error:function(data){
+                //console.log(data)
+            }
+        })
+    })
+    $(document).on('change','.charge_localidad',function(e){
+        //alert($(this).find(":selected").val())
+        //$('.add_specialty tbody tr').closest('tr').remove()
+         $('.localidades option').remove();
+        e.preventDefault(e)
+        $.ajax({
+            type:'POST',
+            url:'/charge_localidad',
+            data:{id:$(this).find(":selected").val(),_token:$('meta[name="csrf-token"]').attr('content')},
+            success:function(data){
+                //console.log(data)
+
+                var da = (data).length
+                $('#localidad').append('<option value=' + 'Seleccione provincia' + '>' + 'Seleccione provincia' + '</option>');
+                //$('#provi option').remove();
+                for(var i = 0; i < da ; i++){
+                    //alert(i)
+                    $('#localidad').append('<option value=' + data[i].id_localidad + '>' + data[i].nombre_localidad + '</option>');
+
+                }
+                //$("#contentGlobal").html(data)
+
+            },
+            error:function(data){
+                //console.log(data)
+            }
+        })
+    })
 })

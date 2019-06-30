@@ -28,26 +28,31 @@ class UsersController extends Controller{
     }
     public function add_user_medics(Request $request){
         //return $request->all();
+        //$query2 = "SELECT id as id_role FROM roles WHERE user_default = :tipe";
+        //$rows2=\DB::select(\DB::raw($query2),array('tipe'=>$request->tipo_usuario));
+        //return count($rows2);
         $validatedData = $request->validate([
-            'apellido_materno' => 'required|max:20',
-            'apellido_paterno' => 'required|max:20',
-            'año_egreso' => 'required|max:20',
+            'apellido_materno' => 'required|max:20|alpha',
+            'apellido_paterno' => 'required|max:20|alpha',
+            //'año_egreso' => 'required|max:20',
             'celular' => 'required|max:20',
-            'contraseña' => 'required|max:20',
+            'contraseña' => 'required|max:20|between:8,20',
             'direccion' => 'required|max:20',
-            'egreso' => 'required|max:20',
+            //'egreso' => 'required|max:20',
             'lugar_de_nacimiento' => 'required|max:20',
-            'matricula' => 'required|max:20',
+            //'matricula' => 'required|max:20',
+            'genero' => 'required',
             'nacionalidad' => 'required|max:20',
-            'nombre' => 'required|max:20',
-            'nombre_usuario' => 'required|max:20',
-            'numero_documento' => 'required|max:20',
+            'nombre' => 'required|max:20|alpha',
+            'email' => 'unique:users|required|max:20|email',
+            'ci' => 'unique:users|required|max:20|alpha_dash', 
             'estado_civil' => 'required|max:20',
             'telefono' => 'required|numeric',
             'tipo_documento' => 'required|max:20',
+            'profesion' => 'required|max:20',
         ]);
         DB::table('users')->insert([
-            'ci' => $request->numero_documento,
+            'ci' => $request->ci,
             'tipo_documento' => $request->tipo_documento,
             'name' => $request->nombre,
             'apellidos' => $request->apellido_paterno .' '. $request->apellido_materno,
@@ -63,11 +68,86 @@ class UsersController extends Controller{
             'telefono' => $request->telefono,
             'celular' => $request->celular,
             'ocupacion' => $request->profesion,
-            'email' => $request->nombre_usuario,
+            'email' => $request->email,
             'password' => bcrypt($request->contraseña),
             'matricula_medico' => $request->matricula,
             'tipo_usuario' => $request->tipo_usuario
         ]);
+        $query2 = "SELECT id as id_user FROM users WHERE ci = :ci";
+        $rows=\DB::select(\DB::raw($query2),array('ci'=>$request->ci));
+        if($request->specialty){
+            //return "tiene especialidades";
+            foreach ($request->specialty as $i) {
+                DB::table('usuarios_especialidades')->insert([
+                    'id_usuario' => $rows[0]->id_user,
+                    'id_especialidad' => $i,
+                    'estado' => 'activo'
+                ]);
+            }
+        }else{
+            //return "no tiene especialidades";
+        }
+        switch ($request->tipo_usuario) {
+            case '1':
+                $query2 = "SELECT id as id_role FROM roles WHERE user_default = :tipe";
+                $rows2=\DB::select(\DB::raw($query2),array('tipe'=>$request->tipo_usuario));
+                $var = count($rows2);
+                for ($i = 0 ; $i < $var ; $i++) {
+                    DB::table('role_user')->insert([
+                        'user_id' => $rows[0]->id_user,
+                        'role_id' => $rows2[$i]->id_role
+                    ]);
+                }
+                break;
+            case '2':
+                $query2 = "SELECT id as id_role FROM roles WHERE user_default = :tipe";
+                $rows2=\DB::select(\DB::raw($query2),array('tipe'=>$request->tipo_usuario));
+                $var = count($rows2);
+                for ($i = 0 ; $i < $var ; $i++) {
+                    DB::table('role_user')->insert([
+                        'user_id' => $rows[0]->id_user,
+                        'role_id' => $rows2[$i]->id_role
+                    ]);
+                }
+                break;
+            case '3':
+                $query2 = "SELECT id as id_role FROM roles WHERE user_default = :tipe";
+                $rows2=\DB::select(\DB::raw($query2),array('tipe'=>$request->tipo_usuario));
+                $var = count($rows2);
+                for ($i = 0 ; $i < $var ; $i++) {
+                    DB::table('role_user')->insert([
+                        'user_id' => $rows[0]->id_user,
+                        'role_id' => $rows2[$i]->id_role
+                    ]);
+                }
+                break;
+            case '6':
+                $query2 = "SELECT id as id_role FROM roles WHERE user_default = :tipe";
+                $rows2=\DB::select(\DB::raw($query2),array('tipe'=>$request->tipo_usuario));
+                $var = count($rows2);
+                for ($i = 0 ; $i < $var ; $i++) {
+                    DB::table('role_user')->insert([
+                        'user_id' => $rows[0]->id_user,
+                        'role_id' => $rows2[$i]->id_role
+                    ]);
+                }
+                break;
+            case '7':
+                $query2 = "SELECT id as id_role FROM roles WHERE user_default = :tipe";
+                $rows2=\DB::select(\DB::raw($query2),array('tipe'=>$request->tipo_usuario));
+                $var = count($rows2);
+                for ($i = 0 ; $i < $var ; $i++) {
+                    DB::table('role_user')->insert([
+                        'user_id' => $rows[0]->id_user,
+                        'role_id' => $rows2[$i]->id_role
+                    ]);
+                }
+                break;
+
+            default:
+                // code...
+                break;
+        }
         return redirect()->action(
             'UsersController@index_medics'
         );
@@ -194,5 +274,14 @@ class UsersController extends Controller{
     }
     public function view_perfil(){
       return view('admin.users.view_perfil');
+    }
+    public function form_users(){
+        $query = "SELECT * FROM tipo_usuarios WHERE id_tipo != 5  ORDER BY id_tipo ASC";
+        $rows=\DB::select(\DB::raw($query));
+        $query1 = "select * from estados_civil order by id_estado_civil asc";
+        $rows1=\DB::select(\DB::raw($query1));
+        $query2 = "select * from especialidades where tipo_usuario = 2 and estado_especialidad = 'Activo' order by id_especialidad asc";
+        $rows2=\DB::select(\DB::raw($query2));
+        return view('admin.users.form_users')->with('rows',$rows)->with('rows1',$rows1)->with('rows2',$rows2);
     }
 }

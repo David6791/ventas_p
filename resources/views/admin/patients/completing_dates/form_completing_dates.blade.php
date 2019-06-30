@@ -370,3 +370,6 @@
     </div>
 <!-- /.modal-dialog -->
 </div>
+<script>
+    $('#datepicker').datepicker({});
+</script>

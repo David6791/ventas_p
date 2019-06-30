@@ -24,22 +24,22 @@
                     <tr>
                         <td>{{ $a++ }}</td>
                         <td>{{ $lista->ci }}</td>
-                        <td>{{ $lista->name }} {{ $lista->apellidos }}</td>   
-                        <td>{{ $lista->nombre_tipo }}</td>           
+                        <td>{{ $lista->name }} {{ $lista->apellidos }}</td>
+                        <td>{{ $lista->nombre_tipo }}</td>
                         <td>{{ $lista->matricula_medico }}</td>
                         <td>{{ $lista->fecha_creacion}}</td>
                         @if($lista->estado_user===1)
                             <td><button class="btn btn-success btn-xs get_BajaUser" name="id_medico" value="{{$lista->id}}"> <span class="glyphicon glyphicon-arrow-up"></span> Activo</button></td>
                         @else
                             <td><button class="btn btn-danger btn-xs get_BajaUser" name="id_medico" value="{{$lista->id}}"> <span class="glyphicon glyphicon-arrow-down"></span> Inactivo</button></td>
-                        @endif   
+                        @endif
                         <td><button class="btn btn-info btn-xs getVerUsuario" name="id_medico" value="{{$lista->id}}"> <span class="glyphicon glyphicon-eye-open"></span> Ver</button> <button class="btn btn-primary btn-xs " name="id_medico" value="{{$lista->id}}"> <span class="glyphicon glyphicon-print"></span> Imprimir</button></td>
                     </tr>
                     @endforeach
                 </tbody>
             </table>
         </div>
-        <div class="box-footer">
+        <!--div class="box-footer">
             <div class="row">
                 <div class="col-md-1"></div>
                 <div class="col-md-2"><button type="button" class="btn btn-info btn-sm"> <span class="glyphicon glyphicon-print"></span> Imrimir Lista de Medicos</button></div>
@@ -48,7 +48,7 @@
                 <div class="col-md-2"><button type="button" class="btn btn-success btn-sm add_medic"><span class="glyphicon glyphicon-plus"></span> Agregar Nuevo Usuario</button></div>
                 @endpermission
             </div>
-        </div>
+        </div-->
     </div>
 </div>
 <script>

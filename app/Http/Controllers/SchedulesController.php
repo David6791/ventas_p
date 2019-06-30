@@ -14,21 +14,30 @@ class SchedulesController extends Controller
     public function index_Schedules(){
         $query = "select * from schedules order by id_schedule";
         $rows=\DB::select(\DB::raw($query));
-        return view('admin.schedules.index_schedules')->with('row',$rows);  
+        $query1 = "SELECT * FROM usuarios_especialidades ue
+            	INNER JOIN users us
+            		ON us.id = ue.id_usuario
+            	INNER JOIN especialidades es
+            		ON es.id_especialidad = ue.id_especialidad
+            WHERE us.tipo_usuario = 2 AND ue.estado = 'activo' AND ue.id_users_esp NOT IN (SELECT id_user_espe FROM  schedules WHERE id_user_espe <> NULL )";
+        $rows1=\DB::select(\DB::raw($query1));
+        //return $rows1;
+        return view('admin.schedules.index_schedules')->with('row',$rows)->with('espe_medico',$rows1);
     }
     public function create_Schedules(Request $request){
-        //return $request->all(); 
+        //return $request->all();
         $validatedData = $request->validate([
             'nombre_horario' => 'required|max:20',
             'hora_inicio' => 'required',
             'hora_fin' => 'required',
             'horario_descripcion' => 'required'
-        ]);       
+        ]);
         DB::table('schedules')->insert([
             'name_schedules' => $request->nombre_horario,
             'schedules_start' => $request->hora_inicio,
             'schedules_end' => $request->hora_fin,
-            'description' => $request->horario_descripcion
+            'description' => $request->horario_descripcion,
+            'id_user_espe' => $request->tipo_horario
         ]);
         return redirect()->action(
             'SchedulesController@index_schedules'
@@ -44,7 +53,7 @@ class SchedulesController extends Controller
             ->where('id_schedule', '=', $request->id)
             ->update([
                 'state' => 'inactivo'
-            ]);    
+            ]);
         }else{
             $baja_schedules = DB::table('schedules')
             ->where('id_schedule', '=', $request->id)
@@ -74,7 +83,7 @@ class SchedulesController extends Controller
             ]);
 
         return redirect()->action(
-            'SchedulesController@index_schedules'                   
+            'SchedulesController@index_schedules'
         );
     }
     public function index_turns(){
@@ -83,7 +92,7 @@ class SchedulesController extends Controller
         return view('admin.schedules.index_schedules_turn')->with('sche',$rows);
     }
     public function view_turns_schedul(Request $request){
-        $query = "select ht.id_schedul, ht.id_hour_turn, ht.start_time, ht.end_time, ht.state state_turn, ht.date_creation date, sc.name_schedules  from hour_turns ht 
+        $query = "select ht.id_schedul, ht.id_hour_turn, ht.start_time, ht.end_time, ht.state state_turn, ht.date_creation date, sc.name_schedules  from hour_turns ht
             inner join schedules sc
                 on sc.id_schedule = ht.id_schedul
         where ht.id_schedul = :id order by ht.id_hour_turn";
@@ -99,7 +108,7 @@ class SchedulesController extends Controller
         //return $request->all();
         $query = "select * from public.eliminar_turn(:id)";
         $rows=\DB::select(\DB::raw($query),array('id'=>$request->id_turn));
-        $query1 = "select ht.id_schedul, ht.id_hour_turn, ht.start_time, ht.end_time, ht.state state_turn, ht.date_creation date, sc.name_schedules  from hour_turns ht 
+        $query1 = "select ht.id_schedul, ht.id_hour_turn, ht.start_time, ht.end_time, ht.state state_turn, ht.date_creation date, sc.name_schedules  from hour_turns ht
                         inner join schedules sc
                             on sc.id_schedule = ht.id_schedul
                     where ht.id_schedul = :id order by ht.id_hour_turn";
@@ -116,7 +125,7 @@ class SchedulesController extends Controller
             $request->hora_fin,
             $request->id_schedule
             ]);
-        $query1 = "select ht.id_schedul, ht.id_hour_turn, ht.start_time, ht.end_time, ht.state state_turn, ht.date_creation date, sc.name_schedules  from hour_turns ht 
+        $query1 = "select ht.id_schedul, ht.id_hour_turn, ht.start_time, ht.end_time, ht.state state_turn, ht.date_creation date, sc.name_schedules  from hour_turns ht
                         inner join schedules sc
                             on sc.id_schedule = ht.id_schedul
                     where ht.id_schedul = :id order by ht.id_hour_turn";

@@ -13,8 +13,8 @@ class MedicalAppointmentController extends Controller
 {
     public function index_Appointment(){
         if(\Entrust::hasRole('citas_medicas')){
-        //return Auth::user()->id;
-        if( Auth::user()->id == 1 ){
+        //return Auth::user()->tipo_usuario;
+        if( Auth::user()->tipo_usuario == 1 || Auth::user()->tipo_usuario == 3 ){
         $query = "SELECT map.id_medical_appointments, map.appointment_description, pa.nombres, pa.ap_paterno, pa.ap_materno, mass.id_user, us.name m_name, us.apellidos m_apellidos, sch.name_schedules, ht.start_time, sap.name_state_appointments, map.date_appointments, ta.name_type FROM medical_appointments map
                             INNER JOIN pacientes pa
                         ON pa.id_paciente = map.id_patient
@@ -34,6 +34,7 @@ class MedicalAppointmentController extends Controller
         $rows=\DB::select(\DB::raw($query));
         $query1 = "SELECT * FROM state_appointments";
         $rows1=\DB::select(\DB::raw($query1));
+        //return $rows1;
         return view('admin.medical_appointment.index_medical_appointments')->with('row',$rows)->with('row1',$rows1);
         }else{
             $query = "SELECT map.id_medical_appointments, map.appointment_description, pa.nombres, pa.ap_paterno, pa.ap_materno, mass.id_user, us.name m_name, us.apellidos m_apellidos, sch.name_schedules, ht.start_time, sap.name_state_appointments, map.date_appointments, ta.name_type FROM medical_appointments map
@@ -56,6 +57,7 @@ class MedicalAppointmentController extends Controller
             $rows=\DB::select(\DB::raw($query),array('id'=>Auth::user()->id));
             $query1 = "SELECT * FROM state_appointments";
             $rows1=\DB::select(\DB::raw($query1));
+            //return $rows;
             return view('admin.medical_appointment.index_medical_appointments')->with('row',$rows)->with('row1',$rows1);
         }
         }else{
@@ -77,7 +79,7 @@ class MedicalAppointmentController extends Controller
                         ON sch.id_schedule = mass.id_schedul
                         INNER JOIN tipo_usuarios tp
                         ON us.tipo_usuario = tp.id_tipo
-                    WHERE state_assignments = 'activo' AND mass.id_schedul != 16 AND us.estado_user != 2";
+                    WHERE state_assignments = 'activo' AND mass.id_schedul != 16 AND us.estado_user != 2 AND sch.id_user_espe = 0";
         $rows=\DB::select(\DB::raw($query));
         //return $rows;
         return view('admin.medical_appointment.load_pages.reservation_medic')->with('medics',$rows);
@@ -127,11 +129,15 @@ class MedicalAppointmentController extends Controller
     }
     public function load_patient_date(Request $request){
         //return $request->all();
+        //load_patient_date
+
         $query = "SELECT * FROM pacientes WHERE ci_paciente = :ci";
         $row = \DB::select(\DB::raw($query),array('ci'=>$request->ci_patient));
         //return ('asdasdas');
         if( empty($row)){
-            return view('admin.medical_appointment.fast_register');
+            //return "asdasd";
+            //return view('admin.medical_appointment.fast_register');
+            return view('admin.medical_appointment.load_pages.error_filiation');
         }else{
             return view('admin.medical_appointment.load_pages.load_dates_patient')->with('dates_patient',$row);
         }
@@ -140,7 +146,7 @@ class MedicalAppointmentController extends Controller
     public function insert_appointsment(Request $request){
         //return $request->all();
         $validatedData = $request->validate([
-            'ci_paciente' => 'required|max:13|min:7',
+            'ci_paciente' => 'unique:pacientes|required|max:13|min:7|alpha_dash',
             'nombre' => 'required|max:30',
             'apellido_paterno' => 'required|max:30',
             'apellido_materno' => 'required|max:30',
@@ -210,7 +216,7 @@ class MedicalAppointmentController extends Controller
                         ON sch.id_schedule = ht.id_schedul
                     WHERE ht.id_schedul = :id_schedul AND ht.state = 'activo' AND ht.id_hour_turn NOT IN (
                    SELECT id_turn_hour FROM medical_appointments map
-                    WHERE date_trunc('day', map.date_appointments) = :date) order by ht.id_hour_turn";
+                    WHERE date_trunc('day', map.date_appointments) = :date) order by ht.start_time";
         $rows=\DB::select(\DB::raw($query),array('date'=>$request->fecha,'id_schedul'=>$id_sc[0]->id_schedul));
         //return $rows;
         return view('admin.medical_appointment.load_pages.load_dates_medic')->with('turns',$rows)->with('date',$request->fecha);
@@ -234,12 +240,12 @@ class MedicalAppointmentController extends Controller
         return view('admin.medical_appointment.load_pages.load_dates_medic_patient_form')->with('dates',$rows)->with('date',$request->fecha)->with('types',$rows2)->with('id_assigment',$request->id_assignments);
     }
     public function insert_appointsments_medic(Request $request){
-        $validatedData = $request->validate([
+        /*$validatedData = $request->validate([
             'ci_paciente' => 'required|max:13|min:7',
             'nombre' => 'required|max:30',
             'apellido_paterno' => 'required|max:30',
             'apellido_materno' => 'required|max:30',
-        ]);
+        ]);*/
         //return $request->all();
         if( ($request->id_patient)){
             DB::table('medical_appointments')->insert([
@@ -420,5 +426,18 @@ class MedicalAppointmentController extends Controller
         }else{
             return view('error.user_not_permission');
         }
+    }
+    public function reservationEspecialty(){
+        $query = "SELECT mass.id_medical_assignments, us.id, us.name, us.apellidos, sch.id_schedule, sch.name_schedules, tp.nombre_tipo FROM medical_assignments mass
+                        INNER JOIN users us
+                        ON us.id = mass.id_user
+                        INNER JOIN schedules sch
+                        ON sch.id_schedule = mass.id_schedul
+                        INNER JOIN tipo_usuarios tp
+                        ON us.tipo_usuario = tp.id_tipo
+                    WHERE state_assignments = 'activo' AND mass.id_schedul != 16 AND us.estado_user != 2 AND sch.id_user_espe = 1";
+        $rows=\DB::select(\DB::raw($query));
+        //return $rows;
+        return view('admin.medical_appointment.load_pages.reservation_specialty')->with('medics',$rows);
     }
 }

@@ -2,7 +2,7 @@
     <div class="row">
         <form class="sendform_patients" action="{{url('store_patients')}}" method="post" autocomplete="off">
         <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
-            <div class="col-md-5">
+            <div class="col-md-12">
                 <div class="box box-primary">
                     <div class="box-header">
                         <h3 class="box-title">Datos Personales</h3>
@@ -13,22 +13,26 @@
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Nro. Documento </label> <br>
                                     <small class="text-red" id=""></small>
-                                    <input name="ci" type="text" class="form-control col-md-7 col-xs-12 name_form" id="inputEmail3" placeholder="">
+                                    <input name="ci_paciente" type="text" class="form-control col-md-7 col-xs-12 name_form" id="inputEmail3" placeholder="">
                                 </div>
                             </div>
                             <div class="col-md-1"></div>
-                            <div class="col-md-7">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1" class="control-label">Genero</label> <br>
                                     <small class="text-red" id=""></small>
-                                    <div id="" data-toggle="buttons" class="btn-group">
+                                    <select class="select2_group form-control name_form" name="genero">
+                                        <option value="1">Masculino</option>
+                                        <option value="2">Femenino</option>
+                                    </select>
+                                    <!--div id="" data-toggle="buttons" class="btn-group">
                                         <label class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
                                             <input type="radio" name="genero" value="Masculino" data-parsley-multiple="genero" class="name_form"> Masculino &nbsp;
                                         </label>
                                         <label class="btn btn-primary" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
                                             <input type="radio" name="genero" value="Femenino" data-parsley-multiple="genero" class="name_form"> Femenino
                                         </label>
-                                    </div>
+                                    </div-->
                                 </div>
                             </div>
                         </div>
@@ -103,11 +107,11 @@
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Nacionalidad</label>
                                     <small class="text-red" id=""></small>
-                                    <select class="select2_group form-control name_form" name="nacionalidad">
-                                        <option value="1">Boliviano</option>
-                                        <option value="2">Argentino</option>
-                                        <option value="3">Chileno</option>
-                                        <option value="4">Peruano</option>
+                                    <select class="select2_group form-control name_form charge_city" name="nacionalidad">
+                                        <option value="">Ninguno</option>
+                                        @foreach($paises as $p)
+                                            <option value="{{ $p->id_pais }}">{{ $p->nombre_pais }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -117,14 +121,20 @@
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Ciudad</label> <br>
                                     <small class="text-red" id=""></small>
-                                    <input type="text" class="form-control col-md-7 col-xs-12 name_form" name="ciudad">
+                                    <!--input type="text" class="form-control col-md-7 col-xs-12 name_form" name="ciudad"-->
+                                    <select id="departamento" class="select2_group form-control name_form charge_provincia depa" name="ciudad">
+
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Provincia</label> <br>
                                     <small class="text-red" id=""></small>
-                                    <input type="text" class="form-control col-md-7 col-xs-12 name_form" name="provincia">
+                                    <!--input type="text" class="form-control col-md-7 col-xs-12 name_form" name="provincia"-->
+                                    <select id="provincia" class="select2_group form-control name_form charge_localidad provi" name="provincia">
+
+                                    </select>
                                 </div>
                             </div>
                         </div> <br>
@@ -133,14 +143,17 @@
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Localidad</label> <br>
                                     <small class="text-red" id=""></small>
-                                    <input type="text" class="form-control col-md-7 col-xs-12 name_form" name="localidad">
+                                    <!--input type="text" class="form-control col-md-7 col-xs-12 name_form" name="localidad"-->
+                                    <select id="localidad" class="select2_group form-control name_form  localidades" name="localidad">
+
+                                    </select>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-7">
+            <!--div class="col-md-7">
                 <div class="box box-success">
                     <div class="box-header">
                         <h3 class="box-title">Datos Medicos</h3>
@@ -199,7 +212,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div-->
             <center><button type="submit" class="btn btn-success btn-ms"> <span class=""></span> Guardar Datos Paciente</button></center>
         </form>
     </div>

@@ -305,10 +305,24 @@
           </ul>
         </li>
         @endrole
+        @role('administrar_usuarios')
         <li class="treeview">
-          @role('administrar_usuarios')
           <a href="#">
             <i class="glyphicon glyphicon-unchecked"></i> <span>Administrador de Usuarios</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            @permission('nuevo_usuario')<li><a href="form_users" class="load-page"><i class="fa fa-circle-o"></i> Registrar Usuario</a></li>@endpermission
+            @permission('Ver_medicos')<li><a href="index_medics" class="load-page"><i class="fa fa-circle-o"></i> Ver Usuarios</a></li>@endpermission
+          </ul>
+        </li>
+        @endrole
+        @role('roles_permisos')
+        <li class="treeview">
+          <a href="#">
+            <i class="glyphicon glyphicon-unchecked"></i> <span>Roles y Permisos</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -318,10 +332,9 @@
             @permission('Permisos')<li><a href="index_permission" class="load-page"><i class="fa fa-circle-o"></i> Permisos</a></li>@endpermission
             @permission('Asi_roles')<li><a href="index_roles_roles" class="load-page"><i class="fa fa-circle-o"></i> Asignacion de Roles</a></li>@endpermission
             @permission('Asig_permi')<li><a href="index_roles_permission" class="load-page"><i class="fa fa-circle-o"></i> Asignacion de Permisos</a></li>@endpermission
-            @permission('Ver_medicos')<li><a href="index_medics" class="load-page"><i class="fa fa-circle-o"></i> Ver Usuarios</a></li>@endpermission
           </ul>
-          @endrole
         </li>
+        @endrole
         <li class="treeview">
           @role('estadisticas')
           <a href="#">
@@ -363,7 +376,7 @@
           @endrole
         </li>
         <li class="treeview">
-          @role('medicamentos')
+          @role('medicamentos_prueba')
           <a href="#">
             <i class="glyphicon glyphicon-unchecked"></i> <span>Medicamentos</span>
             <span class="pull-right-container">
@@ -417,166 +430,193 @@
     <!-- Main content -->
     <!-- page content -->
     <div class="right_col content" role="main" id="contentGlobal">
-        <div class="row">
+        @switch(Auth::user()->tipo_usuario)
+            @case(2)
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="box box-primary">
+                            <div class="box-header">
+                                Panel de Notificaciones {{Auth::user()->tipo_usuario}}
+                            </div>
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                      <!-- small box -->
+                                      <div class="small-box bg-red">
+                                        <div class="inner">
+                                          <h3>{{ $emergencies[0]->count }}</h3>
+                                          <p>Emergencias</p>
+                                        </div>
+                                        <div class="icon">
+                                          <i class="ion glyphicon glyphicon-plus"></i>
+                                        </div>
+                                        @permission('ver_citas')<a href="view_attention_lists" class="load-page small-box-footer">Ver Lista de Citas Medicas <i class="fa fa-arrow-circle-right"></i></a>@endpermission
+                                      </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <!-- small box -->
+                                        <div class="small-box bg-green">
+                                          <div class="inner">
+                                            <h3>{{ $appointments[0]->count }}</h3>
+
+                                            <p>Citas Medicas</p>
+                                          </div>
+                                          <div class="icon">
+                                            <i class="ion ion-stats-bars"></i>
+                                          </div>
+                                          @permission('ver_citas')<a href="view_attention_lists" class="load-page small-box-footer">Ver Lista de Citas Medicas <i class="fa fa-arrow-circle-right"></i></a>@endpermission
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <!-- small box -->
+                                        <div class="small-box bg-info">
+                                          <div class="inner">
+                                            <h3>{{ $r_no_ate[0]->count }}</h3>
+
+                                            <p>Citas Medicas NO ANTENDIDAS</p>
+                                          </div>
+                                          <div class="icon">
+                                            <i class="ion ion-stats-bars"></i>
+                                          </div>
+                                          @permission('ver_citas')<a href="view_list_appinments" class="load-page small-box-footer">Ver Lista de Citas Medicas No Atendidas <i class="fa fa-arrow-circle-right"></i></a>@endpermission
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <!-- small box -->
+                                        <div class="small-box bg-yellow">
+                                          <div class="inner">
+                                            <h3 style="color:#F39C12">0</h3>
+
+                                            <p>Lista de Citas Medicas</p>
+                                          </div>
+                                          <div class="icon">
+                                            <i class="glyphicon glyphicon-th-list"></i>
+                                          </div>
+                                          @permission('imprimir_lista')
+                                          <a target="_blank" href="http://localhost:8080/pentaho/api/repos/%3Apublic%3ASteel%20Wheels%3AReports%3Alista_pacientes_medicos.prpt/generatedContent?userid=admin&password=password&output-target=pageable/pdf&p={{ Auth::user()->id }}" type="button" name="button" class="load-page small-box-footer">Imprimir lista de pacientes <i class="fa fa-arrow-circle-right"></i></a>@endpermission
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @role('atencion_citas_medicas')
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="box box-warning direct-chat direct-chat-warning">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">Nuevas Citas Medicas</h3>
+                                <div class="box-tools pull-right">
+                                    <span data-toggle="tooltip" title="" class="badge bg-yellow" data-original-title="{{ $appointments[0]->count }} Nuevas Citas Medicas">{{ $appointments[0]->count }}</span>
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                                </div>
+                            </div>
+                            <div class="box-body">
+                                <div class="direct-chat-messages">
+                                @forelse($resum_app as $list)
+                                    <div class="direct-chat-msg">
+                                        <div class="direct-chat-info clearfix">
+                                            <span class="direct-chat-name pull-left">Paciente: {{ $list->r_nombres }} {{ $list->r_apaterno }} {{ $list->r_amaterno }}</span>
+                                            <span class="direct-chat-timestamp pull-right">Hora Cita Medica {{ $list->r_start_time }}</span>
+                                        </div>
+                                        <div class="direct-chat-text">
+                                            {{ $list->r_appointment_description }}
+                                        </div>
+                                    </div>
+                                @empty
+                                    <p class="text-danger">No Existen Citas Medicas Confirmadas</p>
+                                @endforelse
+                                </div>
+                            </div>
+                            <div class="box-footer">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="box box-success direct-chat direct-chat-warning">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">Citas Medicas Atendidas</h3>
+                                <div class="box-tools pull-right">
+                                    <span data-toggle="tooltip" title="" class="badge bg-green" data-original-title="{{ $resum_app_1_1[0]->count }} Citas Medicas Atendidas">{{ $resum_app_1_1[0]->count }}</span>
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                                </div>
+                            </div>
+                            <div class="box-body">
+                                <div class="direct-chat-messages">
+                                @foreach($resum_app_1 as $list)
+                                    <div class="direct-chat-msg">
+                                        <div class="direct-chat-info clearfix">
+                                            <span class="direct-chat-name pull-left">Paciente: {{ $list->nombres }} {{ $list->ap_paterno }} {{ $list->ap_materno }}</span>
+                                            <span class="direct-chat-timestamp pull-right">Hora Cita Medica {{ $list->start_time }}</span>
+                                        </div>
+                                        <div class="direct-chat-text">
+                                            {{ $list->appointment_description }}
+                                        </div>
+                                    </div>
+                                @endforeach
+                                </div>
+                            </div>
+                            <div class="box-footer">
+
+                            </div>
+                        </div>
+                    </div>
+                    @endrole
+                </div>
+                @break
+
+            @case(3)
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box box-primary">
+                        <div class="box-header">
+                            <div class="box-title">
+                                Panel de Notificaciones Notificaciones
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row docs-premium-template">
+                <div class="col-sm-12 col-md-6">
+                    <div class="box box-solid">
+                        <div class="box-body li_delete">
+                            @permission('emergencias_inicio')<li><a href="view_emergency" type="button" class="load-page btn btn-danger col-md-12"> Registrar Emergencia</a></li>@endpermission
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <div class="box box-solid">
+                        <div class="box-body li_delete">
+                            @permission('crear_citas_inicio')<li><a type="button" href="create_medical_appointment" class="load-page btn btn-success col-md-12"> Crear Citas Medicas</a></li>@endpermission
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+                @break
+
+            @default
+                <span>Something went wrong, please try again</span>
+        @endswitch
+
+
+
+        <!--div class="row">
             <div class="col-md-12">
                 <div class="box box-primary">
                     <div class="box-header">
-                        Panel de Notificaciones
-                    </div>
-                    <div class="box-body">
-                        <div class="row">
-                            <div class="col-md-3">
-                              <!-- small box -->
-                              <div class="small-box bg-red">
-                                <div class="inner">
-                                  <h3>{{ $emergencies[0]->count }}</h3>
-                                  <p>Emergencias</p>
-                                </div>
-                                <div class="icon">
-                                  <i class="ion glyphicon glyphicon-plus"></i>
-                                </div>
-                                @permission('ver_citas')<a href="view_attention_lists" class="load-page small-box-footer">Ver Lista de Citas Medicas <i class="fa fa-arrow-circle-right"></i></a>@endpermission
-                              </div>
-                            </div>
-                            <div class="col-md-3">
-                                <!-- small box -->
-                                <div class="small-box bg-green">
-                                  <div class="inner">
-                                    <h3>{{ $appointments[0]->count }}</h3>
-
-                                    <p>Citas Medicas</p>
-                                  </div>
-                                  <div class="icon">
-                                    <i class="ion ion-stats-bars"></i>
-                                  </div>
-                                  @permission('ver_citas')<a href="view_attention_lists" class="load-page small-box-footer">Ver Lista de Citas Medicas <i class="fa fa-arrow-circle-right"></i></a>@endpermission
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <!-- small box -->
-                                <div class="small-box bg-info">
-                                  <div class="inner">
-                                    <h3>{{ $r_no_ate[0]->count }}</h3>
-
-                                    <p>Citas Medicas NO ANTENDIDAS</p>
-                                  </div>
-                                  <div class="icon">
-                                    <i class="ion ion-stats-bars"></i>
-                                  </div>
-                                  @permission('ver_citas')<a href="view_list_appinments" class="load-page small-box-footer">Ver Lista de Citas Medicas No Atendidas <i class="fa fa-arrow-circle-right"></i></a>@endpermission
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <!-- small box -->
-                                <div class="small-box bg-yellow">
-                                  <div class="inner">
-                                    <h3 style="color:#F39C12">0</h3>
-
-                                    <p>Lista de Citas Medicas</p>
-                                  </div>
-                                  <div class="icon">
-                                    <i class="glyphicon glyphicon-th-list"></i>
-                                  </div>
-                                  @permission('imprimir_lista')
-                                  <a target="_blank" href="http://localhost:8080/pentaho/api/repos/%3Apublic%3ASteel%20Wheels%3AReports%3Alista_pacientes_medicos.prpt/generatedContent?userid=admin&password=password&output-target=pageable/pdf&p={{ Auth::user()->id }}" type="button" name="button" class="load-page small-box-footer">Imprimir lista de pacientes <i class="fa fa-arrow-circle-right"></i></a>@endpermission
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row docs-premium-template">
-            <div class="col-sm-12 col-md-6">
-                <div class="box box-solid">
-                    <div class="box-body li_delete">
-                        @permission('emergencias_inicio')<li><a href="view_emergency" type="button" class="load-page btn btn-danger col-md-12"> Registrar Emergencia</a></li>@endpermission
 
                     </div>
                 </div>
             </div>
-            <div class="col-sm-12 col-md-6">
-                <div class="box box-solid">
-                    <div class="box-body li_delete">
-                        @permission('crear_citas_inicio')<li><a type="button" href="create_medical_appointment" class="load-page btn btn-success col-md-12"> Crear Citas Medicas</a></li>@endpermission
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="box box-warning direct-chat direct-chat-warning">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">Nuevas Citas Medicas</h3>
-                        <div class="box-tools pull-right">
-                            <span data-toggle="tooltip" title="" class="badge bg-yellow" data-original-title="{{ $appointments[0]->count }} Nuevas Citas Medicas">{{ $appointments[0]->count }}</span>
-                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                        </div>
-                    </div>
-                    <div class="box-body">
-                        <div class="direct-chat-messages">
-                        @forelse($resum_app as $list)
-                            <div class="direct-chat-msg">
-                                <div class="direct-chat-info clearfix">
-                                    <span class="direct-chat-name pull-left">Paciente: {{ $list->r_nombres }} {{ $list->r_apaterno }} {{ $list->r_amaterno }}</span>
-                                    <span class="direct-chat-timestamp pull-right">Hora Cita Medica {{ $list->r_start_time }}</span>
-                                </div>
-                                <div class="direct-chat-text">
-                                    {{ $list->r_appointment_description }}
-                                </div>
-                            </div>
-                        @empty
-                            <p class="text-danger">No Existen Citas Medicas Confirmadas</p>
-                        @endforelse
-                        </div>
-                    </div>
-                    <div class="box-footer">
-
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="box box-success direct-chat direct-chat-warning">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">Citas Medicas Atendidas</h3>
-                        <div class="box-tools pull-right">
-                            <span data-toggle="tooltip" title="" class="badge bg-green" data-original-title="{{ $resum_app_1_1[0]->count }} Citas Medicas Atendidas">{{ $resum_app_1_1[0]->count }}</span>
-                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                        </div>
-                    </div>
-                    <div class="box-body">
-                        <div class="direct-chat-messages">
-                        @foreach($resum_app_1 as $list)
-                            <div class="direct-chat-msg">
-                                <div class="direct-chat-info clearfix">
-                                    <span class="direct-chat-name pull-left">Paciente: {{ $list->nombres }} {{ $list->ap_paterno }} {{ $list->ap_materno }}</span>
-                                    <span class="direct-chat-timestamp pull-right">Hora Cita Medica {{ $list->start_time }}</span>
-                                </div>
-                                <div class="direct-chat-text">
-                                    {{ $list->appointment_description }}
-                                </div>
-                            </div>
-                        @endforeach
-                        </div>
-                    </div>
-                    <div class="box-footer">
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="box box-primary">
-                    <div class="box-header">
-
-                    </div>
-                </div>
-            </div>
-        </div>
+        </div-->
     </div>
         <!-- /page content -->
     <!-- /.content -->

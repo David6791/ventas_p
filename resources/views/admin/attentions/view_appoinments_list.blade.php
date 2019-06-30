@@ -31,7 +31,7 @@
                                 <tbody>
                                     <?php $a = 1 ?>
                                     @foreach($list as $lista)
-                                        @if($lista->emergency=='S')
+                                        @if($lista->emergency=='S')                                        
                                         <tr bgcolor="#FAD2D2">
                                             <td>{{ $a++ }}</td>
                                             <td>{{ $lista->r_ci }}</td>
@@ -39,7 +39,11 @@
                                             <td>{{ $lista->name_type }}</td>
                                             <td>{{ $lista->r_name_schedules }}</td>
                                             <td>{{ $lista->r_name_state_appoinments }}</td>
+                                            @if($lista->r_name_state_appoinments=='Atendido')
+                                            
+                                            @else
                                             <td><button class="btn btn-primary btn-xs start_appointment" value="{{ $lista->r_id_medical_appointments }}">Iniciar Atencion</button></td>
+                                            @endif
                                         </tr>
                                         @else
                                         <tr bgcolor="#CDF3A9">
@@ -49,7 +53,11 @@
                                             <td>{{ $lista->name_type }}</td>
                                             <td>{{ $lista->r_start_time }}</td>
                                             <td>{{ $lista->r_name_state_appoinments }}</td>
+                                            @if($lista->r_name_state_appoinments=='Atendido')
+                                            
+                                            @else
                                             <td><button class="btn btn-primary btn-xs start_appointment" value="{{ $lista->r_id_medical_appointments }}">Iniciar Atencion</button></td>
+                                            @endif
                                         </tr>
                                         @endif                            
                                     @endforeach

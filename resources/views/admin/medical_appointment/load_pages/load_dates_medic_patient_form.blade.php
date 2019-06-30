@@ -22,7 +22,7 @@
                                             </span>
                                         </div>
                                     </div>
-                                </div>  
+                                </div>
                             </div>
                             <div class="col-md-4">
                             <div class="form-group">
@@ -36,7 +36,7 @@
                                             </span>
                                         </div>
                                     </div>
-                                </div>  
+                                </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
@@ -69,7 +69,7 @@
                                             </span>
                                         </div>
                                     </div>
-                                </div>  
+                                </div>
                             </div>
                             <div class="col-md-2"></div>
                             <div class="col-md-3">
@@ -99,25 +99,26 @@
                             </div>
                             <div class="col-md-1"></div>
                             <div class="col-md-3">
-                                <div class="form-group">                            
+                                
+                                <div class="form-group">
                                     <div class="form-group">
                                         <div class='input-group date' id='myDatepicker3'>
-                                            <input name="ci_patient" id="ci_patient" type='text' class="form-control"  value="" />
+                                            <input name="ci_patient" id="ci_patient" type='text' class="form-control name_form"  value="" />
                                             <span class="input-group-addon">
                                                 <span class="fa fa-user"></span>
                                             </span>
                                         </div>
                                     </div>
-                                </div>  
+                                </div>
                             </div>
-                                <div class="col-md-2">                        
-                                    <button type="button" class="btn btn-primary search">Buscar</button>                            
+                                <div class="col-md-2">
+                                    <button type="button" class="btn btn-primary search">Buscar</button>
                                 </div>
                             </div>
                             <div class="row load_dates_patient" id="load_dates_patient">
-                                
-                            </div>                                                                       
-                        </div>      
+
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>

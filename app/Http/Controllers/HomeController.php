@@ -72,7 +72,8 @@ class HomeController extends Controller
 			ON ta.id_type_appointments = map.type_appoinment
                     WHERE  mass.id_user = :id_user AND state_appointments = 1
                         ORDER BY map.emergency desc, map.id_medical_appointments";
-        $resum_rows_1=\DB::select(\DB::raw($resum_1),array('id_user'=>Auth::user()->tipo_usuario));
+        $resum_rows_1=\DB::select(\DB::raw($resum_1),array('id_user'=>Auth::user()->id));
+        //return $resum_rows_1;
         $resum_1_1 = "SELECT count(*) FROM medical_appointments map
                             INNER JOIN medical_assignments mass
                                 ON mass.id_medical_assignments = map.id_medical_assignments

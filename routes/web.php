@@ -15,7 +15,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+//Auth::routes();
+Auth::routes(['register' => false ]);
+
+
+
 Route::get('qrLogin', ['uses' => 'QrLoginController@index']);
 Route::post('qrLogin', ['uses' => 'QrLoginController@checkUser']);
 Route::get('my-qrcode', ['uses' => 'QrLoginController@ViewUserQrCode']);
@@ -76,6 +80,10 @@ Route::group(['middleware' => 'auth' ], function(){
 
     Route::get('/view_perfil','UsersController@view_perfil');
 
+    Route::get('/form_users','UsersController@form_users');
+
+
+
 
     /* Rutas para administrar Pacientes */
     Route::get('/index_patients','PatientsController@index_patients');
@@ -86,6 +94,7 @@ Route::group(['middleware' => 'auth' ], function(){
     Route::post('/edit_date_medic_patient', 'PatientsController@edit_date_medic_patient');
     Route::post('/load_dates_edit_pat_patient', 'PatientsController@load_dates_edit_pat_patient');
     Route::post('/edit_pat_patient', 'PatientsController@edit_pat_patient');
+    Route::post('/edit_dates_patients_form', 'PatientsController@edit_dates_patients_form');
 
 
 
@@ -193,6 +202,9 @@ Route::group(['middleware' => 'auth' ], function(){
     Route::post('/load_patient_dates','MedicalAppointmentController@load_patient_date');
 
 
+
+
+
     /* Cita con Medico disponible */
     Route::post('/select_turns_free','MedicalAppointmentController@select_turn_free');
     Route::post('/load_dates_medic_patients','MedicalAppointmentController@load_dates_medic_patient');
@@ -238,6 +250,12 @@ Route::group(['middleware' => 'auth' ], function(){
     Route::post('/delete_dates_medic_patient', 'PatientsController@delete_dates_medic_patient');
 
     Route::post('/update_patients_dates', 'PatientsController@update_patients_dates');
+
+    Route::post('/charge_depa_b','PatientsController@charge_depa_b');
+
+    Route::post('/charge_provincia','PatientsController@charge_provincia');
+
+    Route::post('/charge_localidad','PatientsController@charge_localidad');
 
 
 
@@ -324,6 +342,8 @@ Route::group(['middleware' => 'auth' ], function(){
 
     Route::post('/update_appoinment_patient', 'MedicalAppointmentController@update_appoinment_patient');
 
+    Route::get('/reservationEspecialty', 'MedicalAppointmentController@reservationEspecialty');
+
 
     /* Rutas para confirmar citas Medicas */
     Route::get('/index_confirm', 'MedicalAppointmentController@index_confirm');
@@ -396,6 +416,9 @@ Route::group(['middleware' => 'auth' ], function(){
     Route::get('/view_list_usuarios_credential','UsersController@view_list_usuarios_credential');
 
     Route::get('/print_credential_user/{id_}','UsersController@print_credential_user');
+
+    Route::get('/ver_historial/{id_}','PatientsController@ver_historial');
+
 
 
     /* reporte de historiales medicos de l;os pacientess */

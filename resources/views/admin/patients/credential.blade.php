@@ -55,7 +55,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="title">
-                    CI:
+                    FECHA NACIMIENTO:
                 </div>
                 <div class="contents">
                     {{ ($rows[0]->fecha_nacimento) }}
@@ -66,7 +66,8 @@
     <div class="col-md-4">
         <div class="row qr">
             <div class="col-md-12">
-                <img src="data:image/png;base64, {{ base64_encode(QrCode::format('png')->size(100)->generate($rows[0]->ci_paciente)) }} ">
+                <!--img src="data:image/png;base64, {{ base64_encode(QrCode::format('png')->size(150)->generate('http://192.168.1.106:8000/ver_historial/'.$rows[0]->ci_paciente)) }} "-->
+                <img src="data:image/png;base64, {{ base64_encode(QrCode::format('png')->size(150)->generate('http://192.168.0.152:8000/ver_historial/'.$rows[0]->ci_paciente)) }} ">
             </div>
         </div> <br> <br> <br> <br> <br> <br>
         <div class="row qr1">

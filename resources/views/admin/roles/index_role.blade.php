@@ -9,10 +9,10 @@
                         <h3 class="box-title">Roles de Usuario</h3>
                     </div>
                     <div class="col-md-2">
-                        <button type="button" class="btn btn-success btn-ms"  data-toggle="modal" data-target="#modal-default"> <span class="fa fa-plus"> </span>  Agregar Nuevo Rol</button>  
+                        <button type="button" class="btn btn-success btn-ms"  data-toggle="modal" data-target="#modal-default"> <span class="fa fa-plus"> </span>  Agregar Nuevo Rol</button>
                     </div>
                 </div>
-              
+
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -20,11 +20,9 @@
                 <thead>
                     <tr>
                         <th>Nro.</th>
-                        <th>Rol</th>
                         <th>Nombre Rol</th>
                         <th>Descripcion Rol</th>
                         <th>Fecha Creacion</th>
-                        <th>Estado Rol</th>
                         <th>Accion</th>
                     </tr>
                 </thead>
@@ -33,11 +31,9 @@
                     @forelse ($row as $roles)
                         <tr>
                             <td>{{ $a++ }}</td>
-                            <td>{{ $roles->name }}</td>
                             <td>{{ $roles->display_name }}</td>
                             <td>{{ $roles->description }}</td>
                             <td>{{ $roles->created_at }}</td>
-                            <td>{{ $roles->state_role }}</td>
                             <td> <button type="button" class="btn btn-primary btn-xs load_dates_edit" value="{{ $roles->id }}"> <span class="fa fa-edit"></span> Editar</button> <button type="button" class="btn btn-danger btn-xs delete"  value="{{ $roles->id }}"> <span class="fa fa-edit"></span> Borrar</button> </td>
                         </tr>
                     @empty
@@ -45,7 +41,7 @@
                             <td>No Existen datos Registrados.</td>
                         </tr>
                     @endforelse
-                </tbody>                              
+                </tbody>
                 <tfoot>
                 </tfoot>
               </table>
@@ -108,7 +104,7 @@
                     <button type="submit" class="btn btn-primary">Guardar</button>
                 </div>
             </form>
-        </div>        
+        </div>
     <!-- /.modal-content -->
     </div>
 <!-- /.modal-dialog -->
@@ -166,7 +162,7 @@
                     <button type="submit" class="btn btn-primary">Guardar Cambios</button>
                 </div>
             </form>
-        </div>        
+        </div>
     <!-- /.modal-content -->
     </div>
 <!-- /.modal-dialog -->

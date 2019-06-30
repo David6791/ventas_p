@@ -17,6 +17,7 @@
                     <th>Estado Cita Medica</th>
                     <th>Medico</th>
                     <th>Opciones</th>
+                    <th>Imprimir</th>
                 </tr>
             </thead>
             <tbody>
@@ -33,6 +34,7 @@
                         <td> {{ $lista->name_state_appointments }} </td>
                         <td>{{ $lista->m_name }} {{ $lista->m_apellidos }}</td>
                         <td><button  value="{{ $lista->id_medical_appointments }}" type="button" class="btn btn-primary btn-xs load_dates_reserva" >Edtiar Cita Medica</button></td>
+                        <td><a target="_blank" href="http://localhost:8080/pentaho/api/repos/%3Apublic%3ASteel%20Wheels%3AReports%3Aboleta_reserva.prpt/generatedContent?userid=admin&password=password&output-target=pageable/pdf&p={{ $lista->id_medical_appointments }}" type="button" class="btn btn-success btn-xs" ><i class="glyphicon glyphicon-print"></i> Imprimir</a></td>
 
                     </tr>
                     @else
@@ -46,7 +48,7 @@
                         <td> {{ $lista->name_state_appointments }} </td>
                         <td>{{ $lista->m_name }} {{ $lista->m_apellidos }}</td>
                         <td><button  value="{{ $lista->id_medical_appointments }}" type="button" class="btn btn-primary btn-xs load_dates_reserva" >Edtiar Cita Medica</button></td>
-
+                        <td><a target="_blank" href="http://localhost:8080/pentaho/api/repos/%3Apublic%3ASteel%20Wheels%3AReports%3Aboleta_reserva.prpt/generatedContent?userid=admin&password=password&output-target=pageable/pdf&p={{ $lista->id_medical_appointments }}" type="button" class="btn btn-success btn-xs" ><i class="glyphicon glyphicon-print"></i> Imprimir</a></td>
                     </tr>
                     @endif
 

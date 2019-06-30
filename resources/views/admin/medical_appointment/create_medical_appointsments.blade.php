@@ -6,7 +6,8 @@
             </div>
             <div class="box-body">
                 <div class="vertical-menu">
-                    <a class="btn btn-success btn-sm reservationMedic">Reservar por Medico</a>
+                    <a class="btn btn-success btn-sm reservationEspecialty">Reservar por Especialidad</a>
+                    <a class="btn btn-success btn-sm reservationMedic">Reservar Medico General</a>
                     <a class="btn btn-success btn-sm reservationDate" >Reservar por Fecha</a>
                 </div>
                 <div class="load_page_appointsment" id="load_page_appointsment">

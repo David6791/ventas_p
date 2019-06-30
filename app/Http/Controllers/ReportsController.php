@@ -51,7 +51,7 @@ class ReportsController extends Controller
                             ON sapp.id_state_appointments = mapp.state_appointments
                         INNER JOIN pacientes p
 		                    ON p.id_paciente = mapp.id_patient
-                    WHERE date_appointments = :fecha AND mass.id_user = :id_user";
+                    WHERE date_appointments = :fecha AND mass.id_user = :id_user AND mapp.state_appointments = 1";
         /*$query = "SELECT p.ci_paciente, p.nombres, p.ap_paterno, p.ap_materno,ht.start_time, sapp.name_state_appointments, mapp.appointment_description FROM medical_appointments mapp
                         INNER JOIN medical_assignments mass
                             ON mass.id_medical_assignments = mapp.id_medical_assignments

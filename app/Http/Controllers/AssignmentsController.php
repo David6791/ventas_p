@@ -52,7 +52,7 @@ class AssignmentsController extends Controller
                         ON mass.id_user = us.id
                             INNER JOIN tipo_usuarios tus
                         ON tus.id_tipo = us.tipo_usuario
-                    WHERE us.estado_user = 1 AND mass.id_user is NULL AND us.tipo_usuario != 1";
+                    WHERE us.estado_user = 1 AND mass.id_user is NULL AND us.tipo_usuario = 2";
         $users=\DB::select(\DB::raw($query1));
         $query2 = "SELECT * FROM schedules WHERE state = 'activo'";
         $schedul = \DB::select(\DB::raw($query2));

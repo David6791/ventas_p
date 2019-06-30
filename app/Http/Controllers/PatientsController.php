@@ -15,11 +15,13 @@ class PatientsController extends Controller
     public function form_patients(){
         if(\Entrust::hasRole('admin_pacientes')){
         //return 'asdasdsad';
+        $qp = "select * from pais";
+        $pais=\DB::select(\DB::raw($qp));
         $query = "select * from patologias where estado_patologia = 'activo'";
         $rows=\DB::select(\DB::raw($query));
         $query1 = "select * from datos_medicos where estado_dato_medico = 'activo'";
         $rows1=\DB::select(\DB::raw($query1));
-        return view('admin.patients.form_patients')->with('row',$rows)->with('rows',$rows1);
+        return view('admin.patients.form_patients')->with('row',$rows)->with('rows',$rows1)->with('paises',$pais);
     }else{
         return view('error.user_not_permission');
     }
@@ -32,7 +34,7 @@ class PatientsController extends Controller
             'apellido_materno' => 'required|max:20',
             'apellido_paterno' => 'required',
             'celular' => 'required',
-            'ci' => 'required',
+            'ci_paciente' => 'unique:pacientes|required|max:20|alpha_dash',
             'ciudad' => 'required',
             'direccion' => 'required',
             'genero' => 'required',
@@ -57,7 +59,7 @@ class PatientsController extends Controller
             'ciudad_nacimiento' => $request->ciudad,
             'provincia' => $request->provincia,
             'localidad_nacimiento' => $request->localidad,
-            'qr_code_patient' => base64_encode(\QrCode::format('png')->size(200)->generate($request->ci_paciente))
+            //'qr_code_patient' => base64_encode(\QrCode::format('png')->size(200)->generate($request->ci_paciente))
 
         ]);
         $query = "select id_paciente from pacientes order by id_paciente desc limit 1";
@@ -101,8 +103,17 @@ class PatientsController extends Controller
     public function index_patients(){
         if(\Entrust::hasRole('admin_pacientes')){
         //return Auth::roles();
-        $query = "SELECT * FROM pacientes";
-        $rows=\DB::select(\DB::raw($query));
+        $query = "SELECT * FROM pacientes p
+        INNER JOIN pais pa
+            ON pa.id_pais = cast(p.pais_nacimiento  as int)
+        INNER JOIN departamentos de
+            ON de.id_departamento = cast(p.ciudad_nacimiento  as int)
+        INNER JOIN provincias pro
+            ON pro.id_provincia = cast(p.provincia  as int)
+        INNER JOIN localidades lo
+            ON lo.id_localidad = cast(p.localidad_nacimiento  as int)
+    WHERE p.id_paciente != 0 ";
+    $rows=\DB::select(\DB::raw($query));
         return view('admin.patients.index_patients')->with('list_patients',$rows);
         }else{
             return view('error.user_not_permission');
@@ -110,10 +121,20 @@ class PatientsController extends Controller
     }
     public function load_dates_patient_edit(Request $request){
         if(\Entrust::hasRole('admin_pacientes')){
-        $query = "SELECT * FROM pacientes p
-                    WHERE p.id_paciente = :id";
+            $query = "SELECT * FROM pacientes p
+        	INNER JOIN pais pa
+        		ON pa.id_pais = cast(p.pais_nacimiento  as int)
+        	INNER JOIN departamentos de
+        		ON de.id_departamento = cast(p.ciudad_nacimiento  as int)
+        	INNER JOIN provincias pro
+        		ON pro.id_provincia = cast(p.provincia  as int)
+        	INNER JOIN localidades lo
+        		ON lo.id_localidad = cast(p.localidad_nacimiento  as int)
+        WHERE p.id_paciente = :id";
         $rows=\DB::select(\DB::raw($query),array('id'=>$request->id_patient));
-        $query2 = "SELECT * FROM pacientes_patologias  pp
+        $qp = "select * from pais";
+        $pais=\DB::select(\DB::raw($qp));
+        /*$query2 = "SELECT * FROM pacientes_patologias  pp
                         LEFT JOIN patologias pt
                         ON pt.id_patologia = pp.id_patologia
                     WHERE pp.id_paciente = :id AND pp.estado_pac_pat = 'activo'";
@@ -122,9 +143,40 @@ class PatientsController extends Controller
                         INNER JOIN datos_medicos dm
                         ON pdm.id_date_medic = dm.id_dato_medico
                     WHERE id_patient = :id";
-        $rows1=\DB::select(\DB::raw($query1),array('id'=>$request->id_patient));
+        $rows1=\DB::select(\DB::raw($query1),array('id'=>$request->id_patient));*/
         //return $rows;
-        return view('admin.patients.view_patients_details')->with('pat',$rows2)->with('dates',$rows)->with('dates_medic',$rows1);
+        return view('admin.patients.view_patients_details')->with('dates',$rows)->with('paises',$qp);
+    }else{
+        return view('error.user_not_permission');
+    }
+    }
+    public function edit_dates_patients_form(Request $request){
+        //return $request->all();
+        if(\Entrust::hasRole('admin_pacientes')){
+        $query = "SELECT * FROM pacientes p
+    	INNER JOIN pais pa
+    		ON pa.id_pais = cast(p.pais_nacimiento  as int)
+    	INNER JOIN departamentos de
+    		ON de.id_departamento = cast(p.ciudad_nacimiento  as int)
+    	INNER JOIN provincias pro
+    		ON pro.id_provincia = cast(p.provincia  as int)
+    	INNER JOIN localidades lo
+    		ON lo.id_localidad = cast(p.localidad_nacimiento  as int)
+        WHERE p.id_paciente = :id";
+        $rows=\DB::select(\DB::raw($query),array('id'=>$request->id_patient));
+        //return $rows;
+        /*$query2 = "SELECT * FROM pacientes_patologias  pp
+                        LEFT JOIN patologias pt
+                        ON pt.id_patologia = pp.id_patologia
+                    WHERE pp.id_paciente = :id AND pp.estado_pac_pat = 'activo'";
+        $rows2=\DB::select(\DB::raw($query2),array('id'=>$request->id_patient));
+        */
+        $query1 = "SELECT * FROM pais";
+        $rows1=\DB::select(\DB::raw($query1));
+        $query2 = "SELECT * FROM pacientes where id_paciente = :id";
+        $rows2=\DB::select(\DB::raw($query2),array('id'=>$request->id_patient));
+        //return $rows2;
+        return view('admin.patients.view_patients_details_formulario')->with('dates_paciente',$rows2)->with('dates',$rows)->with('paises',$rows1);
     }else{
         return view('error.user_not_permission');
     }
@@ -213,7 +265,7 @@ class PatientsController extends Controller
         }
     }
     public function filiation_completing(Request $request){
-        if(\Entrust::hasRole('admin_pacientes')){
+        //if(\Entrust::hasRole('admin_pacientes')){
         $query = "SELECT * FROM pacientes pa
                         INNER JOIN pacientes_patologias pap
                             ON pa.id_paciente = pap.id_paciente
@@ -233,9 +285,9 @@ class PatientsController extends Controller
         $rows2=\DB::select(\DB::raw($query2),array('id_patient'=>$request->id));
         //return $rows2;
         return view('admin.patients.completing_dates.form_completing_dates')->with('pat',$rows)->with('dates_medic',$rows1)->with('dates_patient',$rows2);
-        }else{
+        /*}else{
             return view('error.user_not_permission');
-        }
+        }*/
     }
     public function add_date_new_medic_url(Request $request){
         if(\Entrust::hasRole('admin_pacientes')){
@@ -364,7 +416,7 @@ class PatientsController extends Controller
         }
     }
     public function hability_dates_patients(Request $request){
-        if(\Entrust::hasRole('admin_pacientes')){
+        if(\Entrust::hasRole('activar_editar')){
         $query = "SELECT * FROM public.hability_patients(:id)";
         $rows=\DB::select(\DB::raw($query),array('id'=>$request->id_patients));
         return redirect()->action(
@@ -452,5 +504,54 @@ class PatientsController extends Controller
     }else{
         return view('error.user_not_permission');
     }
+    }
+    public function charge_depa_b(Request $request){
+        //return $request->all();
+        $depa = "SELECT * FROM departamentos WHERE id_pais = :id_pais";
+        $depas=\DB::select(\DB::raw($depa),array('id_pais'=>$request->id));
+        return $depas;
+    }
+    public function charge_provincia(Request $request){
+        //return $request->all();
+        $depa = "SELECT * FROM provincias WHERE id_departamento = :id_depa";
+        $depas=\DB::select(\DB::raw($depa),array('id_depa'=>$request->id));
+        return $depas;
+    }
+    public function charge_localidad(Request $request){
+        //return $request->all();
+        $depa = "SELECT * FROM localidades WHERE id_provincia = :id_provincia";
+        $depas=\DB::select(\DB::raw($depa),array('id_provincia'=>$request->id));
+        return $depas;
+    }
+    public function ver_historial($ci){
+        $paciente = "SELECT * FROM pacientes WHERE ci_paciente = :ci_paciente";
+        $pa=\DB::select(\DB::raw($paciente),array('ci_paciente'=>$ci));
+        //return $pa;
+        $cita_medica = "SELECT * FROM pacientes p
+            	INNER JOIN medical_appointments mapp
+            		ON mapp.id_patient = p.id_paciente
+            	INNER JOIN medical_assignments mass
+            		ON mass.id_medical_assignments = mapp.id_medical_assignments
+            	INNER JOIN schedules sc
+            		ON sc.id_schedule = mass.id_schedul
+            	INNER JOIN hour_turns ht
+            		ON ht.id_hour_turn = mapp.id_turn_hour
+                INNER JOIN users us
+		            ON us.id = mass.id_user
+                WHERE p.ci_paciente = :ci_paciente AND mapp.state_appointments = 3";
+        //return $cita_medica;
+        $r_cita_medica=\DB::select(\DB::raw($cita_medica),array('ci_paciente'=>$ci));
+        $historial = "SELECT * FROM pacientes p
+                	INNER JOIN medical_appointments mapp
+                		ON mapp.id_patient = p.id_paciente
+                	INNER JOIN details_dates_register ddr
+                		ON ddr.id_appointmetns_ = mapp.id_medical_appointments
+                	INNER JOIN dates_of_register dof
+                		ON dof.id_date_register = ddr.id_dates_register
+                WHERE p.ci_paciente =  :ci_paciente ORDER BY mapp.id_medical_appointments DESC, ddr.id_dates_register LIMIT 4";
+        //return $cita_medica;
+        $r_historial=\DB::select(\DB::raw($historial),array('ci_paciente'=>$ci));
+        //return $r_historial;
+        return view('admin.menu_phone.view_menu')->with('pa',$pa)->with('r_cita',$r_cita_medica)->with('r_historial_medico',$r_historial);
     }
 }

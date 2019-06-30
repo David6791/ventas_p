@@ -8,7 +8,7 @@
                     </h3>
                 </div>
                 <div class="box-body box-profile">
-                
+
                 <center>
                 <div class="img-responsive">{!! QrCode::size(200)->generate($dates[0]->ci_paciente); !!}</div>
                 </center>
@@ -40,99 +40,20 @@
                     </li>
                 </ul>
 
-                <a href="#" class="btn btn-primary btn-block"> <span class="fa fa-edit"></span> <b>Editar</b></a>
+                <a href="#" class="btn btn-primary btn-block edit_dates_patients_form" value="{{ $dates[0]->id_paciente }}"> <span class="fa fa-edit"></span> <b>Editar</b></a>
                 <a href="#" class="btn btn-success btn-block"> <span class="fa fa-print"></span> <b>Imprmir Credencial</b></a>
                 </div>
                 <!-- /.box-body -->
             </div>
         </div>
-        <div class="col-md-9">
-            <div class="box box-success">
-                <div class="box-header">
-                    <h3 class="box-title">
-                        Datos Medicos del Paciente
-                    </h3>
-                </div>
-                <div class="box-body">
-                    @forelse($dates_medic as $li)
-                        <div class="row">
-                            <div class="col-md-12">
-                                <table id="example2" class="table table-bordered table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>
-                                                {{ $li->pregunta_mostrar }}
-                                            </th>
-                                            <th width="100px" ></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>
-                                                <p for="" id="{{ $li->id_patent_date_medic }}">{{ $li->descripcion }}</p>
-                                            </td>
-                                            <td>
-                                                <button class="btn btn-info btn-xs edit_dates_medic_patient" value="{{ $li->id_patent_date_medic }}"> <span class="glyphicon glyphicon-edit"></span> Editar</button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    @empty
-                        <label for="">No existen datos medicos</label>
-                    @endforelse
-                </div>
-            </div>
-        </div>
-        <div class="col-md-9">
-            <div class="box box-primary">
-                <div class="box-header">
-                    <h3 class="box-title">Patologias del Paciente </h3>
-                </div>
-                <div class="box-body">
-                    <table id="example2" class="table table-bordered table-hover charge_modify_table">
-                        <thead>
-                            <th>Nro.</th>
-                            <th>Nombre Patologia</th>
-                            <th>Descripcion</th>
-                            <th>Accion</th>
-                        </thead>
-                        <tbody class="charge_modify">
-                            <?php $a = 1 ?>
-                            @forelse($pat as $d)
-                            <tr>
-                                <td>{{ $a++ }}</td>
-                                <td>{{ $d->nombre_patologia }}</td>
-                                <td>No hay descripcion</td>
-                                <td> <button class="btn btn-danger btn-xs"> <span class="glyphicon glyphicon-trash"></span> Eliminar</button> </td>
-                            </tr>
-                            @empty
-                                <tr>
-                                    <td>No Existen datos</td>
-                                </tr>
-                                </tr>
-                            @endforelse
+        <div class="editar_pciente">
 
-                        </tbody>
-                    </table>
-                    <table id="example2" class="table table-bordered table-hover">
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td>
-                            <button class="btn btn-success btn-xm edit_pat_patients" value="{{ $dates[0]->id_paciente }}"> <span class="glyphicon glyphicon-edit"></span> Editar</button></td>
-                            <td></td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
         </div>
     </div>
 </section>
 
 
-<!-- modal para editar los roles de usuario -->
+< modal para editar los roles de usuario -->
 <div class="modal fade" id="modal-edit-dates_medic">
     <div class="modal-dialog">
         <div class="modal-content">
